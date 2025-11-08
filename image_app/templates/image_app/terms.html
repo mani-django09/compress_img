@@ -1,0 +1,374 @@
+{% extends 'image_app/base.html' %}
+{% load static %}
+
+{% block title %}Terms of Service | Resizeimages.tools - Free Online Image Compressor{% endblock %}
+
+{% block description %}Read the terms of service for Resizeimages.tools. Understand your rights and responsibilities when using our free image compression service.{% endblock %}
+
+{% block keywords %}terms of service, terms of use, legal terms, user agreement, service conditions{% endblock %}
+
+{% block extra_css %}
+<style>
+    .legal-page {
+        padding: 3rem 0;
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        min-height: 80vh;
+    }
+
+    .legal-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .legal-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .legal-title {
+        font-size: clamp(2rem, 5vw, 2.5rem);
+        font-weight: 800;
+        color: #1f2937;
+        margin-bottom: 1rem;
+    }
+
+    .legal-subtitle {
+        font-size: 1.125rem;
+        color: #6b7280;
+        margin-bottom: 1rem;
+    }
+
+    .last-updated {
+        background: #f3f4f6;
+        padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+        font-size: 0.875rem;
+        color: #4b5563;
+        display: inline-block;
+        border: 1px solid #d1d5db;
+    }
+
+    .legal-content {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 2.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+    }
+
+    .legal-section {
+        margin-bottom: 2.5rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #3b82f6;
+    }
+
+    .legal-content p {
+        color: #4b5563;
+        line-height: 1.7;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+    }
+
+    .legal-content ul, .legal-content ol {
+        color: #4b5563;
+        line-height: 1.7;
+        margin-bottom: 1rem;
+        padding-left: 2rem;
+    }
+
+    .legal-content li {
+        margin-bottom: 0.5rem;
+    }
+
+    .warning-box {
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        border-left: 4px solid #f59e0b;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin: 1.5rem 0;
+    }
+
+    .warning-box h4 {
+        color: #92400e;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .warning-box p {
+        color: #92400e;
+        margin: 0;
+        font-weight: 500;
+    }
+
+    .info-box {
+        background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+        border-left: 4px solid #3b82f6;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin: 1.5rem 0;
+    }
+
+    .info-box h4 {
+        color: #1e40af;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .info-box p {
+        color: #1e40af;
+        margin: 0;
+        font-weight: 500;
+    }
+
+    .contact-info {
+        background: #f8fafc;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .contact-info h4 {
+        color: #1f2937;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .contact-info p {
+        margin: 0.5rem 0;
+    }
+
+    .contact-info a {
+        color: #3b82f6;
+        text-decoration: none;
+    }
+
+    .contact-info a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+        .legal-container {
+            padding: 0 1rem;
+        }
+        
+        .legal-content {
+            padding: 1.5rem;
+        }
+        
+        .legal-header {
+            margin-bottom: 2rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="legal-page">
+    <div class="legal-container">
+        <div class="legal-header">
+            <h1 class="legal-title">Terms of Service</h1>
+            <p class="legal-subtitle">Please read these terms carefully before using our service</p>
+            <div class="last-updated">
+                <strong>Last Updated:</strong> January 2025
+            </div>
+        </div>
+
+        <div class="legal-content">
+            <div class="legal-section">
+                <h2 class="section-title">1. Acceptance of Terms</h2>
+                <p>
+                    By accessing or using Resizeimages.tools ("the Service"), you agree to be bound by these Terms of Service 
+                    ("Terms"). If you do not agree to these Terms, please do not use our Service.
+                </p>
+                
+                <div class="info-box">
+                    <h4>Agreement</h4>
+                    <p>Using our service means you accept these terms. It's that simple.</p>
+                </div>
+            </div>
+
+            <div class="legal-section">
+                <h2 class="section-title">2. Description of Service</h2>
+                <p>
+                    Resizeimages.tools provides a free online image compression service that allows users to reduce the file 
+                    size of their images while maintaining acceptable quality. Our service supports various image formats 
+                    including JPEG, PNG, WebP, and HEIC.
+                </p>
+                
+                <h3 style="color: #374151; font-weight: 600; margin: 1.5rem 0 0.75rem 0;">What We Offer</h3>
+                <ul>
+                    <li>Free image compression and optimization</li>
+                    <li>Batch processing capabilities</li>
+                    <li>Multiple format support</li>
+                    <li>Privacy-focused processing (images deleted within 24 hours)</li>
+                    <li>No registration required</li>
+                </ul>
+            </div>
+
+            <div class="legal-section">
+                <h2 class="section-title">3. User Responsibilities</h2>
+                <p>When using our Service, you agree to:</p>
+                <ul>
+                    <li>Only upload images you own or have permission to use</li>
+                    <li>Not upload illegal, harmful, or inappropriate content</li>
+                    <li>Not attempt to harm, disrupt, or overload our systems</li>
+                    <li>Respect the intellectual property rights of others</li>
+                    <li>Use the service for legitimate purposes only</li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4>Important</h4>
+                    <p>You are responsible for the content you upload. Do not upload images you don't have rights to use.</p>
+                </div>
+            </div>
+
+            <div class="legal-section">
+                <h2 class="section-title">4. Prohibited Uses</h2>
+                <p>You may not use our Service to:</p>
+                <ul>
+                    <li>Upload copyrighted material without permission</li>
+                    <li>Process illegal, harmful, or offensive content</li>
+                    <li>Attempt to reverse engineer or hack our systems</li>
+                    <li>Use automated systems to overload our servers</li>
+                    <li>Resell or redistribute our service</li>
+                    <li>Upload malware or viruses</li>
+                    <li>Violate any applicable laws or regulations</li>
+                </ul>
+            </div>
+
+            <div class="legal-section">
+                <h2 class="section-title">5. Content and Intellectual Property</h2>
+                <h3 style="color: #374151; font-weight: 600; margin: 1.5rem 0 0.75rem 0;">Your Content</h3>
+                <p>
+                    You retain all rights to the images you upload. We do not claim ownership of your content. 
+                    By using our service, you grant us a temporary license to process your images solely for 
+                    the purpose of providing our compression service.
+                </p>
+
+                <h3 style="color: #374151; font-weight: 600; margin: 1.5rem 0 0.75rem 0;">Our Content</h3>
+                <p>
+                    All content on this website, including text, graphics, logos, and software, is owned by 
+                    Resizeimages.tools and is protected by copyright laws. You may not reproduce or distribute 
+                    our content without permission.
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2 class="section-title">6. Service Availability</h2>
+                <p>
+                    We strive to keep our service available 24/7, but we cannot guarantee uninterrupted access. 
+                    We may temporarily suspend the service for maintenance, updates, or other reasons without notice.
+                </p>
+
+                <h3 style="color: #374151; font-weight: 600; margin: 1.5rem 0 0.75rem 0;">Service Limits</h3>
+                <ul>
+                    <li>Maximum file size: 10MB per image</li>
+                    <li>Maximum batch size: 20 images at once</li>
+                    <li>File retention: 24 hours maximum</li>
+                    <li>Supported formats: JPEG, PNG, WebP, HEIC</li>
+                </ul>
+            </div>
+
+            <div class="legal-section">
+                <h2 class="section-title">7. Privacy and Data Handling</h2>
+                <p>
+                    We take your privacy seriously. All uploaded images are automatically deleted within 24 hours. 
+                    For detailed information about how we handle your data, please review our 
+                    <a href="{% url 'privacy' %}" style="color: #3b82f6;">Privacy Policy</a>.
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2 class="section-title">8. Disclaimers</h2>
+                
+                <div class="warning-box">
+                    <h4>Service "As Is"</h4>
+                    <p>Our service is provided "as is" without any warranties. Use at your own risk.</p>
+                </div>
+
+                <p>
+                    Resizeimages.tools is provided on an "as is" and "as available" basis. We make no warranties, 
+                    express or implied, regarding the service's reliability, accuracy, or fitness for a particular purpose.
+                </p>
+
+                <h3 style="color: #374151; font-weight: 600; margin: 1.5rem 0 0.75rem 0;">What We Don't Guarantee</h3>
+                <ul>
+                    <li>Perfect compression results for all images</li>
+                    <li>100% uptime or availability</li>
+                    <li>Compatibility with all devices and browsers</li>
+                    <li>Data recovery if something goes wrong</li>
+                    <li>That the service will meet all your needs</li>
+                </ul>
+            </div>
+
+            <div class="legal-section">
+                <h2 class="section-title">9. Limitation of Liability</h2>
+                <p>
+                    To the maximum extent permitted by law, Resizeimages.tools shall not be liable for any indirect, 
+                    incidental, special, consequential, or punitive damages arising from your use of the service. 
+                    Our total liability shall not exceed the amount you paid us (which is $0 since our service is free).
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2 class="section-title">10. Termination</h2>
+                <p>
+                    We reserve the right to terminate or restrict access to our service at any time, for any reason, 
+                    without prior notice. You may stop using the service at any time.
+                </p>
+
+                <h3 style="color: #374151; font-weight: 600; margin: 1.5rem 0 0.75rem 0;">Reasons for Termination</h3>
+                <ul>
+                    <li>Violation of these Terms</li>
+                    <li>Illegal or harmful use</li>
+                    <li>Abuse of service resources</li>
+                    <li>Technical or security concerns</li>
+                </ul>
+            </div>
+
+            <div class="legal-section">
+                <h2 class="section-title">11. Changes to Terms</h2>
+                <p>
+                    We may update these Terms from time to time. When we do, we'll update the "Last Updated" date 
+                    at the top of this page. Continued use of the service after changes constitutes acceptance of 
+                    the new Terms.
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2 class="section-title">12. Governing Law</h2>
+                <p>
+                    These Terms are governed by and construed in accordance with applicable laws. Any disputes 
+                    arising from these Terms or your use of the service will be resolved in the appropriate courts.
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2 class="section-title">13. Contact Information</h2>
+                <p>
+                    If you have questions about these Terms, please contact us using the information provided on 
+                    our <a href="{% url 'contact' %}" style="color: #3b82f6;">Contact page</a>.
+                </p>
+            </div>
+
+            <div class="contact-info">
+                <h4>Questions About These Terms?</h4>
+                <p>We're here to help clarify anything you don't understand.</p>
+                <p><strong>Email:</strong> <a href="mailto:legal@Resizeimages.tools">legal@Resizeimages.tools</a></p>
+                <p><strong>Website:</strong> <a href="https://Resizeimages.tools/contact">https://Resizeimages.tools/contact</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

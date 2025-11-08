@@ -1,0 +1,1467 @@
+{% extends 'image_app/base.html' %}
+{% load static %}
+
+{% block title %}Compress Image to 200KB Online Free | Photo Compressor 200KB | JPEG to 200KB{% endblock %}
+{% block description %}Compress image to 200KB, compress JPEG to 200KB, and photo compressor 200KB online free. Professional image compressor to 200KB for high-quality images, presentations, documents, and portfolios. Instant results!{% endblock %}
+{% block keywords %}compress image to 200kb, compress jpeg to 200kb, photo compressor to 200kb, resize image to 200kb, reduce pdf size to 200kb, image compressor to 200kb, 200kb image compressor{% endblock %}
+{% block canonical %}https://resizeimages.tools/compress-to-200kb/{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --primary: #7C3AED;
+        --primary-hover: #6D28D9;
+        --primary-light: #F5F3FF;
+        --secondary: #059669;
+        --secondary-hover: #047857;
+        --accent: #DC2626;
+        --background: #F9FAFB;
+        --surface: #FFFFFF;
+        --text-primary: #111827;
+        --text-secondary: #6B7280;
+        --border: #E5E7EB;
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+        --radius-sm: 6px;
+        --radius-md: 10px;
+        --radius-lg: 14px;
+        --radius-xl: 18px;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%);
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        color: var(--text-primary);
+        line-height: 1.6;
+        min-height: 100vh;
+    }
+
+    .hero-section {
+        background: linear-gradient(135deg, #059669 0%, #10B981 50%, #34D399 100%);
+        color: white;
+        padding: 3rem 1.5rem 2.5rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
+        pointer-events: none;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 750px;
+        margin: 0 auto;
+    }
+
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.875rem;
+        margin-bottom: 1.25rem;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        font-weight: 600;
+    }
+
+    .hero-title {
+        font-size: clamp(2rem, 5vw, 2.75rem);
+        font-weight: 900;
+        margin-bottom: 0.75rem;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+    }
+
+    .hero-subtitle {
+        font-size: clamp(1rem, 2.5vw, 1.125rem);
+        opacity: 0.95;
+        line-height: 1.6;
+        font-weight: 400;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .main-container {
+        max-width: 850px;
+        margin: -2rem auto 3rem;
+        padding: 0 1.5rem;
+        position: relative;
+        z-index: 10;
+    }
+
+    .upload-card {
+        background: var(--surface);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-xl);
+        overflow: hidden;
+        border: 1px solid var(--border);
+    }
+
+    .card-section {
+        padding: 2rem;
+    }
+
+    .section-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .section-icon {
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(135deg, var(--secondary) 0%, #10B981 100%);
+        color: white;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.875rem;
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+    }
+
+    .upload-zone {
+        background: linear-gradient(135deg, #FAFAFB 0%, #F3F4F6 100%);
+        border: 2px dashed var(--border);
+        border-radius: var(--radius-lg);
+        padding: 2.5rem 2rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .upload-zone:hover,
+    .upload-zone.drag-active {
+        border-color: var(--secondary);
+        background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(5, 150, 105, 0.15);
+    }
+
+    .upload-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 1.25rem;
+        background: linear-gradient(135deg, var(--secondary) 0%, #10B981 100%);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.75rem;
+        box-shadow: 0 8px 24px rgba(5, 150, 105, 0.4);
+        transition: all 0.3s ease;
+    }
+
+    .upload-zone:hover .upload-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .upload-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+    }
+
+    .upload-description {
+        color: var(--text-secondary);
+        font-size: 0.9375rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .file-input {
+        display: none;
+    }
+
+    .upload-button {
+        background: linear-gradient(135deg, var(--secondary) 0%, #10B981 100%);
+        color: white;
+        border: none;
+        padding: 0.75rem 2rem;
+        border-radius: var(--radius-md);
+        font-size: 0.9375rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        pointer-events: none;
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+    }
+
+    .upload-specs {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 1.25rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--border);
+        font-size: 0.875rem;
+    }
+
+    .spec-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    .spec-icon {
+        color: var(--secondary);
+    }
+
+    .preview-section {
+        display: none;
+        padding: 1.25rem;
+        background: linear-gradient(to right, #ECFDF5 0%, #D1FAE5 100%);
+        border-radius: var(--radius-lg);
+        border: 1px solid #6EE7B7;
+        margin-top: 1rem;
+    }
+
+    .preview-section.active {
+        display: block;
+        animation: slideIn 0.4s ease;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .preview-container {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+    }
+
+    .preview-thumbnail {
+        width: 80px;
+        height: 80px;
+        border-radius: var(--radius-md);
+        object-fit: cover;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border: 3px solid white;
+    }
+
+    .preview-details {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .preview-filename {
+        font-size: 0.9375rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.375rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .preview-meta {
+        display: flex;
+        gap: 1rem;
+        font-size: 0.8125rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    .remove-button {
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        color: white;
+        border: none;
+        width: 36px;
+        height: 36px;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+
+    .remove-button:hover {
+        transform: scale(1.1);
+    }
+
+    .options-section {
+        border-top: 1px solid var(--border);
+        background: #FAFAFA;
+    }
+
+    .options-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .option-card {
+        background: white;
+        border: 2px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .option-card:hover {
+        border-color: var(--secondary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.15);
+    }
+
+    .option-card.selected {
+        border-color: var(--secondary);
+        background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    }
+
+    .option-radio {
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--border);
+        border-radius: 50%;
+        position: relative;
+        flex-shrink: 0;
+        transition: all 0.3s ease;
+    }
+
+    .option-card.selected .option-radio {
+        border-color: var(--secondary);
+        background: var(--secondary);
+    }
+
+    .option-card.selected .option-radio::after {
+        content: '✓';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 0.75rem;
+        font-weight: 700;
+    }
+
+    .option-details {
+        flex: 1;
+    }
+
+    .option-title {
+        font-size: 0.9375rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.25rem;
+    }
+
+    .option-description {
+        font-size: 0.8125rem;
+        color: var(--text-secondary);
+    }
+
+    .compress-button {
+        width: 100%;
+        background: linear-gradient(135deg, var(--secondary) 0%, #047857 100%);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: var(--radius-md);
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.625rem;
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        margin-top: 1.5rem;
+    }
+
+    .compress-button:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(5, 150, 105, 0.4);
+    }
+
+    .compress-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .loading-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.98);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(10px);
+    }
+
+    .loading-overlay.active {
+        display: flex;
+    }
+
+    .loading-content {
+        text-align: center;
+        max-width: 320px;
+    }
+
+    .loading-spinner {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 1.5rem;
+        border: 5px solid #E5E7EB;
+        border-top-color: var(--secondary);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    .loading-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .loading-subtitle {
+        font-size: 1rem;
+        color: var(--text-secondary);
+    }
+
+    .download-page {
+        display: none;
+    }
+
+    .download-page.active {
+        display: block;
+    }
+
+    .download-container {
+        max-width: 700px;
+        margin: -2rem auto 3rem;
+        padding: 0 1.5rem;
+        position: relative;
+        z-index: 10;
+    }
+
+    .download-card {
+        background: var(--surface);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-xl);
+        overflow: hidden;
+        border: 1px solid var(--border);
+    }
+
+    .download-preview-section {
+        padding: 2rem;
+        text-align: center;
+        background: linear-gradient(to bottom, #ECFDF5 0%, #D1FAE5 100%);
+    }
+
+    .download-image-wrapper {
+        background: white;
+        border-radius: var(--radius-lg);
+        padding: 1.25rem;
+        margin-bottom: 1.25rem;
+        display: inline-block;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .download-thumbnail {
+        max-width: 100%;
+        max-height: 200px;
+        border-radius: var(--radius-md);
+        object-fit: contain;
+    }
+
+    .download-filename {
+        font-size: 1.125rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        word-break: break-word;
+    }
+
+    .download-size-text {
+        font-size: 0.9375rem;
+        color: var(--text-secondary);
+        margin-bottom: 1.25rem;
+        font-weight: 500;
+    }
+
+    .stats-row {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .stat-badge {
+        background: white;
+        padding: 1rem 1.25rem;
+        border-radius: var(--radius-md);
+        min-width: 110px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        border: 1px solid #6EE7B7;
+    }
+
+    .stat-value {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: var(--secondary);
+        margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+    }
+
+    .download-actions {
+        padding: 2rem;
+    }
+
+    .primary-download-btn {
+        width: 100%;
+        background: linear-gradient(135deg, var(--secondary) 0%, #10B981 100%);
+        color: white;
+        border: none;
+        padding: 1rem;
+        border-radius: var(--radius-md);
+        font-size: 1.0625rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.625rem;
+        margin-bottom: 1.25rem;
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+    }
+
+    .primary-download-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(5, 150, 105, 0.4);
+    }
+
+    .action-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.875rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .action-btn {
+        padding: 0.75rem;
+        border-radius: var(--radius-md);
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary { background: linear-gradient(135deg, #7C3AED 0%, #A855F7 100%); color: white; }
+    .btn-success { background: linear-gradient(135deg, var(--secondary) 0%, #047857 100%); color: white; }
+    .btn-warning { background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); color: white; }
+    .btn-info { background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%); color: white; }
+
+    .action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .privacy-card {
+        background: linear-gradient(to right, #EFF6FF 0%, #DBEAFE 100%);
+        border: 1px solid #93C5FD;
+        border-radius: var(--radius-md);
+        padding: 1.25rem;
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .privacy-icon {
+        width: 36px;
+        height: 36px;
+        background: white;
+        border-radius: var(--radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3B82F6;
+        flex-shrink: 0;
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+    }
+
+    .privacy-text {
+        font-size: 0.875rem;
+        color: #1E40AF;
+        line-height: 1.6;
+    }
+
+    .content-wrapper {
+        max-width: 1100px;
+        margin: 3rem auto;
+        padding: 0 1.5rem;
+    }
+
+    .content-section {
+        background: white;
+        border-radius: var(--radius-xl);
+        padding: 3rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--border);
+    }
+
+    .content-heading {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin-bottom: 1.5rem;
+        line-height: 1.3;
+        position: relative;
+        padding-bottom: 1rem;
+    }
+
+    .content-heading::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 70px;
+        height: 4px;
+        background: linear-gradient(to right, var(--secondary), #10B981);
+        border-radius: 2px;
+    }
+
+    .content-subheading {
+        font-size: 1.375rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 2rem 0 1.25rem;
+    }
+
+    .content-text {
+        color: var(--text-secondary);
+        font-size: 1.0625rem;
+        line-height: 1.8;
+        margin-bottom: 1.25rem;
+    }
+
+    .content-list {
+        color: var(--text-secondary);
+        font-size: 1.0625rem;
+        line-height: 1.8;
+        padding-left: 1.75rem;
+        margin: 1.25rem 0;
+    }
+
+    .content-list li {
+        margin-bottom: 1rem;
+    }
+
+    .content-list li::marker {
+        color: var(--secondary);
+        font-weight: 700;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1.75rem;
+        margin-top: 2rem;
+    }
+
+    .feature-card {
+        background: linear-gradient(to bottom, #FFFFFF 0%, #FAFAFA 100%);
+        border-radius: var(--radius-lg);
+        padding: 2rem;
+        border: 1px solid var(--border);
+        transition: all 0.4s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+        border-color: rgba(5, 150, 105, 0.2);
+    }
+
+    .feature-icon {
+        width: 48px;
+        height: 48px;
+        background: linear-gradient(135deg, var(--secondary) 0%, #10B981 100%);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.25rem;
+        color: white;
+        font-size: 1.25rem;
+        box-shadow: 0 6px 16px rgba(5, 150, 105, 0.3);
+    }
+
+    .feature-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.75rem;
+    }
+
+    .feature-description {
+        color: var(--text-secondary);
+        line-height: 1.7;
+        font-size: 0.9375rem;
+    }
+
+    .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 2rem 0;
+        background: white;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .comparison-table th {
+        background: linear-gradient(135deg, var(--secondary) 0%, #10B981 100%);
+        color: white;
+        padding: 1rem;
+        text-align: left;
+        font-weight: 700;
+        font-size: 0.9375rem;
+    }
+
+    .comparison-table td {
+        padding: 1rem;
+        border-bottom: 1px solid var(--border);
+        color: var(--text-secondary);
+    }
+
+    .comparison-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .comparison-table tr:hover {
+        background: #FAFAFA;
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 2.5rem 1.25rem 2rem;
+        }
+
+        .main-container {
+            padding: 0 1.25rem;
+        }
+
+        .card-section {
+            padding: 1.5rem;
+        }
+
+        .content-section {
+            padding: 2rem 1.5rem;
+        }
+
+        .upload-specs {
+            flex-direction: column;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .preview-container {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .options-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .action-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .features-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+
+<div id="uploadPage">
+    <div class="hero-section">
+        <div class="hero-content">
+            
+            <h1 class="hero-title">Compress Image to 200KB Online </h1>
+            <p class="hero-subtitle">Professional photo compressor to 200KB. Compress JPEG to 200KB, resize image to 200KB with exceptional quality retention.</p>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="upload-card">
+            <div class="card-section">
+                <div class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <span>Select Image to Compress to 200KB</span>
+                </div>
+
+                <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+                    <div class="upload-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <div class="upload-title">Drop your image here or click to browse</div>
+                    <div class="upload-description">Compress image to 200KB with premium quality retention</div>
+                    <button type="button" class="upload-button">
+                        <i class="fas fa-folder-open"></i>
+                        Choose Image File
+                    </button>
+                    <input type="file" id="fileInput" class="file-input" accept="image/*">
+                    
+                    <div class="upload-specs">
+                        <div class="spec-item">
+                            <i class="fas fa-check-circle spec-icon"></i>
+                            <span>All Image Formats</span>
+                        </div>
+                        <div class="spec-item">
+                            <i class="fas fa-check-circle spec-icon"></i>
+                            <span>Max 15MB</span>
+                        </div>
+                        <div class="spec-item">
+                            <i class="fas fa-check-circle spec-icon"></i>
+                            <span>200KB Target</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="preview-section" id="previewSection">
+                    <div class="preview-container">
+                        <img id="previewThumb" class="preview-thumbnail" src="" alt="Preview">
+                        <div class="preview-details">
+                            <div class="preview-filename" id="previewName"></div>
+                            <div class="preview-meta">
+                                <span><i class="fas fa-database"></i> <span id="previewSize"></span></span>
+                                <span><i class="fas fa-expand"></i> <span id="previewDimensions"></span></span>
+                            </div>
+                        </div>
+                        <button type="button" class="remove-button" onclick="clearFile()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-section options-section">
+                <div class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-sliders-h"></i>
+                    </div>
+                    <span>Quality Mode for 200KB Compression</span>
+                </div>
+
+                <div class="options-grid">
+                    <div class="option-card selected" data-quality="premium" onclick="selectOption(this)">
+                        <div class="option-radio"></div>
+                        <div class="option-details">
+                            <div class="option-title">Premium Quality</div>
+                            <div class="option-description">Best for portfolios & presentations</div>
+                        </div>
+                    </div>
+                    <div class="option-card" data-quality="balanced" onclick="selectOption(this)">
+                        <div class="option-radio"></div>
+                        <div class="option-details">
+                            <div class="option-title">Balanced</div>
+                            <div class="option-description">Great quality-size balance</div>
+                        </div>
+                    </div>
+                    <div class="option-card" data-quality="maximum" onclick="selectOption(this)">
+                        <div class="option-radio"></div>
+                        <div class="option-details">
+                            <div class="option-title">Maximum Compression</div>
+                            <div class="option-description">Prioritizes file size</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" id="compressBtn" class="compress-button" onclick="compressImage()" disabled>
+                    <i class="fas fa-compress-arrows-alt"></i>
+                    Compress Image to 200KB
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="loading-overlay" id="loadingScreen">
+    <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <div class="loading-title">Compressing to 200KB...</div>
+        <div class="loading-subtitle">Optimizing your image with premium quality retention</div>
+    </div>
+</div>
+
+<div class="download-page" id="downloadPage">
+    <div class="hero-section">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-check-circle"></i>
+                Compression Complete!
+            </div>
+            <h1 class="hero-title">Your Image is Ready!</h1>
+            <p class="hero-subtitle">Successfully compressed to 200KB with premium quality</p>
+        </div>
+    </div>
+
+    <div class="download-container">
+        <div class="download-card">
+            <div class="download-preview-section">
+                <div class="download-image-wrapper">
+                    <img id="downloadThumb" class="download-thumbnail" src="" alt="Compressed">
+                </div>
+                <div class="download-filename" id="downloadName"></div>
+                <div class="download-size-text" id="downloadSizeText"></div>
+                
+                <div class="stats-row">
+                    <div class="stat-badge">
+                        <div class="stat-value" id="statOriginal">-</div>
+                        <div class="stat-label">Original</div>
+                    </div>
+                    <div class="stat-badge">
+                        <div class="stat-value" id="statFinal">-</div>
+                        <div class="stat-label">Final Size</div>
+                    </div>
+                    <div class="stat-badge">
+                        <div class="stat-value" id="statReduction">-</div>
+                        <div class="stat-label">Reduction</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="download-actions">
+                <button type="button" class="primary-download-btn" onclick="downloadImage()">
+                    <i class="fas fa-download"></i>
+                    Download Compressed Image (200KB)
+                </button>
+
+                <div class="action-grid">
+                    <button type="button" class="action-btn btn-success" onclick="compressAnother()">
+                        <i class="fas fa-redo"></i>
+                        Compress Another
+                    </button>
+                    <button type="button" class="action-btn btn-primary" onclick="window.location.href='/resize-image-to-50kb/'">
+                        <i class="fas fa-compress"></i>
+                        Compress to 50KB
+                    </button>
+                    <button type="button" class="action-btn btn-warning" onclick="window.location.href='/resize-image-to-100kb/'">
+                        <i class="fas fa-expand-alt"></i>
+                        Compress to 100KB
+                    </button>
+                    <button type="button" class="action-btn btn-info" onclick="window.location.href='/resize-image-to-20kb/'">
+                        <i class="fas fa-compress-alt"></i>
+                        Compress to 20KB
+                    </button>
+                </div>
+
+                <div class="privacy-card">
+                    <div class="privacy-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <p class="privacy-text">
+                        <strong>Your Privacy Matters:</strong> This image will be automatically deleted from our servers within 30 minutes. We never store, analyze, or share your photos.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content-wrapper">
+    <div class="content-section">
+        <h2 class="content-heading">Compress Image to 200KB - Premium Photo Compressor</h2>
+        
+        <p class="content-text">
+            Our professional <strong>image compressor to 200KB</strong> tool delivers exceptional quality retention while precisely hitting your target file size. Whether you need to <strong>compress JPEG to 200KB</strong>, <strong>resize image to 200KB</strong>, or use our <strong>photo compressor to 200KB</strong> for professional work, our tool ensures your images maintain their visual integrity.
+        </p>
+
+        <p class="content-text">
+            The 200KB file size is ideal for high-quality presentations, professional portfolios, premium website content, and document attachments where you need excellent image quality without excessive file sizes. Our advanced compression algorithm analyzes your image and applies optimal settings to achieve 200KB while preserving crucial visual details.
+        </p>
+
+        <h3 class="content-subheading">Why Compress Images to 200KB?</h3>
+        
+        <ul class="content-list">
+            <li><strong>Professional Presentations:</strong> Perfect file size for PowerPoint, Keynote, and Google Slides where quality matters</li>
+            <li><strong>Portfolio Images:</strong> Ideal for online portfolios, showcasing work samples with excellent quality</li>
+            <li><strong>Document Attachments:</strong> Attach multiple high-quality images to emails and documents</li>
+            <li><strong>Premium Website Content:</strong> Fast-loading yet high-quality images for professional websites</li>
+            <li><strong>Print Materials:</strong> Suitable for digital proofs and review copies before final print</li>
+            <li><strong>Client Presentations:</strong> Share professional-quality previews with clients efficiently</li>
+        </ul>
+
+        <h3 class="content-subheading">How to Compress Image to 200KB</h3>
+        
+        <ul class="content-list">
+            <li><strong>Upload Your Image:</strong> Click or drag to upload any image format (JPG, PNG, WEBP, etc.)</li>
+            <li><strong>Select Quality Mode:</strong> Choose from Premium, Balanced, or Maximum Compression</li>
+            <li><strong>Automatic Processing:</strong> Our tool automatically compresses your image to 200KB</li>
+            <li><strong>Download Result:</strong> Get your professionally compressed 200KB image instantly</li>
+        </ul>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <div class="feature-title">Premium Quality at 200KB</div>
+                <div class="feature-description">Advanced algorithms ensure exceptional visual quality while precisely achieving 200KB file size</div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-tachometer-alt"></i>
+                </div>
+                <div class="feature-title">Lightning Fast Processing</div>
+                <div class="feature-description">Compress your images to 200KB in seconds with our optimized compression engine</div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-check"></i>
+                </div>
+                <div class="feature-title">100% Secure & Private</div>
+                <div class="feature-description">Your images are processed securely and automatically deleted within 30 minutes</div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-infinity"></i>
+                </div>
+                <div class="feature-title">Unlimited Compressions</div>
+                <div class="feature-description">Compress as many images to 200KB as you need - completely free, no limits</div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-file-image"></i>
+                </div>
+                <div class="feature-title">All Image Formats</div>
+                <div class="feature-description">Supports JPG, PNG, WEBP, GIF, BMP and converts to optimized JPEG at 200KB</div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="feature-title">Works Everywhere</div>
+                <div class="feature-description">Use on desktop, laptop, tablet, or mobile - no installation required</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <h2 class="content-heading">Advanced Features of Our 200KB Photo Compressor</h2>
+        
+        <h3 class="content-subheading">Intelligent Compression Technology</h3>
+        <p class="content-text">
+            Our <strong>photo compressor to 200KB</strong> uses sophisticated algorithms that analyze image content, identify important visual elements, and apply selective compression. This ensures that faces, text, and key details remain sharp while less critical areas are compressed more aggressively.
+        </p>
+
+        <h3 class="content-subheading">Multiple Quality Modes</h3>
+        <p class="content-text">
+            Choose from three compression modes optimized for different needs:
+        </p>
+        <ul class="content-list">
+            <li><strong>Premium Quality:</strong> Maximum quality retention at 200KB - best for portfolios, presentations, and professional work</li>
+            <li><strong>Balanced:</strong> Optimal balance between quality and compression - perfect for most use cases</li>
+            <li><strong>Maximum Compression:</strong> Prioritizes achieving exactly 200KB while maintaining acceptable quality</li>
+        </ul>
+
+        <h3 class="content-subheading">Automatic Image Optimization</h3>
+        <p class="content-text">
+            When you <strong>compress JPEG to 200KB</strong> or <strong>resize image to 200KB</strong>, our tool automatically:
+        </p>
+        <ul class="content-list">
+            <li>Corrects image orientation based on EXIF data</li>
+            <li>Adjusts compression quality iteratively to hit 200KB target</li>
+            <li>Optimizes color profiles for web and print viewing</li>
+            <li>Removes unnecessary metadata while preserving copyright info (optional)</li>
+            <li>Applies smart dimension reduction if needed for quality preservation</li>
+        </ul>
+    </div>
+
+    <div class="content-section">
+        <h2 class="content-heading">Common Uses for 200KB Image Compression</h2>
+        
+        <h3 class="content-subheading">Professional & Business Applications</h3>
+        <ul class="content-list">
+            <li><strong>Business Presentations:</strong> High-quality slides that load quickly and look professional</li>
+            <li><strong>Marketing Materials:</strong> Email campaigns, digital brochures, and promotional content</li>
+            <li><strong>Client Deliverables:</strong> Share draft designs and concepts with clients efficiently</li>
+            <li><strong>Product Catalogs:</strong> Display multiple product images without large file sizes</li>
+            <li><strong>Annual Reports:</strong> Include quality images in digital reports and documents</li>
+        </ul>
+
+        <h3 class="content-subheading">Creative & Portfolio Work</h3>
+        <ul class="content-list">
+            <li><strong>Online Portfolios:</strong> Showcase your work with fast-loading, high-quality images</li>
+            <li><strong>Photography Previews:</strong> Share client galleries and proofs efficiently</li>
+            <li><strong>Design Mockups:</strong> Present design concepts with excellent visual fidelity</li>
+            <li><strong>Art Submissions:</strong> Meet submission requirements while maintaining quality</li>
+        </ul>
+
+        <h3 class="content-subheading">Educational & Documentation</h3>
+        <ul class="content-list">
+            <li><strong>Educational Materials:</strong> Create visually rich learning content</li>
+            <li><strong>Research Papers:</strong> Include quality figures and images in academic work</li>
+            <li><strong>Technical Documentation:</strong> Clear diagrams and screenshots at manageable sizes</li>
+            <li><strong>Training Materials:</strong> Comprehensive guides with quality visuals</li>
+        </ul>
+    </div>
+
+    <div class="content-section">
+        <h2 class="content-heading">Tips for Best Results at 200KB</h2>
+        
+        <h3 class="content-subheading">Image Selection Guidelines</h3>
+        <ul class="content-list">
+            <li><strong>Start with High Quality:</strong> Better source images yield better compressed results</li>
+            <li><strong>Appropriate Resolution:</strong> Images at 1920×1080 or lower work best for 200KB compression</li>
+            <li><strong>Clean Backgrounds:</strong> Simple backgrounds compress more efficiently than complex textures</li>
+            <li><strong>Good Lighting:</strong> Well-lit images maintain quality better during compression</li>
+        </ul>
+
+        <h3 class="content-subheading">Quality Mode Selection</h3>
+        <ul class="content-list">
+            <li><strong>Use Premium Mode for:</strong> Portfolio pieces, client presentations, important documents</li>
+            <li><strong>Use Balanced Mode for:</strong> General website use, social media, most business needs</li>
+            <li><strong>Use Maximum Mode for:</strong> When file size is critical and quality can be slightly compromised</li>
+        </ul>
+
+        <h3 class="content-subheading">Post-Compression Best Practices</h3>
+        <ul class="content-list">
+            <li>Preview the compressed image before using it in production</li>
+            <li>Keep original files as backups for future needs</li>
+            <li>Use appropriate image formats for your specific platform or purpose</li>
+            <li>Consider the viewing context - screen vs. print, size of display, etc.</li>
+        </ul>
+    </div>
+
+    <div class="content-section">
+        <h2 class="content-heading">Frequently Asked Questions</h2>
+        
+        <h3 class="content-subheading">What image formats can I compress to 200KB?</h3>
+        <p class="content-text">
+            Our tool accepts all common image formats including JPG/JPEG, PNG, WEBP, GIF, and BMP. The output is always optimized JPEG format at 200KB, which provides the best balance of quality and compatibility.
+        </p>
+
+        <h3 class="content-subheading">Will my 200KB compressed image lose quality?</h3>
+        <p class="content-text">
+            Some quality reduction is necessary to achieve 200KB, but our advanced algorithms minimize visible loss. The Premium quality mode retains excellent visual fidelity, making it suitable for professional use. Most users can't distinguish compressed 200KB images from originals in normal viewing conditions.
+        </p>
+
+        <h3 class="content-subheading">Can I compress multiple images to 200KB at once?</h3>
+        <p class="content-text">
+            Currently, our tool processes one image at a time for optimal quality control. However, you can compress unlimited images sequentially with no restrictions or fees.
+        </p>
+
+        <h3 class="content-subheading">Is it safe to use your photo compressor to 200KB?</h3>
+        <p class="content-text">
+            Absolutely! All image processing happens securely on our servers. Your images are automatically deleted within 30 minutes, and we never store, analyze, or share your photos. Your privacy is our top priority.
+        </p>
+
+        <h3 class="content-subheading">What's the maximum file size I can upload?</h3>
+        <p class="content-text">
+            You can upload images up to 15MB. This accommodates high-resolution photos and large image files while maintaining fast processing speeds.
+        </p>
+
+        <h3 class="content-subheading">Can I use compressed images commercially?</h3>
+        <p class="content-text">
+            Yes! The compressed images are yours to use however you need - personal, commercial, client work, or any other purpose. We don't add watermarks or impose any usage restrictions.
+        </p>
+
+        <h3 class="content-subheading">How does 200KB compare to other file sizes?</h3>
+        <p class="content-text">
+            200KB offers a sweet spot for many professional applications. It's larger than 50KB or 100KB, allowing for higher resolution and better quality, but significantly smaller than uncompressed images which can be 2-10MB or more. This makes it ideal for situations where quality matters but you need reasonable file sizes.
+        </p>
+
+        <h3 class="content-subheading">Why should I use 200KB specifically?</h3>
+        <p class="content-text">
+            200KB is commonly required for:
+        </p>
+        <ul class="content-list">
+            <li>Professional presentation software where quality is important</li>
+            <li>Email attachments with multiple images</li>
+            <li>Premium website content that needs to look professional</li>
+            <li>Digital portfolios and client galleries</li>
+            <li>Document management systems with size restrictions</li>
+            <li>Content management systems with optimal image size recommendations</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+let selectedFile = null;
+let processedBlob = null;
+let processedFilename = null;
+let selectedQuality = 'premium';
+
+const fileInput = document.getElementById('fileInput');
+const uploadZone = document.getElementById('uploadZone');
+
+fileInput.addEventListener('change', handleFileSelect);
+
+uploadZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadZone.classList.add('drag-active');
+});
+
+uploadZone.addEventListener('dragleave', () => {
+    uploadZone.classList.remove('drag-active');
+});
+
+uploadZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadZone.classList.remove('drag-active');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+        fileInput.files = e.dataTransfer.files;
+        handleFileSelect({ target: { files: [file] } });
+    }
+});
+
+function handleFileSelect(e) {
+    const file = e.target.files[0];
+    if (!file || !file.type.startsWith('image/')) {
+        alert('Please select a valid image file');
+        return;
+    }
+    
+    selectedFile = file;
+    
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+            document.getElementById('previewThumb').src = e.target.result;
+            document.getElementById('previewName').textContent = file.name;
+            document.getElementById('previewSize').textContent = formatSize(file.size);
+            document.getElementById('previewDimensions').textContent = `${img.width} × ${img.height}px`;
+            
+            document.getElementById('uploadZone').style.display = 'none';
+            document.getElementById('previewSection').classList.add('active');
+            document.getElementById('compressBtn').disabled = false;
+        };
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+function clearFile() {
+    selectedFile = null;
+    fileInput.value = '';
+    document.getElementById('uploadZone').style.display = 'block';
+    document.getElementById('previewSection').classList.remove('active');
+    document.getElementById('compressBtn').disabled = true;
+}
+
+function selectOption(element) {
+    document.querySelectorAll('.option-card').forEach(card => {
+        card.classList.remove('selected');
+    });
+    element.classList.add('selected');
+    selectedQuality = element.getAttribute('data-quality');
+}
+
+function compressImage() {
+    if (!selectedFile) {
+        alert('Please select an image first');
+        return;
+    }
+    
+    document.getElementById('uploadPage').style.display = 'none';
+    document.getElementById('loadingScreen').classList.add('active');
+    
+    const formData = new FormData();
+    formData.append('image_file', selectedFile);
+    formData.append('target_size_kb', '200');
+    formData.append('auto_rotate', 'on');
+    formData.append('preserve_exif', 'off');
+    formData.append('quality_mode', selectedQuality);
+    
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+    fetch('/compress-to-200kb/', {
+        method: 'POST',
+        body: formData,
+        headers: { 'X-CSRFToken': csrftoken }
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(data => {
+                throw new Error(data.error || 'Compression failed. Please try again.');
+            }).catch(() => {
+                throw new Error('Compression failed. Please try again.');
+            });
+        }
+        
+        const contentDisposition = response.headers.get('Content-Disposition');
+        let filename = selectedFile.name.replace(/\.[^/.]+$/, '') + '_compressed_200kb.jpg';
+        if (contentDisposition) {
+            const match = contentDisposition.match(/filename="(.+)"/);
+            if (match) filename = match[1];
+        }
+        
+        const originalSize = response.headers.get('X-Original-Size');
+        const compressedSize = response.headers.get('X-Compressed-Size');
+        
+        return response.blob().then(blob => ({ 
+            blob, 
+            filename,
+            originalSize: parseInt(originalSize) || selectedFile.size,
+            compressedSize: parseInt(compressedSize) || blob.size
+        }));
+    })
+    .then(({ blob, filename, originalSize, compressedSize }) => {
+        processedBlob = blob;
+        processedFilename = filename;
+        showDownloadPage(blob, filename, originalSize, compressedSize);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error: ' + error.message);
+        document.getElementById('loadingScreen').classList.remove('active');
+        document.getElementById('uploadPage').style.display = 'block';
+    });
+}
+
+function showDownloadPage(blob, filename, originalSize, compressedSize) {
+    document.getElementById('loadingScreen').classList.remove('active');
+    
+    const url = URL.createObjectURL(blob);
+    document.getElementById('downloadThumb').src = url;
+    document.getElementById('downloadName').textContent = filename;
+    document.getElementById('downloadSizeText').textContent = 'File size: ' + formatSize(blob.size);
+    
+    document.getElementById('statOriginal').textContent = formatSize(originalSize || selectedFile.size);
+    document.getElementById('statFinal').textContent = formatSize(compressedSize || blob.size);
+    
+    const actualOriginal = originalSize || selectedFile.size;
+    const actualCompressed = compressedSize || blob.size;
+    const reduction = Math.round(((actualOriginal - actualCompressed) / actualOriginal) * 100);
+    document.getElementById('statReduction').textContent = Math.max(0, reduction) + '%';
+    
+    document.getElementById('downloadPage').classList.add('active');
+    window.history.pushState({}, '', window.location.pathname + '#download');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function downloadImage() {
+    if (!processedBlob) {
+        alert('No image to download');
+        return;
+    }
+    
+    const url = URL.createObjectURL(processedBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = processedFilename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+function compressAnother() {
+    clearFile();
+    processedBlob = null;
+    processedFilename = null;
+    selectedQuality = 'premium';
+    
+    document.querySelectorAll('.option-card').forEach(card => {
+        card.classList.remove('selected');
+    });
+    document.querySelector('[data-quality="premium"]').classList.add('selected');
+    
+    document.getElementById('downloadPage').classList.remove('active');
+    document.getElementById('uploadPage').style.display = 'block';
+    window.history.pushState({}, '', window.location.pathname);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function formatSize(bytes) {
+    if (!bytes || bytes < 0) return '0 B';
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+}
+
+window.addEventListener('popstate', () => {
+    if (window.location.hash.includes('download')) {
+        if (processedBlob) {
+            document.getElementById('uploadPage').style.display = 'none';
+            document.getElementById('downloadPage').classList.add('active');
+        }
+    } else {
+        document.getElementById('downloadPage').classList.remove('active');
+        document.getElementById('uploadPage').style.display = 'block';
+    }
+});
+</script>
+{% endblock %}

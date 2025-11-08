@@ -1,0 +1,1537 @@
+{% extends 'image_app/base.html' %}
+{% load static %}
+
+{% block title %}Compress Image to 50KB Online Free | Photo Compressor 50KB | JPEG to 50KB{% endblock %}
+{% block description %}Compress image to 50KB, compress JPEG to 50KB, and photo resize 50KB online free. Professional photo compressor to 50KB for job applications, resumes, and uploads. Instant results!{% endblock %}
+{% block keywords %}compress image to 50kb, compress jpeg to 50kb, photo compressor to 50kb, photo resize 50 kb, reduce image to 50kb, compress photo to 50kb, 50kb image compressor{% endblock %}
+{% block canonical %}https://resizeimages.tools/compress-to-50kb/{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --primary: #7C3AED;
+        --primary-hover: #6D28D9;
+        --primary-light: #F5F3FF;
+        --secondary: #059669;
+        --secondary-hover: #047857;
+        --accent: #DC2626;
+        --background: #F9FAFB;
+        --surface: #FFFFFF;
+        --text-primary: #111827;
+        --text-secondary: #6B7280;
+        --border: #E5E7EB;
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+        --radius-sm: 6px;
+        --radius-md: 10px;
+        --radius-lg: 14px;
+        --radius-xl: 18px;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%);
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        color: var(--text-primary);
+        line-height: 1.6;
+        min-height: 100vh;
+    }
+
+    .hero-section {
+        background: linear-gradient(135deg, #059669 0%, #10B981 50%, #34D399 100%);
+        color: white;
+        padding: 3rem 1.5rem 2.5rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
+        pointer-events: none;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 750px;
+        margin: 0 auto;
+    }
+
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.875rem;
+        margin-bottom: 1.25rem;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        font-weight: 600;
+    }
+
+    .hero-title {
+        font-size: clamp(2rem, 5vw, 2.75rem);
+        font-weight: 900;
+        margin-bottom: 0.75rem;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+    }
+
+    .hero-subtitle {
+        font-size: clamp(1rem, 2.5vw, 1.125rem);
+        opacity: 0.95;
+        line-height: 1.6;
+        font-weight: 400;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .main-container {
+        max-width: 850px;
+        margin: -2rem auto 3rem;
+        padding: 0 1.5rem;
+        position: relative;
+        z-index: 10;
+    }
+
+    .upload-card {
+        background: var(--surface);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-xl);
+        overflow: hidden;
+        border: 1px solid var(--border);
+    }
+
+    .card-section {
+        padding: 2rem;
+    }
+
+    .section-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .section-icon {
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(135deg, var(--secondary) 0%, #10B981 100%);
+        color: white;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.875rem;
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+    }
+
+    .upload-zone {
+        background: linear-gradient(135deg, #FAFAFB 0%, #F3F4F6 100%);
+        border: 2px dashed var(--border);
+        border-radius: var(--radius-lg);
+        padding: 2.5rem 2rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .upload-zone:hover,
+    .upload-zone.drag-active {
+        border-color: var(--secondary);
+        background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(5, 150, 105, 0.15);
+    }
+
+    .upload-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 1.25rem;
+        background: linear-gradient(135deg, var(--secondary) 0%, #10B981 100%);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.75rem;
+        box-shadow: 0 8px 24px rgba(5, 150, 105, 0.4);
+        transition: all 0.3s ease;
+    }
+
+    .upload-zone:hover .upload-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .upload-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+    }
+
+    .upload-description {
+        color: var(--text-secondary);
+        font-size: 0.9375rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .file-input {
+        display: none;
+    }
+
+    .upload-button {
+        background: linear-gradient(135deg, var(--secondary) 0%, #10B981 100%);
+        color: white;
+        border: none;
+        padding: 0.75rem 2rem;
+        border-radius: var(--radius-md);
+        font-size: 0.9375rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        pointer-events: none;
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+    }
+
+    .upload-specs {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 1.25rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--border);
+        font-size: 0.875rem;
+    }
+
+    .spec-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    .spec-icon {
+        color: var(--secondary);
+    }
+
+    .preview-section {
+        display: none;
+        padding: 1.25rem;
+        background: linear-gradient(to right, #ECFDF5 0%, #D1FAE5 100%);
+        border-radius: var(--radius-lg);
+        border: 1px solid #6EE7B7;
+        margin-top: 1rem;
+    }
+
+    .preview-section.active {
+        display: block;
+        animation: slideIn 0.4s ease;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .preview-container {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+    }
+
+    .preview-thumbnail {
+        width: 80px;
+        height: 80px;
+        border-radius: var(--radius-md);
+        object-fit: cover;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border: 3px solid white;
+    }
+
+    .preview-details {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .preview-filename {
+        font-size: 0.9375rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.375rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .preview-meta {
+        display: flex;
+        gap: 1rem;
+        font-size: 0.8125rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    .remove-button {
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        color: white;
+        border: none;
+        width: 36px;
+        height: 36px;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+
+    .remove-button:hover {
+        transform: scale(1.1);
+    }
+
+    .options-section {
+        border-top: 1px solid var(--border);
+        background: #FAFAFA;
+    }
+
+    .options-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .option-card {
+        background: white;
+        border: 2px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .option-card:hover {
+        border-color: var(--secondary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.15);
+    }
+
+    .option-card.selected {
+        border-color: var(--secondary);
+        background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    }
+
+    .option-radio {
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--border);
+        border-radius: 50%;
+        position: relative;
+        flex-shrink: 0;
+        transition: all 0.3s ease;
+    }
+
+    .option-card.selected .option-radio {
+        border-color: var(--secondary);
+        background: var(--secondary);
+    }
+
+    .option-card.selected .option-radio::after {
+        content: '✓';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 0.75rem;
+        font-weight: 700;
+    }
+
+    .option-details {
+        flex: 1;
+    }
+
+    .option-title {
+        font-size: 0.9375rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.25rem;
+    }
+
+    .option-description {
+        font-size: 0.8125rem;
+        color: var(--text-secondary);
+    }
+
+    .compress-button {
+        width: 100%;
+        background: linear-gradient(135deg, var(--secondary) 0%, #047857 100%);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: var(--radius-md);
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.625rem;
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        margin-top: 1.5rem;
+    }
+
+    .compress-button:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(5, 150, 105, 0.4);
+    }
+
+    .compress-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .loading-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.98);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(10px);
+    }
+
+    .loading-overlay.active {
+        display: flex;
+    }
+
+    .loading-content {
+        text-align: center;
+        max-width: 320px;
+    }
+
+    .loading-spinner {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 1.5rem;
+        border: 5px solid #E5E7EB;
+        border-top-color: var(--secondary);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    .loading-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .loading-subtitle {
+        font-size: 1rem;
+        color: var(--text-secondary);
+    }
+
+    .download-page {
+        display: none;
+    }
+
+    .download-page.active {
+        display: block;
+    }
+
+    .download-container {
+        max-width: 700px;
+        margin: -2rem auto 3rem;
+        padding: 0 1.5rem;
+        position: relative;
+        z-index: 10;
+    }
+
+    .download-card {
+        background: var(--surface);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-xl);
+        overflow: hidden;
+        border: 1px solid var(--border);
+    }
+
+    .download-preview-section {
+        padding: 2rem;
+        text-align: center;
+        background: linear-gradient(to bottom, #ECFDF5 0%, #D1FAE5 100%);
+    }
+
+    .download-image-wrapper {
+        background: white;
+        border-radius: var(--radius-lg);
+        padding: 1.25rem;
+        margin-bottom: 1.25rem;
+        display: inline-block;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .download-thumbnail {
+        max-width: 100%;
+        max-height: 200px;
+        border-radius: var(--radius-md);
+        object-fit: contain;
+    }
+
+    .download-filename {
+        font-size: 1.125rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        word-break: break-word;
+    }
+
+    .download-size-text {
+        font-size: 0.9375rem;
+        color: var(--text-secondary);
+        margin-bottom: 1.25rem;
+        font-weight: 500;
+    }
+
+    .stats-row {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .stat-badge {
+        background: white;
+        padding: 1rem 1.25rem;
+        border-radius: var(--radius-md);
+        min-width: 110px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        border: 1px solid #6EE7B7;
+    }
+
+    .stat-value {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: var(--secondary);
+        margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+    }
+
+    .download-actions {
+        padding: 2rem;
+    }
+
+    .primary-download-btn {
+        width: 100%;
+        background: linear-gradient(135deg, var(--secondary) 0%, #10B981 100%);
+        color: white;
+        border: none;
+        padding: 1rem;
+        border-radius: var(--radius-md);
+        font-size: 1.0625rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.625rem;
+        margin-bottom: 1.25rem;
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+    }
+
+    .primary-download-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(5, 150, 105, 0.4);
+    }
+
+    .action-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.875rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .action-btn {
+        padding: 0.75rem;
+        border-radius: var(--radius-md);
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary { background: linear-gradient(135deg, #7C3AED 0%, #A855F7 100%); color: white; }
+    .btn-success { background: linear-gradient(135deg, var(--secondary) 0%, #047857 100%); color: white; }
+    .btn-warning { background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); color: white; }
+    .btn-info { background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%); color: white; }
+
+    .action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .privacy-card {
+        background: linear-gradient(to right, #EFF6FF 0%, #DBEAFE 100%);
+        border: 1px solid #93C5FD;
+        border-radius: var(--radius-md);
+        padding: 1.25rem;
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .privacy-icon {
+        width: 36px;
+        height: 36px;
+        background: white;
+        border-radius: var(--radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3B82F6;
+        flex-shrink: 0;
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+    }
+
+    .privacy-text {
+        font-size: 0.875rem;
+        color: #1E40AF;
+        line-height: 1.6;
+    }
+
+    .content-wrapper {
+        max-width: 1100px;
+        margin: 3rem auto;
+        padding: 0 1.5rem;
+    }
+
+    .content-section {
+        background: white;
+        border-radius: var(--radius-xl);
+        padding: 3rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--border);
+    }
+
+    .content-heading {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin-bottom: 1.5rem;
+        line-height: 1.3;
+        position: relative;
+        padding-bottom: 1rem;
+    }
+
+    .content-heading::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 70px;
+        height: 4px;
+        background: linear-gradient(to right, var(--secondary), #10B981);
+        border-radius: 2px;
+    }
+
+    .content-subheading {
+        font-size: 1.375rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 2rem 0 1.25rem;
+    }
+
+    .content-text {
+        color: var(--text-secondary);
+        font-size: 1.0625rem;
+        line-height: 1.8;
+        margin-bottom: 1.25rem;
+    }
+
+    .content-list {
+        color: var(--text-secondary);
+        font-size: 1.0625rem;
+        line-height: 1.8;
+        padding-left: 1.75rem;
+        margin: 1.25rem 0;
+    }
+
+    .content-list li {
+        margin-bottom: 1rem;
+    }
+
+    .content-list li::marker {
+        color: var(--secondary);
+        font-weight: 700;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1.75rem;
+        margin-top: 2rem;
+    }
+
+    .feature-card {
+        background: linear-gradient(to bottom, #FFFFFF 0%, #FAFAFA 100%);
+        border-radius: var(--radius-lg);
+        padding: 2rem;
+        border: 1px solid var(--border);
+        transition: all 0.4s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+        border-color: rgba(5, 150, 105, 0.2);
+    }
+
+    .feature-icon {
+        width: 48px;
+        height: 48px;
+        background: linear-gradient(135deg, var(--secondary) 0%, #10B981 100%);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.25rem;
+        color: white;
+        font-size: 1.25rem;
+        box-shadow: 0 6px 16px rgba(5, 150, 105, 0.3);
+    }
+
+    .feature-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.75rem;
+    }
+
+    .feature-description {
+        color: var(--text-secondary);
+        line-height: 1.7;
+        font-size: 0.9375rem;
+    }
+
+    .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 2rem 0;
+        background: white;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .comparison-table th {
+        background: linear-gradient(135deg, var(--secondary) 0%, #10B981 100%);
+        color: white;
+        padding: 1rem;
+        text-align: left;
+        font-weight: 700;
+        font-size: 0.9375rem;
+    }
+
+    .comparison-table td {
+        padding: 1rem;
+        border-bottom: 1px solid var(--border);
+        color: var(--text-secondary);
+    }
+
+    .comparison-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .comparison-table tr:hover {
+        background: #FAFAFA;
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 2.5rem 1rem 2rem;
+        }
+
+        .main-container,
+        .download-container {
+            margin-top: -1.5rem;
+        }
+
+        .card-section {
+            padding: 1.5rem;
+        }
+
+        .upload-zone {
+            padding: 2rem 1.25rem;
+        }
+
+        .options-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .action-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .content-section {
+            padding: 2rem 1.5rem;
+        }
+
+        .features-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .preview-container {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .comparison-table {
+            font-size: 0.875rem;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 0.75rem 0.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<form style="display: none;">
+{% csrf_token %}
+</form>
+
+<div class="page-wrapper">
+    <!-- Upload Page -->
+    <div id="uploadPage">
+        <section class="hero-section">
+            <div class="hero-content">
+               
+                <h1 class="hero-title">Compress Images to 50KB</h1>
+                <p class="hero-subtitle">
+                    Intelligent image compression with quality optimization - perfect for professional applications and web uploads
+                </p>
+            </div>
+        </section>
+
+        <div class="main-container">
+            <div class="upload-card">
+                <div class="card-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </span>
+                        Upload Your Image
+                    </h2>
+
+                    <div class="upload-zone" id="uploadZone">
+                        <input type="file" id="fileInput" class="file-input" accept="image/*">
+                        <label for="fileInput" style="cursor: pointer; width: 100%;">
+                            <div class="upload-icon">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <h3 class="upload-title">Drop image or click to browse</h3>
+                            <p class="upload-description">
+                                JPEG, PNG, WebP, HEIC supported (max 10MB)
+                            </p>
+                            <button type="button" class="upload-button" onclick="event.preventDefault();">
+                                Select Image
+                            </button>
+                            <div class="upload-specs">
+                                <div class="spec-item">
+                                    <i class="fas fa-check-circle spec-icon"></i>
+                                    <span>Fast Processing</span>
+                                </div>
+                                <div class="spec-item">
+                                    <i class="fas fa-check-circle spec-icon"></i>
+                                    <span>No Registration</span>
+                                </div>
+                                <div class="spec-item">
+                                    <i class="fas fa-check-circle spec-icon"></i>
+                                    <span>100% Free</span>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="preview-section" id="previewSection">
+                        <div class="preview-container">
+                            <img id="previewThumb" class="preview-thumbnail" alt="Preview">
+                            <div class="preview-details">
+                                <div class="preview-filename" id="previewName"></div>
+                                <div class="preview-meta">
+                                    <span><i class="fas fa-file-alt"></i> <span id="previewSize"></span></span>
+                                    <span><i class="fas fa-expand-alt"></i> <span id="previewDimensions"></span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="remove-button" onclick="clearFile()" title="Remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-section options-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">
+                            <i class="fas fa-sliders-h"></i>
+                        </span>
+                        Compression Options
+                    </h2>
+
+                    <div class="options-grid">
+                        <div class="option-card selected" data-quality="high" onclick="selectOption(this)">
+                            <div class="option-radio"></div>
+                            <div class="option-details">
+                                <div class="option-title">High Quality</div>
+                                <div class="option-description">Best visual quality</div>
+                            </div>
+                        </div>
+                        <div class="option-card" data-quality="balanced" onclick="selectOption(this)">
+                            <div class="option-radio"></div>
+                            <div class="option-details">
+                                <div class="option-title">Balanced</div>
+                                <div class="option-description">Quality + Size balance</div>
+                            </div>
+                        </div>
+                        <div class="option-card" data-quality="maximum" onclick="selectOption(this)">
+                            <div class="option-radio"></div>
+                            <div class="option-details">
+                                <div class="option-title">Maximum Compression</div>
+                                <div class="option-description">Smallest file size</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="compress-button" id="compressBtn" onclick="compressImage()" disabled>
+                        <i class="fas fa-compress-alt"></i>
+                        Compress to 50KB
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Sections -->
+        <div class="content-wrapper">
+            <div class="content-section">
+                <h2 class="content-heading">Why Compress Images to 50KB?</h2>
+                <p class="content-text">
+                    Compressing images to 50KB offers the perfect balance between file size and quality for professional applications. Unlike basic resizing that simply changes dimensions, smart compression analyzes your image content and applies intelligent optimization techniques to achieve the exact file size while maintaining visual clarity.
+                </p>
+                <p class="content-text">
+                    This approach is particularly valuable when you need to meet specific file size requirements for job portals, application forms, or upload systems that enforce strict limits. Our compression algorithm dynamically adjusts both quality settings and dimensions to hit your target precisely.
+                </p>
+
+                <h3 class="content-subheading">Key Benefits of 50KB Compression</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Faster Upload Times</h3>
+                        <p class="feature-description">
+                            50KB files upload 20-40x faster than original images, crucial for slow connections or mobile networks.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-check-double"></i>
+                        </div>
+                        <h3 class="feature-title">Universal Compatibility</h3>
+                        <p class="feature-description">
+                            Meet requirements for virtually all job portals, professional platforms, and government applications.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Quality Preservation</h3>
+                        <p class="feature-description">
+                            Smart algorithms maintain facial features and important details while reducing file size significantly.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h3 class="feature-title">Reduced Storage</h3>
+                        <p class="feature-description">
+                            Save disk space and bandwidth costs - ideal for websites handling thousands of user uploads.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="content-heading">How Smart Compression Works</h2>
+                <p class="content-text">
+                    Our intelligent compression system uses a multi-step optimization process to achieve exactly 50KB while preserving maximum quality:
+                </p>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 class="feature-title">1. Content Analysis</h3>
+                        <p class="feature-description">
+                            Algorithm analyzes image complexity, color depth, and content type to determine optimal compression strategy.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </div>
+                        <h3 class="feature-title">2. Dimension Optimization</h3>
+                        <p class="feature-description">
+                            Calculates ideal pixel dimensions based on original aspect ratio and target file size requirements.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-adjust"></i>
+                        </div>
+                        <h3 class="feature-title">3. Quality Calibration</h3>
+                        <p class="feature-description">
+                            Uses binary search algorithm to find perfect quality setting that hits 50KB target within 5% tolerance.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-magic"></i>
+                        </div>
+                        <h3 class="feature-title">4. Final Optimization</h3>
+                        <p class="feature-description">
+                            Applies format-specific optimizations like JPEG progressive encoding and metadata stripping.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="content-heading">Compression vs Resizing: What's the Difference?</h2>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Compression</th>
+                            <th>Basic Resizing</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Primary Method</strong></td>
+                            <td>Reduces quality + dimensions intelligently</td>
+                            <td>Only changes pixel dimensions</td>
+                        </tr>
+                        <tr>
+                            <td><strong>File Size Control</strong></td>
+                            <td>Precise targeting (exactly 50KB)</td>
+                            <td>Unpredictable final size</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Quality Management</strong></td>
+                            <td>Adaptive quality optimization</td>
+                            <td>Fixed quality, may be too large</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Best For</strong></td>
+                            <td>Meeting strict file size limits</td>
+                            <td>Changing display dimensions</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Algorithm</strong></td>
+                            <td>Multi-pass iterative optimization</td>
+                            <td>Single-pass dimension scaling</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Result Consistency</strong></td>
+                            <td>Always hits target size</td>
+                            <td>Size varies by content</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p class="content-text">
+                    <strong>When to use compression:</strong> When you have specific file size requirements (job applications, form uploads, system limits).
+                </p>
+                <p class="content-text">
+                    <strong>When to use resizing:</strong> When you need specific pixel dimensions (profile pictures, thumbnails, display requirements).
+                </p>
+            </div>
+
+            <div class="content-section">
+                <h2 class="content-heading">Common 50KB Compression Use Cases</h2>
+                
+                <h3 class="content-subheading">Professional & Career</h3>
+                <ul class="content-list">
+                    <li><strong>Job Application Portals:</strong> Corporate HR systems and ATS platforms often limit resume photos and profile images to 50KB for efficient database management</li>
+                    <li><strong>Freelance Platforms:</strong> Upwork, Fiverr, and Freelancer profiles with 50KB photo limits for fast page loading</li>
+                    <li><strong>Professional Certifications:</strong> PMP, CPA, CFA, and other professional credential applications requiring compact photo files</li>
+                    <li><strong>LinkedIn Optimization:</strong> While not required, 50KB profile photos load instantly and reduce mobile data usage</li>
+                </ul>
+
+                <h3 class="content-subheading">Educational Institutions</h3>
+                <ul class="content-list">
+                    <li><strong>College Applications:</strong> UCAS, Common App, and university portals with file size restrictions</li>
+                    <li><strong>Scholarship Applications:</strong> Educational foundations managing thousands of applications need compact file sizes</li>
+                    <li><strong>Online Learning Platforms:</strong> Coursera, Udemy, and edX student profile photos</li>
+                    <li><strong>Academic Conferences:</strong> Paper submissions and presenter profiles for academic events</li>
+                </ul>
+
+                <h3 class="content-subheading">Government & Official</h3>
+                <ul class="content-list">
+                    <li><strong>Visa Applications:</strong> E-visa systems for countries requiring specific file size limits</li>
+                    <li><strong>Government Job Portals:</strong> Civil service exam applications and government employment systems</li>
+                    <li><strong>Identity Documentation:</strong> Digital ID card applications and official document submissions</li>
+                    <li><strong>Tax & Legal Filing:</strong> Professional registration systems for lawyers, accountants, and consultants</li>
+                </ul>
+
+                <h3 class="content-subheading">Web & Digital</h3>
+                <ul class="content-list">
+                    <li><strong>Email Attachments:</strong> Reducing email size for faster sending and better deliverability</li>
+                    <li><strong>Web Optimization:</strong> Blog author photos, testimonial images, and team member galleries</li>
+                    <li><strong>Mobile Apps:</strong> User profile pictures that need to load quickly on mobile networks</li>
+                    <li><strong>Social Media:</strong> Platform-specific size requirements for optimal performance</li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <h2 class="content-heading">Quality Optimization Tips</h2>
+                
+                <h3 class="content-subheading">Getting the Best Results at 50KB</h3>
+                <ul class="content-list">
+                    <li><strong>Start with High Quality:</strong> Begin with the highest resolution original photo you have - our algorithm will optimize it perfectly</li>
+                    <li><strong>Good Lighting Matters:</strong> Well-lit photos compress better and maintain clarity at smaller file sizes</li>
+                    <li><strong>Simple Backgrounds:</strong> Plain or solid-color backgrounds compress more efficiently than complex patterns</li>
+                    <li><strong>Face-Focused Composition:</strong> For headshots, ensure your face occupies adequate space in the frame before compression</li>
+                    <li><strong>Avoid Heavy Editing:</strong> Excessive filters or effects can make compression more challenging - keep it natural</li>
+                    <li><strong>Check Orientation:</strong> Our tool auto-rotates based on EXIF data, but verify your image is correctly oriented</li>
+                </ul>
+
+                <h3 class="content-subheading">Compression Mode Selection</h3>
+                <p class="content-text">
+                    <strong>High Quality Mode:</strong> Maintains maximum visual clarity by reducing dimensions more and quality less. Best for professional headshots, LinkedIn profiles, and situations where appearance matters most. Typical result: 600-800px dimensions at 75-85% quality.
+                </p>
+                <p class="content-text">
+                    <strong>Balanced Mode:</strong> Our recommended default that equally optimizes dimensions and quality. Suitable for most use cases including job applications and general uploads. Typical result: 500-700px dimensions at 65-80% quality.
+                </p>
+                <p class="content-text">
+                    <strong>Maximum Compression Mode:</strong> Prioritizes hitting exactly 50KB by aggressively reducing both dimensions and quality. Use when systems are very strict about file size limits. Typical result: 400-600px dimensions at 50-70% quality.
+                </p>
+            </div>
+
+            <div class="content-section">
+                <h2 class="content-heading">Frequently Asked Questions</h2>
+                
+                <div style="space-y: 1.5rem;">
+                    <div style="margin-bottom: 1.5rem;">
+                        <h3 class="content-subheading" style="margin: 0 0 0.75rem 0; font-size: 1.125rem;">How accurate is the 50KB compression?</h3>
+                        <p class="content-text" style="margin: 0;">
+                            Our algorithm achieves 95-105% accuracy, meaning your result will be between 47.5KB and 52.5KB. This precision ensures compatibility with strict upload systems while maximizing visual quality within the constraint.
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <h3 class="content-subheading" style="margin: 0 0 0.75rem 0; font-size: 1.125rem;">Will my image still look professional at 50KB?</h3>
+                        <p class="content-text" style="margin: 0;">
+                            Yes! For passport-sized photos (300×300 to 600×600 pixels), 50KB provides excellent quality. Our smart compression preserves important details like facial features, skin tones, and clarity while removing imperceptible data.
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <h3 class="content-subheading" style="margin: 0 0 0.75rem 0; font-size: 1.125rem;">Can I compress photos taken with my smartphone?</h3>
+                        <p class="content-text" style="margin: 0;">
+                            Absolutely! Our tool handles all smartphone formats including iPhone HEIC and Android JPEG. We automatically process EXIF orientation data so your photos appear correctly rotated. Modern smartphone cameras (10MP+) compress beautifully to 50KB.
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <h3 class="content-subheading" style="margin: 0 0 0.75rem 0; font-size: 1.125rem;">Is my data secure and private?</h3>
+                        <p class="content-text" style="margin: 0;">
+                            Yes, completely secure. All processing happens on our encrypted servers, images are never stored permanently, and files are automatically deleted within 30 minutes. We're GDPR compliant and never access, share, or retain your personal photos.
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <h3 class="content-subheading" style="margin: 0 0 0.75rem 0; font-size: 1.125rem;">What's the difference between this and the resize tool?</h3>
+                        <p class="content-text" style="margin: 0;">
+                            Both achieve 50KB but use different optimization approaches. Compression tool focuses on quality-size balance with adaptive algorithms, while resize tool prioritizes hitting exact file size through dimension control. Compression typically produces better visual results.
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <h3 class="content-subheading" style="margin: 0 0 0.75rem 0; font-size: 1.125rem;">Can I compress multiple images at once?</h3>
+                        <p class="content-text" style="margin: 0;">
+                            Currently, we process one image at a time for optimal quality control. After downloading, simply click "Compress Another" to process additional images. We're developing batch processing for future updates.
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <h3 class="content-subheading" style="margin: 0 0 0.75rem 0; font-size: 1.125rem;">Why does my portal still reject the image?</h3>
+                        <p class="content-text" style="margin: 0;">
+                            Portal rejections beyond file size usually involve: specific pixel dimensions (e.g., must be 600×600px), aspect ratio requirements (square vs rectangle), background color specifications (white/grey), or format restrictions (JPEG only, no PNG). Always check complete upload requirements.
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <h3 class="content-subheading" style="margin: 0 0 0.75rem 0; font-size: 1.125rem;">Does compression remove personal metadata?</h3>
+                        <p class="content-text" style="margin: 0;">
+                            By default, we strip EXIF metadata (GPS location, camera info, timestamps) for privacy. If you need to preserve this data for specific requirements, our resize tool offers a "preserve EXIF" option.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h2 class="loading-title">Compressing Image</h2>
+            <p class="loading-subtitle">Optimizing to 50KB...</p>
+        </div>
+    </div>
+
+    <!-- Download Page -->
+    <div class="download-page" id="downloadPage">
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Success</span>
+                </div>
+                <h1 class="hero-title">Compression Complete!</h1>
+                <p class="hero-subtitle">Your image has been optimized to 50KB</p>
+            </div>
+        </section>
+
+        <div class="download-container">
+            <div class="download-card">
+                <div class="download-preview-section">
+                    <div class="download-image-wrapper">
+                        <img id="downloadThumb" class="download-thumbnail" alt="Compressed">
+                    </div>
+                    <div class="download-filename" id="downloadName"></div>
+                    <div class="download-size-text" id="downloadSizeText"></div>
+                    <div class="stats-row">
+                        <div class="stat-badge">
+                            <div class="stat-value" id="statOriginal">0 KB</div>
+                            <div class="stat-label">Original</div>
+                        </div>
+                        <div class="stat-badge">
+                            <div class="stat-value" id="statFinal">0 KB</div>
+                            <div class="stat-label">Compressed</div>
+                        </div>
+                        <div class="stat-badge">
+                            <div class="stat-value" id="statReduction">0%</div>
+                            <div class="stat-label">Smaller</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="download-actions">
+                    <button type="button" class="primary-download-btn" onclick="downloadImage()">
+                        <i class="fas fa-download"></i>
+                        Download Compressed Image
+                    </button>
+
+                    <div class="action-grid">
+                        <button type="button" class="action-btn btn-success" onclick="compressAnother()">
+                            <i class="fas fa-redo"></i>
+                            Compress Another
+                        </button>
+                        <button type="button" class="action-btn btn-primary" onclick="window.location.href='/resize-image-to-50kb/'">
+                            <i class="fas fa-ruler-combined"></i>
+                            Try Resize Tool
+                        </button>
+                        <button type="button" class="action-btn btn-warning" onclick="window.location.href='/resize-image-to-100kb/'">
+                            <i class="fas fa-expand"></i>
+                            Compress to 100KB
+                        </button>
+                        <button type="button" class="action-btn btn-info" onclick="window.location.href='/resize-image-to-20kb/'">
+                            <i class="fas fa-compress"></i>
+                            Compress to 20KB
+                        </button>
+                    </div>
+
+                    <div class="privacy-card">
+                        <div class="privacy-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <p class="privacy-text">
+                            <strong>Your Privacy Matters:</strong> This image will be automatically deleted from our servers within 30 minutes. We never store, analyze, or share your photos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let selectedFile = null;
+let processedBlob = null;
+let processedFilename = null;
+let selectedQuality = 'high';
+
+const fileInput = document.getElementById('fileInput');
+const uploadZone = document.getElementById('uploadZone');
+
+fileInput.addEventListener('change', handleFileSelect);
+
+uploadZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadZone.classList.add('drag-active');
+});
+
+uploadZone.addEventListener('dragleave', () => {
+    uploadZone.classList.remove('drag-active');
+});
+
+uploadZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadZone.classList.remove('drag-active');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+        fileInput.files = e.dataTransfer.files;
+        handleFileSelect({ target: { files: [file] } });
+    }
+});
+
+function handleFileSelect(e) {
+    const file = e.target.files[0];
+    if (!file || !file.type.startsWith('image/')) {
+        alert('Please select a valid image file');
+        return;
+    }
+    
+    selectedFile = file;
+    
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+            document.getElementById('previewThumb').src = e.target.result;
+            document.getElementById('previewName').textContent = file.name;
+            document.getElementById('previewSize').textContent = formatSize(file.size);
+            document.getElementById('previewDimensions').textContent = `${img.width} × ${img.height}px`;
+            
+            document.getElementById('uploadZone').style.display = 'none';
+            document.getElementById('previewSection').classList.add('active');
+            document.getElementById('compressBtn').disabled = false;
+        };
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+function clearFile() {
+    selectedFile = null;
+    fileInput.value = '';
+    document.getElementById('uploadZone').style.display = 'block';
+    document.getElementById('previewSection').classList.remove('active');
+    document.getElementById('compressBtn').disabled = true;
+}
+
+function selectOption(element) {
+    document.querySelectorAll('.option-card').forEach(card => {
+        card.classList.remove('selected');
+    });
+    element.classList.add('selected');
+    selectedQuality = element.getAttribute('data-quality');
+}
+
+function compressImage() {
+    if (!selectedFile) {
+        alert('Please select an image first');
+        return;
+    }
+    
+    document.getElementById('uploadPage').style.display = 'none';
+    document.getElementById('loadingScreen').classList.add('active');
+    
+    const formData = new FormData();
+    formData.append('image_file', selectedFile);
+    formData.append('target_size_kb', '50');
+    formData.append('auto_rotate', 'on');
+    formData.append('preserve_exif', 'off');
+    formData.append('quality_mode', selectedQuality);
+    
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+    fetch('/compress-to-50kb/', {
+        method: 'POST',
+        body: formData,
+        headers: { 'X-CSRFToken': csrftoken }
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(data => {
+                throw new Error(data.error || 'Compression failed. Please try again.');
+            }).catch(() => {
+                throw new Error('Compression failed. Please try again.');
+            });
+        }
+        
+        const contentDisposition = response.headers.get('Content-Disposition');
+        let filename = selectedFile.name.replace(/\.[^/.]+$/, '') + '_compressed_50kb.jpg';
+        if (contentDisposition) {
+            const match = contentDisposition.match(/filename="(.+)"/);
+            if (match) filename = match[1];
+        }
+        
+        const originalSize = response.headers.get('X-Original-Size');
+        const compressedSize = response.headers.get('X-Compressed-Size');
+        
+        return response.blob().then(blob => ({ 
+            blob, 
+            filename,
+            originalSize: parseInt(originalSize) || selectedFile.size,
+            compressedSize: parseInt(compressedSize) || blob.size
+        }));
+    })
+    .then(({ blob, filename, originalSize, compressedSize }) => {
+        processedBlob = blob;
+        processedFilename = filename;
+        showDownloadPage(blob, filename, originalSize, compressedSize);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error: ' + error.message);
+        document.getElementById('loadingScreen').classList.remove('active');
+        document.getElementById('uploadPage').style.display = 'block';
+    });
+}
+
+function showDownloadPage(blob, filename, originalSize, compressedSize) {
+    document.getElementById('loadingScreen').classList.remove('active');
+    
+    const url = URL.createObjectURL(blob);
+    document.getElementById('downloadThumb').src = url;
+    document.getElementById('downloadName').textContent = filename;
+    document.getElementById('downloadSizeText').textContent = 'File size: ' + formatSize(blob.size);
+    
+    document.getElementById('statOriginal').textContent = formatSize(originalSize || selectedFile.size);
+    document.getElementById('statFinal').textContent = formatSize(compressedSize || blob.size);
+    
+    const actualOriginal = originalSize || selectedFile.size;
+    const actualCompressed = compressedSize || blob.size;
+    const reduction = Math.round(((actualOriginal - actualCompressed) / actualOriginal) * 100);
+    document.getElementById('statReduction').textContent = Math.max(0, reduction) + '%';
+    
+    document.getElementById('downloadPage').classList.add('active');
+    window.history.pushState({}, '', window.location.pathname + '#download');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function downloadImage() {
+    if (!processedBlob) {
+        alert('No image to download');
+        return;
+    }
+    
+    const url = URL.createObjectURL(processedBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = processedFilename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+function compressAnother() {
+    clearFile();
+    processedBlob = null;
+    processedFilename = null;
+    selectedQuality = 'high';
+    
+    document.querySelectorAll('.option-card').forEach(card => {
+        card.classList.remove('selected');
+    });
+    document.querySelector('[data-quality="high"]').classList.add('selected');
+    
+    document.getElementById('downloadPage').classList.remove('active');
+    document.getElementById('uploadPage').style.display = 'block';
+    window.history.pushState({}, '', window.location.pathname);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function formatSize(bytes) {
+    if (!bytes || bytes < 0) return '0 B';
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+}
+
+window.addEventListener('popstate', () => {
+    if (window.location.hash.includes('download')) {
+        if (processedBlob) {
+            document.getElementById('uploadPage').style.display = 'none';
+            document.getElementById('downloadPage').classList.add('active');
+        }
+    } else {
+        document.getElementById('downloadPage').classList.remove('active');
+        document.getElementById('uploadPage').style.display = 'block';
+    }
+});
+</script>
+{% endblock %}

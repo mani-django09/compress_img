@@ -1,0 +1,840 @@
+{% extends 'image_app/base.html' %}
+
+{% block title %}Advanced Image Compression Features | AI-Powered Tools | resizeimages.tools{% endblock %}
+
+{% block description %}Discover powerful image compression features including AI optimization, batch processing, format conversion, EXIF preservation, and more. Perfect for photographers and web developers.{% endblock %}
+
+{% block keywords %}image compression features, AI image optimization, batch image processing, EXIF data preservation, format conversion, lossless compression, web image optimization, photography tools{% endblock %}
+
+{% block extra_css %}
+<style>
+    .features-page {
+        padding: 2rem 0 4rem;
+    }
+
+    .features-hero {
+        background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-surface) 100%);
+        padding: 4rem 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .features-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 30% 20%, rgba(37, 99, 235, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 70% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+        z-index: -1;
+    }
+
+    .features-title {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 900;
+        background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-light) 50%, var(--secondary) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1.5rem;
+    }
+
+    .features-subtitle {
+        font-size: 1.25rem;
+        color: var(--text-secondary);
+        max-width: 700px;
+        margin: 0 auto 3rem;
+        line-height: 1.6;
+    }
+
+    .features-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    /* Feature Categories */
+    .feature-categories {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+        margin: 4rem 0;
+    }
+
+    .category-card {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 2rem;
+        backdrop-filter: blur(20px);
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .category-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        transform: scaleX(0);
+        transition: transform 0.4s ease;
+    }
+
+    .category-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .category-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-xl);
+        border-color: var(--primary);
+    }
+
+    .category-icon {
+        width: 80px;
+        height: 80px;
+        background: var(--gradient-1);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 2rem;
+        font-size: 2rem;
+        color: white;
+        transition: all 0.3s ease;
+    }
+
+    .category-card:hover .category-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .category-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+    }
+
+    .category-description {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 2rem;
+    }
+
+    .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .feature-list li {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: var(--text-secondary);
+        margin-bottom: 0.75rem;
+    }
+
+    .feature-list i {
+        color: var(--success);
+        font-size: 1rem;
+    }
+
+    /* Detailed Features */
+    .detailed-features {
+        margin: 6rem 0;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+        font-size: 1.125rem;
+        color: var(--text-secondary);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    .feature-showcase {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+        margin: 4rem 0;
+    }
+
+    .feature-showcase:nth-child(even) {
+        direction: rtl;
+    }
+
+    .feature-showcase:nth-child(even) > * {
+        direction: ltr;
+    }
+
+    .feature-content h3 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+    }
+
+    .feature-content p {
+        color: var(--text-secondary);
+        line-height: 1.7;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+    }
+
+    .feature-benefits {
+        list-style: none;
+        margin-bottom: 2rem;
+        padding: 0;
+    }
+
+    .feature-benefits li {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+        color: var(--text-secondary);
+    }
+
+    .feature-benefits i {
+        color: var(--primary);
+        font-size: 1.125rem;
+    }
+
+    .feature-visual {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 2rem;
+        backdrop-filter: blur(20px);
+        text-align: center;
+    }
+
+    .demo-container {
+        position: relative;
+        margin: 2rem 0;
+    }
+
+    .demo-image {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: white;
+        margin-bottom: 1rem;
+    }
+
+    .demo-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .demo-stat {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary);
+    }
+
+    .demo-label {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        margin-top: 0.25rem;
+    }
+
+    /* Comparison Section */
+    .comparison-section {
+        background: var(--glass-bg);
+        padding: 4rem 0;
+        margin: 4rem 0;
+    }
+
+    .comparison-table {
+        background: var(--bg-white);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .comparison-table thead {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    }
+
+    .comparison-table thead th {
+        padding: 1.5rem 1rem;
+        text-align: left;
+        color: white;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    .comparison-table tbody td {
+        padding: 1.25rem 1rem;
+        border-bottom: 1px solid var(--border);
+        color: var(--text-dark);
+    }
+
+    .comparison-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .comparison-table tbody tr:hover {
+        background: var(--bg-light);
+    }
+
+    .check-mark {
+        color: var(--accent);
+        font-weight: 600;
+    }
+
+    .x-mark {
+        color: var(--text-gray);
+    }
+
+    /* CTA Section */
+    .features-cta {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        border-radius: 20px;
+        padding: 4rem 2rem;
+        text-align: center;
+        margin: 4rem 0;
+        color: white;
+    }
+
+    .features-cta h3 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+    }
+
+    .features-cta p {
+        font-size: 1.125rem;
+        max-width: 600px;
+        margin: 0 auto 2rem;
+        opacity: 0.95;
+        line-height: 1.6;
+    }
+
+    .cta-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: white;
+        color: var(--primary);
+        padding: 1rem 2.5rem;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1.125rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .feature-categories {
+            grid-template-columns: 1fr;
+        }
+
+        .feature-showcase {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .feature-showcase:nth-child(even) {
+            direction: ltr;
+        }
+
+        .features-title {
+            font-size: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+        }
+
+        .feature-content h3 {
+            font-size: 1.5rem;
+        }
+
+        .features-cta h3 {
+            font-size: 1.75rem;
+        }
+
+        .comparison-table {
+            overflow-x: auto;
+        }
+
+        .comparison-table table {
+            min-width: 600px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="features-page">
+    <!-- Hero Section -->
+    <div class="features-hero">
+        <div class="features-container">
+            <h1 class="features-title fade-in-up">Advanced Image Compression Features</h1>
+            <p class="features-subtitle fade-in-up fade-in-delay-1">
+                Discover the powerful tools and technologies that make resizeimages.tools 
+                the most advanced image compression platform available online.
+            </p>
+        </div>
+    </div>
+
+    <div class="features-container">
+        <!-- Feature Categories -->
+        <section class="feature-categories">
+            <div class="category-card fade-in-up">
+                <div class="category-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h2 class="category-title">AI-Powered Optimization</h2>
+                <p class="category-description">
+                    Leverage advanced machine learning algorithms to achieve optimal compression 
+                    while preserving visual quality.
+                </p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check-circle"></i> Intelligent quality adjustment</li>
+                    <li><i class="fas fa-check-circle"></i> Content-aware compression</li>
+                    <li><i class="fas fa-check-circle"></i> Automatic format selection</li>
+                    <li><i class="fas fa-check-circle"></i> Smart artifact reduction</li>
+                </ul>
+            </div>
+
+            <div class="category-card fade-in-up fade-in-delay-1">
+                <div class="category-icon">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <h2 class="category-title">Batch Processing</h2>
+                <p class="category-description">
+                    Process multiple images simultaneously with our powerful batch compression 
+                    engine, saving you valuable time.
+                </p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check-circle"></i> Upload up to 50 images</li>
+                    <li><i class="fas fa-check-circle"></i> Parallel processing</li>
+                    <li><i class="fas fa-check-circle"></i> Bulk download option</li>
+                    <li><i class="fas fa-check-circle"></i> Progress tracking</li>
+                </ul>
+            </div>
+
+            <div class="category-card fade-in-up fade-in-delay-2">
+                <div class="category-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h2 class="category-title">Privacy Protection</h2>
+                <p class="category-description">
+                    Your images are automatically deleted after 24 hours. We never store or 
+                    share your personal photos.
+                </p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check-circle"></i> Secure HTTPS upload</li>
+                    <li><i class="fas fa-check-circle"></i> Auto-deletion after 24h</li>
+                    <li><i class="fas fa-check-circle"></i> No registration required</li>
+                    <li><i class="fas fa-check-circle"></i> Zero data tracking</li>
+                </ul>
+            </div>
+
+            <div class="category-card fade-in-up">
+                <div class="category-icon">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <h2 class="category-title">Format Conversion</h2>
+                <p class="category-description">
+                    Convert between JPEG, PNG, WebP, and HEIC formats while optimizing for 
+                    size and quality.
+                </p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check-circle"></i> JPEG ↔ PNG conversion</li>
+                    <li><i class="fas fa-check-circle"></i> WebP support</li>
+                    <li><i class="fas fa-check-circle"></i> HEIC compatibility</li>
+                    <li><i class="fas fa-check-circle"></i> Transparency preservation</li>
+                </ul>
+            </div>
+
+            <div class="category-card fade-in-up fade-in-delay-1">
+                <div class="category-icon">
+                    <i class="fas fa-info-circle"></i>
+                </div>
+                <h2 class="category-title">EXIF Data Control</h2>
+                <p class="category-description">
+                    Choose to preserve or remove metadata including GPS location, camera 
+                    settings, and copyright information.
+                </p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check-circle"></i> Selective EXIF removal</li>
+                    <li><i class="fas fa-check-circle"></i> GPS data protection</li>
+                    <li><i class="fas fa-check-circle"></i> Copyright preservation</li>
+                    <li><i class="fas fa-check-circle"></i> Orientation correction</li>
+                </ul>
+            </div>
+
+            <div class="category-card fade-in-up fade-in-delay-2">
+                <div class="category-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h2 class="category-title">Mobile Optimized</h2>
+                <p class="category-description">
+                    Fully responsive design works seamlessly on all devices. Compress images 
+                    anywhere, anytime.
+                </p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check-circle"></i> Touch-friendly interface</li>
+                    <li><i class="fas fa-check-circle"></i> Camera integration</li>
+                    <li><i class="fas fa-check-circle"></i> Progressive web app</li>
+                    <li><i class="fas fa-check-circle"></i> Offline capability</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Detailed Features -->
+        <section class="detailed-features">
+            <div class="section-header fade-in-up">
+                <h2 class="section-title">How Our Features Work</h2>
+                <p class="section-subtitle">
+                    Deep dive into the technology and methods that power our advanced compression algorithms
+                </p>
+            </div>
+
+            <div class="feature-showcase fade-in-up">
+                <div class="feature-content">
+                    <h3>Intelligent Compression Algorithm</h3>
+                    <p>
+                        Our proprietary AI analyzes each image's content, identifying areas of detail that 
+                        require preservation versus areas where aggressive compression won't impact visual quality. 
+                        This results in smaller file sizes without visible quality loss.
+                    </p>
+                    <ul class="feature-benefits">
+                        <li><i class="fas fa-check-circle"></i> Up to 90% size reduction</li>
+                        <li><i class="fas fa-check-circle"></i> Maintains visual quality</li>
+                        <li><i class="fas fa-check-circle"></i> Adaptive to content type</li>
+                        <li><i class="fas fa-check-circle"></i> No visible artifacts</li>
+                    </ul>
+                </div>
+                <div class="feature-visual">
+                    <div class="demo-container">
+                        <div class="demo-image">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <div class="demo-stats">
+                            <div>
+                                <div class="demo-stat">5.2MB</div>
+                                <div class="demo-label">Original</div>
+                            </div>
+                            <div>
+                                <div class="demo-stat">→</div>
+                                <div class="demo-label">Compressed</div>
+                            </div>
+                            <div>
+                                <div class="demo-stat">520KB</div>
+                                <div class="demo-label">Final</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="feature-showcase fade-in-up">
+                <div class="feature-visual">
+                    <div class="demo-container">
+                        <div class="demo-image">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <div class="demo-stats">
+                            <div>
+                                <div class="demo-stat">50</div>
+                                <div class="demo-label">Images</div>
+                            </div>
+                            <div>
+                                <div class="demo-stat">2 min</div>
+                                <div class="demo-label">Process Time</div>
+                            </div>
+                            <div>
+                                <div class="demo-stat">85%</div>
+                                <div class="demo-label">Size Saved</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-content">
+                    <h3>High-Performance Batch Processing</h3>
+                    <p>
+                        Process entire photo albums in minutes with our distributed compression engine. 
+                        Each image is optimized individually while maintaining consistent quality across the entire batch.
+                    </p>
+                    <ul class="feature-benefits">
+                        <li><i class="fas fa-check-circle"></i> Parallel processing architecture</li>
+                        <li><i class="fas fa-check-circle"></i> Consistent quality across batch</li>
+                        <li><i class="fas fa-check-circle"></i> Real-time progress tracking</li>
+                        <li><i class="fas fa-check-circle"></i> Error handling and retry logic</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-showcase fade-in-up">
+                <div class="feature-content">
+                    <h3>Format Conversion & Optimization</h3>
+                    <p>
+                        Convert between image formats while applying optimal compression for each format type. 
+                        Our system automatically selects the best output format based on image content and intended use case.
+                    </p>
+                    <ul class="feature-benefits">
+                        <li><i class="fas fa-check-circle"></i> JPEG for photos with gradients</li>
+                        <li><i class="fas fa-check-circle"></i> PNG for images with transparency</li>
+                        <li><i class="fas fa-check-circle"></i> WebP for modern browsers</li>
+                        <li><i class="fas fa-check-circle"></i> HEIC for iOS compatibility</li>
+                    </ul>
+                </div>
+                <div class="feature-visual">
+                    <div class="demo-container">
+                        <div class="demo-image">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <div class="demo-stats">
+                            <div>
+                                <div class="demo-stat">JPEG</div>
+                                <div class="demo-label">Photos</div>
+                            </div>
+                            <div>
+                                <div class="demo-stat">PNG</div>
+                                <div class="demo-label">Graphics</div>
+                            </div>
+                            <div>
+                                <div class="demo-stat">WebP</div>
+                                <div class="demo-label">Web Optimized</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparison Table -->
+        <section class="comparison-section">
+            <div class="features-container">
+                <div class="section-header fade-in-up">
+                    <h2 class="section-title">Feature Comparison</h2>
+                    <p class="section-subtitle">
+                        See how resizeimages.tools compares to other image compression tools
+                    </p>
+                </div>
+
+                <div class="comparison-table fade-in-up fade-in-delay-1">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>resizeimages.tools</th>
+                                <th>Basic Tools</th>
+                                <th>Desktop Software</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Batch Processing</td>
+                                <td class="check-mark">✓ Up to 50 images</td>
+                                <td class="x-mark">✗ One at a time</td>
+                                <td class="check-mark">✓ Limited</td>
+                            </tr>
+                            <tr>
+                                <td>AI-Powered Optimization</td>
+                                <td class="check-mark">✓ Advanced AI</td>
+                                <td class="x-mark">✗ Basic algorithms</td>
+                                <td class="x-mark">✗ Manual settings</td>
+                            </tr>
+                            <tr>
+                                <td>Format Conversion</td>
+                                <td class="check-mark">✓ All major formats</td>
+                                <td class="check-mark">✓ Limited formats</td>
+                                <td class="check-mark">✓ Most formats</td>
+                            </tr>
+                            <tr>
+                                <td>EXIF Data Control</td>
+                                <td class="check-mark">✓ Selective preservation</td>
+                                <td class="x-mark">✗ All or nothing</td>
+                                <td class="check-mark">✓ Full control</td>
+                            </tr>
+                            <tr>
+                                <td>No Software Installation</td>
+                                <td class="check-mark">✓ Browser-based</td>
+                                <td class="check-mark">✓ Browser-based</td>
+                                <td class="x-mark">✗ Requires download</td>
+                            </tr>
+                            <tr>
+                                <td>Mobile Optimization</td>
+                                <td class="check-mark">✓ Fully responsive</td>
+                                <td class="x-mark">✗ Desktop only</td>
+                                <td class="x-mark">✗ Desktop only</td>
+                            </tr>
+                            <tr>
+                                <td>Privacy Protection</td>
+                                <td class="check-mark">✓ Auto-delete 24h</td>
+                                <td class="x-mark">✗ Unknown storage</td>
+                                <td class="check-mark">✓ Local processing</td>
+                            </tr>
+                            <tr>
+                                <td>Cost</td>
+                                <td class="check-mark">✓ Completely free</td>
+                                <td class="check-mark">✓ Free with limits</td>
+                                <td class="x-mark">✗ Paid license</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="features-cta fade-in-up">
+            <h3>Ready to Experience Advanced Image Compression?</h3>
+            <p>
+                Try all these powerful features for free. No registration required, no hidden fees, 
+                and your privacy is always protected.
+            </p>
+            <a href="{% url 'upload' %}" class="cta-button">
+                <i class="fas fa-rocket"></i>
+                <span>Start Compressing Images</span>
+            </a>
+        </section>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate numbers when they come into view
+    const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px 0px -100px 0px'
+    };
+
+    const numberObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const stat = entry.target.querySelector('.demo-stat');
+                if (stat && !stat.classList.contains('animated')) {
+                    animateNumber(stat);
+                    stat.classList.add('animated');
+                }
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.demo-stats').forEach(el => {
+        numberObserver.observe(el);
+    });
+
+    function animateNumber(element) {
+        const text = element.textContent;
+        const number = parseInt(text);
+        if (isNaN(number)) return;
+
+        let current = 0;
+        const increment = number / 30;
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= number) {
+                element.textContent = text;
+                clearInterval(timer);
+            } else {
+                element.textContent = Math.floor(current) + text.replace(/\d+/, '');
+            }
+        }, 50);
+    }
+
+    // Add smooth scrolling for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Parallax effect for hero background
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const hero = document.querySelector('.features-hero');
+        if (hero) {
+            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        }
+    });
+
+    // Add intersection observer for fade-in animations
+    const fadeObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    // Apply fade-in observer to elements
+    document.querySelectorAll('.fade-in-up').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        
+        // Add delay if specified
+        if (el.classList.contains('fade-in-delay-1')) {
+            el.style.transitionDelay = '0.2s';
+        } else if (el.classList.contains('fade-in-delay-2')) {
+            el.style.transitionDelay = '0.4s';
+        } else if (el.classList.contains('fade-in-delay-3')) {
+            el.style.transitionDelay = '0.6s';
+        }
+        
+        fadeObserver.observe(el);
+    });
+});
+</script>
+{% endblock %}

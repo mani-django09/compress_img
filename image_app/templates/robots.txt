@@ -1,0 +1,32 @@
+User-agent: *
+Allow: /
+
+# Important pages
+Allow: /upload/
+Allow: /image-compressor/
+Allow: /gallery/
+Allow: /features/
+
+# Resize image pages - high priority
+Allow: /resize-image-to-20kb/
+Allow: /resize-image-to-50kb/
+Allow: /resize-image-to-100kb/
+
+# Static pages
+Allow: /about/
+Allow: /privacy-policy/
+Allow: /terms-of-service/
+Allow: /contact/
+
+# Block admin and internal URLs
+Disallow: /admin/
+Disallow: /login/
+Disallow: /logout/
+Disallow: /api/
+Disallow: /media/temp/
+
+# Sitemap location
+Sitemap: https://resizeimages.tools/sitemap.xml
+
+# Crawl delay (optional - be nice to servers)
+Crawl-delay: 1

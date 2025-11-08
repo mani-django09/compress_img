@@ -1,0 +1,473 @@
+{% extends 'image_app/base.html' %}
+{% load static %}
+
+{% block title %}Contact Resizeimages.tools - Get Help with Image Compression{% endblock %}
+
+{% block description %}Need help with Resizeimages.tools? Contact our support team for technical assistance, feedback, or questions about our free image compression service.{% endblock %}
+
+{% block keywords %}contact us, support, help, customer service, technical support, feedback{% endblock %}
+
+{% block extra_css %}
+<style>
+    .contact-page {
+        padding: 3rem 0;
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        min-height: 80vh;
+    }
+
+    .contact-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .contact-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .contact-title {
+        font-size: clamp(2.5rem, 5vw, 3rem);
+        font-weight: 800;
+        color: #1f2937;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .contact-subtitle {
+        font-size: clamp(1.125rem, 3vw, 1.25rem);
+        color: #6b7280;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    .contact-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        margin-top: 2rem;
+    }
+
+    .contact-info {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 2.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+    }
+
+    .contact-methods {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        border-radius: 12px;
+        padding: 2.5rem;
+        border: 1px solid #e5e7eb;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        background: #f8fafc;
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+        transition: all 0.3s ease;
+    }
+
+    .contact-item:hover {
+        background: #f0f7ff;
+        border-color: #3b82f6;
+        transform: translateY(-1px);
+    }
+
+    .contact-icon {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+        color: white;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.125rem;
+        flex-shrink: 0;
+    }
+
+    .contact-details h3 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+    }
+
+    .contact-details p {
+        color: #6b7280;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .contact-details a {
+        color: #3b82f6;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .contact-details a:hover {
+        text-decoration: underline;
+    }
+
+    .quick-help {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 2.5rem;
+        margin-top: 3rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+    }
+
+    .help-categories {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .help-category {
+        background: #f8fafc;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .help-category:hover {
+        background: #f0f7ff;
+        border-color: #3b82f6;
+        transform: translateY(-2px);
+    }
+
+    .help-category h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .help-category p {
+        color: #6b7280;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    .faq-preview {
+        background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+        color: white;
+        border-radius: 12px;
+        padding: 2.5rem;
+        margin-top: 3rem;
+        text-align: center;
+    }
+
+    .faq-preview h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .faq-preview p {
+        font-size: 1.125rem;
+        margin-bottom: 2rem;
+        opacity: 0.95;
+    }
+
+    .faq-button {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .faq-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+        border-color: rgba(255, 255, 255, 0.5);
+        color: white;
+        text-decoration: none;
+        transform: translateY(-1px);
+    }
+
+    .response-time {
+        background: #fef3c7;
+        border: 1px solid #fbbf24;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .response-time p {
+        color: #92400e;
+        font-weight: 600;
+        margin: 0;
+        font-size: 0.875rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+        justify-content: center;
+    }
+
+    .social-link {
+        width: 44px;
+        height: 44px;
+        background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+        color: white;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 1.125rem;
+    }
+
+    .social-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+        color: white;
+    }
+
+    @media (max-width: 768px) {
+        .contact-container {
+            padding: 0 1rem;
+        }
+        
+        .contact-content {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .contact-info,
+        .contact-methods,
+        .quick-help,
+        .faq-preview {
+            padding: 1.5rem;
+        }
+        
+        .help-categories {
+            grid-template-columns: 1fr;
+        }
+        
+        .contact-item {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="contact-page">
+    <div class="contact-container">
+        <div class="contact-header">
+            <h1 class="contact-title">Get in Touch</h1>
+            <p class="contact-subtitle">
+                Have questions about Resizeimages.tools? Need technical help? Want to share feedback? 
+                We're here to help and would love to hear from you.
+            </p>
+        </div>
+
+        <div class="contact-content">
+            <div class="contact-info">
+                <h2 class="section-title">
+                    <i class="fas fa-envelope"></i>
+                    Contact Information
+                </h2>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Technical Support</h3>
+                        <p>Having trouble with image compression? Need help with file formats or quality settings?</p>
+                        <a href="mailto:support@Resizeimages.tools">support@Resizeimages.tools</a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Feedback & Suggestions</h3>
+                        <p>Got ideas for new features? Found a bug? We want to hear about it.</p>
+                        <a href="mailto:feedback@Resizeimages.tools">feedback@Resizeimages.tools</a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Partnerships & Business</h3>
+                        <p>Interested in partnerships, API access, or business inquiries?</p>
+                        <a href="mailto:business@Resizeimages.tools">business@Resizeimages.tools</a>
+                    </div>
+                </div>
+
+                <div class="response-time">
+                    <p>
+                        <i class="fas fa-clock"></i>
+                        We typically respond within 24 hours during business days
+                    </p>
+                </div>
+            </div>
+
+            <div class="contact-methods">
+                <h2 class="section-title">
+                    <i class="fas fa-comments"></i>
+                    Other Ways to Connect
+                </h2>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Privacy & Legal</h3>
+                        <p>Questions about our privacy policy, data handling, or terms of service?</p>
+                        <a href="mailto:privacy@Resizeimages.tools">privacy@Resizeimages.tools</a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Report Issues</h3>
+                        <p>Found something not working right? Report technical issues or abuse.</p>
+                        <a href="mailto:issues@Resizeimages.tools">issues@Resizeimages.tools</a>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <h3 style="color: #1f2937; font-weight: 600; margin-bottom: 1rem;">Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link" title="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link" title="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-help">
+            <h2 class="section-title">
+                <i class="fas fa-question-circle"></i>
+                Quick Help Topics
+            </h2>
+            <p style="color: #6b7280; margin-bottom: 1.5rem;">
+                Before sending an email, check if your question is covered in these common topics:
+            </p>
+
+            <div class="help-categories">
+                <div class="help-category">
+                    <h4>
+                        <i class="fas fa-file-image"></i>
+                        Supported File Types
+                    </h4>
+                    <p>We support JPEG, PNG, WebP, and HEIC files up to 10MB each. Most common image formats work perfectly.</p>
+                </div>
+
+                <div class="help-category">
+                    <h4>
+                        <i class="fas fa-compress-alt"></i>
+                        Compression Quality
+                    </h4>
+                    <p>Use 70-80% quality for web images, 85-95% for print. Lower values = smaller files but reduced quality.</p>
+                </div>
+
+                <div class="help-category">
+                    <h4>
+                        <i class="fas fa-shield-alt"></i>
+                        Privacy & Security
+                    </h4>
+                    <p>Your images are automatically deleted within 24 hours. We don't store, analyze, or share your photos.</p>
+                </div>
+
+                <div class="help-category">
+                    <h4>
+                        <i class="fas fa-mobile-alt"></i>
+                        Mobile Usage
+                    </h4>
+                    <p>Our tool works great on phones and tablets. No app needed - just use your mobile browser.</p>
+                </div>
+
+                <div class="help-category">
+                    <h4>
+                        <i class="fas fa-download"></i>
+                        Download Issues
+                    </h4>
+                    <p>Can't download your compressed images? Try refreshing the page or using a different browser.</p>
+                </div>
+
+                <div class="help-category">
+                    <h4>
+                        <i class="fas fa-layer-group"></i>
+                        Batch Processing
+                    </h4>
+                    <p>Upload up to 20 images at once. All will be compressed with your selected quality settings.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-preview">
+            <h3>Still Have Questions?</h3>
+            <p>Check out our comprehensive FAQ section for detailed answers to the most common questions about image compression.</p>
+            <a href="{% url 'home' %}#faq" class="faq-button">
+                <i class="fas fa-arrow-right"></i>
+                <span>View FAQ</span>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

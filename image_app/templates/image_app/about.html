@@ -1,0 +1,604 @@
+{% extends 'image_app/base.html' %}
+{% load static %}
+
+{% block title %}About ResizeImages.tools | Free Online Image Resizer & Compressor{% endblock %}
+
+{% block description %}Learn about ResizeImages.tools - the free online image resizer trusted by over 100,000 users. Discover our mission to make image optimization simple, fast, and accessible to everyone.{% endblock %}
+
+{% block keywords %}about resizeimages tools, image resizer tool, free image compressor, online image optimizer, about us{% endblock %}
+
+{% block canonical %}https://resizeimages.tools/about/{% endblock %}
+
+{% block extra_css %}
+<style>
+    .about-hero {
+        background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+        padding: 4rem 0 3rem;
+        color: white;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .about-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="grad1" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:white;stop-opacity:0.1" /><stop offset="100%" style="stop-color:white;stop-opacity:0" /></radialGradient></defs><rect width="100%" height="100%" fill="url(%23grad1)"/></svg>');
+        opacity: 0.5;
+    }
+
+    .about-hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .about-hero h1 {
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 900;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+    }
+
+    .about-hero p {
+        font-size: clamp(1rem, 3vw, 1.25rem);
+        line-height: 1.6;
+        opacity: 0.95;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .about-content {
+        padding: 4rem 0;
+    }
+
+    .content-section {
+        max-width: 900px;
+        margin: 0 auto 4rem;
+        padding: 0 1rem;
+    }
+
+    .content-section h2 {
+        font-size: clamp(1.75rem, 4vw, 2.25rem);
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 1.5rem;
+        position: relative;
+        padding-bottom: 1rem;
+    }
+
+    .content-section h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #3b82f6, #06b6d4);
+        border-radius: 2px;
+    }
+
+    .content-section p {
+        font-size: clamp(1rem, 2.5vw, 1.125rem);
+        line-height: 1.75;
+        color: #6b7280;
+        margin-bottom: 1.5rem;
+    }
+
+    .content-section p strong {
+        color: #1f2937;
+        font-weight: 600;
+    }
+
+    .stats-showcase {
+        background: #f8fafc;
+        padding: 3rem 0;
+        margin: 4rem 0;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .stat-card {
+        text-align: center;
+        padding: 2rem;
+        background: white;
+        border-radius: 12px;
+        border: 1px solid #e5e7eb;
+        transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(59, 130, 246, 0.15);
+        border-color: #3b82f6;
+    }
+
+    .stat-number {
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 900;
+        background: linear-gradient(135deg, #3b82f6, #06b6d4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        font-size: 1rem;
+        color: #6b7280;
+        font-weight: 500;
+    }
+
+    .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 2rem 0;
+    }
+
+    .feature-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding: 1.25rem;
+        background: #f8fafc;
+        border-radius: 10px;
+        border: 1px solid #e5e7eb;
+        transition: all 0.3s ease;
+    }
+
+    .feature-list li:hover {
+        background: white;
+        border-color: #3b82f6;
+        transform: translateX(5px);
+    }
+
+    .feature-icon {
+        width: 48px;
+        height: 48px;
+        background: linear-gradient(135deg, #3b82f6, #06b6d4);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.25rem;
+        flex-shrink: 0;
+    }
+
+    .feature-text h3 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 0.375rem;
+    }
+
+    .feature-text p {
+        font-size: 0.9375rem;
+        color: #6b7280;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .mission-vision {
+        background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+        padding: 3rem 2rem;
+        border-radius: 20px;
+        margin: 3rem 0;
+    }
+
+    .mission-vision h3 {
+        font-size: clamp(1.25rem, 3vw, 1.5rem);
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .mission-icon {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #3b82f6, #06b6d4);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.125rem;
+    }
+
+    .cta-section {
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        padding: 4rem 2rem;
+        border-radius: 20px;
+        text-align: center;
+        color: white;
+        margin: 4rem 0;
+    }
+
+    .cta-section h2 {
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+        font-weight: 800;
+        margin-bottom: 1rem;
+        color: white;
+    }
+
+    .cta-section h2::after {
+        display: none;
+    }
+
+    .cta-section p {
+        font-size: clamp(1rem, 2.5vw, 1.125rem);
+        margin-bottom: 2rem;
+        color: rgba(255, 255, 255, 0.95);
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .cta-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: white;
+        color: #3b82f6;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1.125rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        color: #3b82f6;
+        text-decoration: none;
+    }
+
+    .values-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
+
+    .value-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        border: 1px solid #e5e7eb;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .value-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        border-color: #3b82f6;
+    }
+
+    .value-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #3b82f6, #06b6d4);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        color: white;
+        font-size: 1.5rem;
+    }
+
+    .value-card h4 {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 0.75rem;
+    }
+
+    .value-card p {
+        font-size: 0.9375rem;
+        color: #6b7280;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    @media (max-width: 768px) {
+        .about-hero {
+            padding: 3rem 0 2rem;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .feature-list li {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="about-hero">
+    <div class="about-hero-content">
+        <h1>About ResizeImages.tools</h1>
+        <p>Making image optimization simple, fast, and accessible to everyone. Since 2024, we've helped over 100,000 users resize millions of images for free.</p>
+    </div>
+</section>
+
+<!-- Stats Showcase -->
+<section class="stats-showcase">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">10M+</div>
+                <div class="stat-label">Images Resized</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100K+</div>
+                <div class="stat-label">Happy Users</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">90%</div>
+                <div class="stat-label">Average Size Reduction</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Free Forever</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content -->
+<section class="about-content">
+    <div class="container">
+        <!-- Our Story -->
+        <div class="content-section">
+            <h2>Our Story</h2>
+            <p>
+                ResizeImages.tools was born from a simple frustration: why is it so complicated to resize images online? We noticed that existing tools were either too complex, required expensive software, or came with hidden fees and limitations.
+            </p>
+            <p>
+                We believed there had to be a better way. So we built <strong>ResizeImages.tools</strong> - a completely free, easy-to-use online image resizer that anyone can use, whether you're a professional photographer, web developer, or just someone trying to email photos to family.
+            </p>
+            <p>
+                Today, we're proud to serve over <strong>100,000 users</strong> who have resized more than <strong>10 million images</strong> using our platform. And we're just getting started.
+            </p>
+        </div>
+
+        <!-- Mission & Vision -->
+        <div class="content-section">
+            <div class="mission-vision">
+                <h3>
+                    <span class="mission-icon"><i class="fas fa-bullseye"></i></span>
+                    Our Mission
+                </h3>
+                <p>
+                    To provide the world's most user-friendly, powerful, and completely free image resizing tool. We believe essential digital tools should be accessible to everyone, regardless of technical skill or budget.
+                </p>
+            </div>
+
+            <div class="mission-vision">
+                <h3>
+                    <span class="mission-icon"><i class="fas fa-eye"></i></span>
+                    Our Vision
+                </h3>
+                <p>
+                    A world where anyone can optimize images instantly without barriers. Where website owners can easily speed up their sites, photographers can share their work efficiently, and everyone can manage their digital photos with ease.
+                </p>
+            </div>
+        </div>
+
+        <!-- What We Offer -->
+        <div class="content-section">
+            <h2>What We Offer</h2>
+            <ul class="feature-list">
+                <li>
+                    <div class="feature-icon">
+                        <i class="fas fa-compress-alt"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h3>Smart Image Compression</h3>
+                        <p>Advanced algorithms that reduce file sizes by up to 90% while maintaining visual quality. Perfect for web optimization and file size requirements.</p>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="feature-icon">
+                        <i class="fas fa-ruler-combined"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h3>Precise KB Targeting</h3>
+                        <p>Resize images to exact file sizes: 20KB, 50KB, 100KB, or 200KB. Ideal for meeting specific requirements for job applications, submissions, or website needs.</p>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="feature-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h3>Bulk Processing</h3>
+                        <p>Resize up to 20 images simultaneously with consistent quality. Save hours when working with photo albums or website image galleries.</p>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h3>Privacy First</h3>
+                        <p>Your images are automatically deleted within 24 hours. We use HTTPS encryption and never store, view, or share your photos.</p>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h3>Works Everywhere</h3>
+                        <p>Fully responsive design works perfectly on desktop, tablet, and mobile devices. No apps to download or software to install.</p>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="feature-icon">
+                        <i class="fas fa-infinity"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h3>Unlimited & Free</h3>
+                        <p>No usage limits, no registration required, no hidden fees. We believe in keeping powerful tools accessible to everyone.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Our Values -->
+        <div class="content-section">
+            <h2>Our Values</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h4>User-First Design</h4>
+                    <p>Every feature is designed with simplicity and efficiency in mind. If it's not easy to use, we don't ship it.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h4>Privacy & Security</h4>
+                    <p>Your data is yours. We implement industry-standard security and automatically delete uploaded images.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h4>Continuous Innovation</h4>
+                    <p>We're constantly improving our algorithms and adding features based on user feedback.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h4>Free & Accessible</h4>
+                    <p>Quality tools shouldn't be locked behind paywalls. We're committed to keeping ResizeImages.tools free forever.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Who Uses Our Tool -->
+        <div class="content-section">
+            <h2>Who Uses ResizeImages.tools</h2>
+            <p>
+                Our tool is trusted by a diverse community of users around the world:
+            </p>
+            <p>
+                <strong>Web Developers & Designers</strong> use our bulk image resizer to optimize website assets, ensuring fast page load times and better SEO rankings.
+            </p>
+            <p>
+                <strong>Photographers & Creatives</strong> resize images for client proofs, online portfolios, and social media while maintaining professional quality.
+            </p>
+            <p>
+                <strong>E-commerce Businesses</strong> optimize product photos to balance quality with fast loading speeds, improving conversion rates.
+            </p>
+            <p>
+                <strong>Job Seekers & Students</strong> resize documents and photos to meet specific file size requirements for applications and submissions.
+            </p>
+            <p>
+                <strong>Social Media Managers</strong> prepare images for various platforms, optimizing for both quality and upload speed.
+            </p>
+            <p>
+                <strong>Everyday Users</strong> compress photos for email attachments, free up phone storage, and share memories without file size hassles.
+            </p>
+        </div>
+
+        <!-- Technology -->
+        <div class="content-section">
+            <h2>Our Technology</h2>
+            <p>
+                ResizeImages.tools is built with cutting-edge web technologies to deliver fast, reliable image processing:
+            </p>
+            <p>
+                We use <strong>advanced compression algorithms</strong> including Lanczos resampling for superior image quality when resizing. Our intelligent compression analyzes each image to find the optimal balance between file size and visual quality.
+            </p>
+            <p>
+                The platform is powered by <strong>Python and Django</strong> on the backend, with <strong>Pillow (PIL)</strong> for image processing. Our responsive frontend ensures smooth operation on any device.
+            </p>
+            <p>
+                All image processing happens on secure servers with <strong>HTTPS encryption</strong>. We implement automatic cleanup systems that delete uploaded images within 24 hours to protect your privacy.
+            </p>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="content-section">
+            <div class="cta-section">
+                <h2>Ready to Resize Your Images?</h2>
+                <p>
+                    Join over 100,000 users who trust ResizeImages.tools for fast, free, and easy image optimization. No registration required.
+                </p>
+                <a href="{% url 'upload' %}" class="cta-button">
+                    <i class="fas fa-compress-alt"></i>
+                    <span>Start Resizing Images Free</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Contact & Support -->
+        <div class="content-section">
+            <h2>Get in Touch</h2>
+            <p>
+                Have questions, feedback, or suggestions? We'd love to hear from you!
+            </p>
+            <p>
+                <strong>Contact us:</strong> <a href="{% url 'contact' %}" style="color: #3b82f6; text-decoration: none; font-weight: 600;">Send us a message</a>
+            </p>
+            <p>
+                <strong>Report issues:</strong> Found a bug? Let us know so we can fix it quickly.
+            </p>
+            <p>
+                <strong>Feature requests:</strong> Tell us what features would make ResizeImages.tools even better for you.
+            </p>
+            <p>
+                We typically respond within 24-48 hours and genuinely appreciate all feedback that helps us improve the platform.
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,1669 @@
+{% extends 'image_app/base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }}{% endblock %}
+{% block description %}{{ meta_description }}{% endblock %}
+{% block keywords %}{{ keywords }}{% endblock %}
+{% block canonical %}{{ canonical_url }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --primary: #4F46E5;
+        --primary-hover: #4338CA;
+        --primary-light: #EEF2FF;
+        --secondary: #10B981;
+        --secondary-hover: #059669;
+        --accent: #F59E0B;
+        --background: #F8FAFC;
+        --surface: #FFFFFF;
+        --text-primary: #0F172A;
+        --text-secondary: #64748B;
+        --border: #E2E8F0;
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+        --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.12);
+        --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        --radius-sm: 8px;
+        --radius-md: 12px;
+        --radius-lg: 16px;
+        --radius-xl: 20px;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background: linear-gradient(to bottom, #F8FAFC 0%, #EEF2FF 100%);
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        color: var(--text-primary);
+        line-height: 1.6;
+        min-height: 100vh;
+    }
+
+    /* Hero Section - COMPACT */
+    .hero-section {
+        background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #EC4899 100%);
+        color: white;
+        padding: 2.5rem 1.5rem 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        opacity: 0.3;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        padding: 0.375rem 0.875rem;
+        border-radius: 50px;
+        font-size: 0.8125rem;
+        margin-bottom: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .hero-title {
+        font-size: clamp(1.75rem, 4vw, 2.25rem);
+        font-weight: 800;
+        margin-bottom: 0.625rem;
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-subtitle {
+        font-size: clamp(0.9375rem, 2vw, 1.0625rem);
+        opacity: 0.95;
+        line-height: 1.5;
+        font-weight: 400;
+    }
+
+    /* Main Container - COMPACT */
+    .main-container {
+        max-width: 800px;
+        margin: -1.5rem auto 3rem;
+        padding: 0 1.5rem;
+        position: relative;
+        z-index: 10;
+    }
+
+    /* Upload Card - COMPACT */
+    .upload-card {
+        background: var(--surface);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-xl);
+        overflow: hidden;
+        border: 1px solid rgba(79, 70, 229, 0.1);
+    }
+
+    .card-section {
+        padding: 1.5rem;
+    }
+
+    .section-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+    }
+
+    .section-icon {
+        width: 28px;
+        height: 28px;
+        background: linear-gradient(135deg, var(--primary) 0%, #7C3AED 100%);
+        color: white;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8125rem;
+        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    }
+
+    /* Upload Zone - COMPACT */
+    .upload-zone {
+        background: linear-gradient(to bottom, #FAFBFC 0%, #F3F4F6 100%);
+        border: 2px dashed var(--border);
+        border-radius: var(--radius-lg);
+        padding: 2rem 1.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .upload-zone::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(79, 70, 229, 0.05) 0%, rgba(236, 72, 153, 0.05) 100%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+
+    .upload-zone:hover::before,
+    .upload-zone.drag-active::before {
+        opacity: 1;
+    }
+
+    .upload-zone:hover,
+    .upload-zone.drag-active {
+        border-color: var(--primary);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(79, 70, 229, 0.15);
+    }
+
+    .upload-icon {
+        width: 56px;
+        height: 56px;
+        margin: 0 auto 1rem;
+        background: linear-gradient(135deg, var(--primary) 0%, #7C3AED 100%);
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+        position: relative;
+        z-index: 1;
+        transition: all 0.3s ease;
+    }
+
+    .upload-zone:hover .upload-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .upload-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.375rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .upload-description {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .file-input {
+        display: none;
+    }
+
+    .upload-button {
+        background: linear-gradient(135deg, var(--primary) 0%, #7C3AED 100%);
+        color: white;
+        border: none;
+        padding: 0.625rem 1.75rem;
+        border-radius: var(--radius-md);
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        pointer-events: none;
+        position: relative;
+        z-index: 1;
+        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    }
+
+    .upload-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
+    }
+
+    .upload-specs {
+        display: flex;
+        justify-content: center;
+        gap: 1.25rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border);
+        font-size: 0.8125rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .spec-item {
+        display: flex;
+        align-items: center;
+        gap: 0.375rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    .spec-icon {
+        color: var(--secondary);
+        font-size: 0.875rem;
+    }
+
+    /* Preview Section */
+    .preview-section {
+        display: none;
+        padding: 1rem;
+        background: linear-gradient(to right, #F0FDF4 0%, #ECFDF5 100%);
+        border-radius: var(--radius-lg);
+        border: 1px solid #86EFAC;
+    }
+
+    .preview-section.active {
+        display: block;
+        animation: slideIn 0.4s ease;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .preview-container {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .preview-thumbnail {
+        width: 70px;
+        height: 70px;
+        border-radius: var(--radius-md);
+        object-fit: cover;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border: 2px solid white;
+    }
+
+    .preview-details {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .preview-filename {
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.25rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .preview-meta {
+        display: flex;
+        gap: 0.875rem;
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    .remove-button {
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        color: white;
+        border: none;
+        width: 32px;
+        height: 32px;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+
+    .remove-button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
+    }
+
+    /* Size Control - COMPACT */
+    .size-section {
+        border-top: 1px solid var(--border);
+        background: linear-gradient(to bottom, #FAFBFC 0%, #FFFFFF 100%);
+    }
+
+    .size-control-group {
+        display: flex;
+        gap: 0.875rem;
+        align-items: flex-end;
+    }
+
+    .input-group {
+        max-width: 140px;
+    }
+
+    .input-label {
+        display: block;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+    }
+
+    .size-input {
+        width: 100%;
+        padding: 0.625rem 2.25rem 0.625rem 0.875rem;
+        border: 2px solid var(--border);
+        border-radius: var(--radius-md);
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        text-align: center;
+        transition: all 0.3s ease;
+        background: white;
+    }
+
+    .size-input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+
+    .size-input-wrapper {
+        position: relative;
+    }
+
+    .size-unit {
+        position: absolute;
+        right: 0.875rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 0.8125rem;
+        font-weight: 700;
+        color: var(--text-secondary);
+        pointer-events: none;
+    }
+
+    .process-button {
+        background: linear-gradient(135deg, var(--secondary) 0%, #059669 100%);
+        color: white;
+        border: none;
+        padding: 0.625rem 1.75rem;
+        border-radius: var(--radius-md);
+        font-size: 0.9375rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        flex: 1;
+        justify-content: center;
+    }
+
+    .process-button:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+    }
+
+    .process-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    /* Loading Overlay */
+    .loading-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.98);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(10px);
+    }
+
+    .loading-overlay.active {
+        display: flex;
+    }
+
+    .loading-content {
+        text-align: center;
+        max-width: 300px;
+    }
+
+    .loading-spinner {
+        width: 56px;
+        height: 56px;
+        margin: 0 auto 1.25rem;
+        border: 4px solid #E5E7EB;
+        border-top-color: var(--primary);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    .loading-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+    }
+
+    .loading-subtitle {
+        font-size: 0.9375rem;
+        color: var(--text-secondary);
+    }
+
+    /* Download Page - COMPACT */
+    .download-page {
+        display: none;
+    }
+
+    .download-page.active {
+        display: block;
+    }
+
+    .download-container {
+        max-width: 650px;
+        margin: -1.5rem auto 3rem;
+        padding: 0 1.5rem;
+        position: relative;
+        z-index: 10;
+    }
+
+    .download-card {
+        background: var(--surface);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-xl);
+        overflow: hidden;
+        border: 1px solid rgba(79, 70, 229, 0.1);
+    }
+
+    .download-preview-section {
+        padding: 1.5rem;
+        text-align: center;
+        background: linear-gradient(to bottom, #F0FDF4 0%, #ECFDF5 100%);
+    }
+
+    .download-image-wrapper {
+        background: white;
+        border-radius: var(--radius-lg);
+        padding: 1rem;
+        margin-bottom: 1rem;
+        display: inline-block;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .download-thumbnail {
+        max-width: 100%;
+        max-height: 180px;
+        border-radius: var(--radius-md);
+        object-fit: contain;
+    }
+
+    .download-filename {
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 0.375rem;
+        word-break: break-word;
+        color: var(--text-primary);
+    }
+
+    .download-size-text {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+        font-weight: 500;
+    }
+
+    .stats-row {
+        display: flex;
+        gap: 0.875rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .stat-badge {
+        background: white;
+        padding: 0.75rem 1rem;
+        border-radius: var(--radius-md);
+        min-width: 100px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .stat-value {
+        font-size: 1.125rem;
+        font-weight: 800;
+        color: var(--secondary);
+        margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+        font-size: 0.6875rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+    }
+
+    .download-actions {
+        padding: 1.5rem;
+    }
+
+    .primary-download-btn {
+        width: 100%;
+        background: linear-gradient(135deg, var(--primary) 0%, #7C3AED 100%);
+        color: white;
+        border: none;
+        padding: 0.875rem;
+        border-radius: var(--radius-md);
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    }
+
+    .primary-download-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
+    }
+
+    .action-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .action-btn {
+        padding: 0.625rem;
+        border-radius: var(--radius-md);
+        font-size: 0.8125rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.375rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary { background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%); color: white; }
+    .btn-success { background: linear-gradient(135deg, var(--secondary) 0%, #059669 100%); color: white; }
+    .btn-warning { background: linear-gradient(135deg, var(--accent) 0%, #D97706 100%); color: white; }
+    .btn-info { background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%); color: white; }
+
+    .action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .privacy-card {
+        background: linear-gradient(to right, #EFF6FF 0%, #DBEAFE 100%);
+        border: 1px solid #93C5FD;
+        border-radius: var(--radius-md);
+        padding: 1rem;
+        display: flex;
+        gap: 0.875rem;
+        align-items: flex-start;
+    }
+
+    .privacy-icon {
+        width: 32px;
+        height: 32px;
+        background: white;
+        border-radius: var(--radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3B82F6;
+        flex-shrink: 0;
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+    }
+
+    .privacy-text {
+        font-size: 0.8125rem;
+        color: #1E40AF;
+        line-height: 1.6;
+    }
+
+    /* Content Wrapper */
+    .content-wrapper {
+        max-width: 1000px;
+        margin: 3rem auto;
+        padding: 0 1.5rem;
+    }
+
+    .content-section {
+        background: white;
+        border-radius: var(--radius-xl);
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--border);
+        transition: all 0.3s ease;
+    }
+
+    .content-section:hover {
+        box-shadow: var(--shadow-lg);
+    }
+
+    .content-heading {
+        font-size: 1.75rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin-bottom: 1.25rem;
+        line-height: 1.3;
+        position: relative;
+        padding-bottom: 1rem;
+    }
+
+    .content-heading::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(to right, var(--primary), #7C3AED);
+        border-radius: 2px;
+    }
+
+    .content-subheading {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 2rem 0 1rem;
+    }
+
+    .content-text {
+        color: var(--text-secondary);
+        font-size: 1.0625rem;
+        line-height: 1.8;
+        margin-bottom: 1.25rem;
+    }
+
+    .content-list {
+        color: var(--text-secondary);
+        font-size: 1.0625rem;
+        line-height: 1.8;
+        padding-left: 1.75rem;
+        margin: 1rem 0;
+    }
+
+    .content-list li {
+        margin-bottom: 1rem;
+        position: relative;
+    }
+
+    .content-list li::marker {
+        color: var(--primary);
+        font-weight: 700;
+    }
+
+    .content-list li strong {
+        color: var(--text-primary);
+        font-weight: 700;
+    }
+
+    /* Feature Grid */
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .feature-card {
+        background: linear-gradient(to bottom, #FFFFFF 0%, #FAFBFC 100%);
+        border-radius: var(--radius-lg);
+        padding: 1.75rem;
+        border: 1px solid var(--border);
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(to right, var(--primary), #7C3AED, #EC4899);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s ease;
+    }
+
+    .feature-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+        border-color: rgba(79, 70, 229, 0.2);
+    }
+
+    .feature-icon {
+        width: 44px;
+        height: 44px;
+        background: linear-gradient(135deg, var(--primary) 0%, #7C3AED 100%);
+        border-radius: 11px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        color: white;
+        font-size: 1.125rem;
+        box-shadow: 0 6px 16px rgba(79, 70, 229, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .feature-title {
+        font-size: 1.0625rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.625rem;
+    }
+
+    .feature-description {
+        color: var(--text-secondary);
+        line-height: 1.7;
+        font-size: 0.9375rem;
+    }
+
+    /* Stats Section */
+    .stats-section {
+        background: linear-gradient(135deg, var(--primary) 0%, #7C3AED 100%);
+        border-radius: var(--radius-xl);
+        padding: 2.5rem 2rem;
+        color: white;
+        text-align: center;
+        margin: 2.5rem 0;
+        box-shadow: 0 12px 32px rgba(79, 70, 229, 0.3);
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1.75rem;
+        margin-top: 1.75rem;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 2.25rem;
+        font-weight: 800;
+        margin-bottom: 0.375rem;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-text {
+        font-size: 0.9375rem;
+        opacity: 0.95;
+    }
+
+    /* FAQ Section - Accordion */
+    .faq-section {
+        margin-top: 2rem;
+    }
+
+    .faq-item {
+        background: white;
+        border-radius: var(--radius-lg);
+        margin-bottom: 0.875rem;
+        border: 1px solid var(--border);
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .faq-item:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .faq-question {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        padding: 1.25rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        user-select: none;
+        transition: all 0.3s ease;
+    }
+
+    .faq-question:hover {
+        background: var(--primary-light);
+        color: var(--primary);
+    }
+
+    .faq-icon {
+        font-size: 1.125rem;
+        color: var(--primary);
+        transition: transform 0.3s ease;
+        flex-shrink: 0;
+        margin-left: 1rem;
+    }
+
+    .faq-item.active .faq-icon {
+        transform: rotate(180deg);
+    }
+
+.faq-answer {
+        padding: 0 1.25rem;
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.4s ease;
+        color: var(--text-secondary);
+        font-size: 0.9375rem;
+        line-height: 1.7;
+    }
+
+
+    .faq-item.active .faq-answer {
+        padding: 0 1.25rem 1.25rem;
+        max-height: 500px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 2rem 1rem 1.5rem;
+        }
+
+        .hero-title {
+            font-size: 1.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 0.9375rem;
+        }
+
+        .main-container,
+        .download-container {
+            margin-top: -1rem;
+            padding: 0 1rem;
+        }
+
+        .card-section {
+            padding: 1.25rem;
+        }
+
+        .upload-zone {
+            padding: 1.5rem 1rem;
+        }
+
+        .preview-container {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .preview-thumbnail {
+            width: 100%;
+            height: auto;
+            max-height: 140px;
+        }
+
+        .size-control-group {
+            flex-direction: column;
+            gap: 0.875rem;
+        }
+
+        .input-group {
+            max-width: 100%;
+        }
+
+        .process-button {
+            width: 100%;
+        }
+
+        .action-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .content-section {
+            padding: 2rem 1.25rem;
+        }
+
+        .content-heading {
+            font-size: 1.5rem;
+        }
+
+        .features-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+        }
+
+        .upload-specs {
+            flex-direction: column;
+            gap: 0.625rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hero-badge {
+            font-size: 0.75rem;
+            padding: 0.375rem 0.75rem;
+        }
+
+        .stats-row {
+            flex-direction: column;
+            gap: 0.625rem;
+        }
+
+        .stat-badge {
+            width: 100%;
+        }
+
+        .stats-section {
+            padding: 2rem 1.5rem;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<form style="display: none;">
+{% csrf_token %}
+</form>
+
+<div class="page-wrapper">
+    <!-- Upload Page -->
+    <div id="uploadPage">
+        <!-- Hero -->
+        <section class="hero-section">
+            <div class="hero-content">
+                    
+                <h1 class="hero-title">Resize Images to 20KB</h1>
+                <p class="hero-subtitle">
+                    Compress images to exact target sizes for job applications and official documents
+                </p>
+            </div>
+        </section>
+
+        <!-- Main Upload -->
+        <div class="main-container">
+            <div class="upload-card">
+                <!-- Upload -->
+                <div class="card-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </span>
+                        Upload Image
+                    </h2>
+
+                    <div class="upload-zone" id="uploadZone">
+                        <input type="file" id="fileInput" class="file-input" accept="image/*">
+                        <label for="fileInput" style="cursor: pointer; width: 100%;">
+                            <div class="upload-icon">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <h3 class="upload-title">Drop image or click to browse</h3>
+                            <p class="upload-description">
+                                JPEG, PNG, WebP, HEIC (max 10MB)
+                            </p>
+                            <button type="button" class="upload-button" onclick="event.preventDefault();">
+                                Select Image
+                            </button>
+                            <div class="upload-specs">
+                                <div class="spec-item">
+                                    <i class="fas fa-check-circle spec-icon"></i>
+                                    <span>No Watermark</span>
+                                </div>
+                                <div class="spec-item">
+                                    <i class="fas fa-check-circle spec-icon"></i>
+                                    <span>Free Forever</span>
+                                </div>
+                                <div class="spec-item">
+                                    <i class="fas fa-check-circle spec-icon"></i>
+                                    <span>Instant</span>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- Preview -->
+                    <div class="preview-section" id="previewSection">
+                        <div class="preview-container">
+                            <img id="previewThumb" class="preview-thumbnail" alt="Preview">
+                            <div class="preview-details">
+                                <div class="preview-filename" id="previewName"></div>
+                                <div class="preview-meta">
+                                    <span><i class="fas fa-file-alt"></i> <span id="previewSize"></span></span>
+                                    <span><i class="fas fa-expand-alt"></i> <span id="previewDimensions"></span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="remove-button" onclick="clearFile()" title="Remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Size Control -->
+                <div class="card-section size-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">
+                            <i class="fas fa-sliders-h"></i>
+                        </span>
+                        Target Size
+                    </h2>
+
+                    <div class="size-control-group">
+                        <div class="input-group">
+                            <label class="input-label" for="targetSize">File Size</label>
+                            <div class="size-input-wrapper">
+                                <input type="number" id="targetSize" class="size-input" value="20" min="5" max="1000">
+                                <span class="size-unit">KB</span>
+                            </div>
+                        </div>
+                        <button type="button" class="process-button" id="processBtn" onclick="processImage()" disabled>
+                            <i class="fas fa-magic"></i>
+                            Resize
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="content-wrapper">
+            <div class="stats-section">
+                <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.375rem;">Trusted Worldwide</h2>
+                <p style="opacity: 0.9; margin-bottom: 0.5rem;">Professional image compression</p>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">5M+</div>
+                        <div class="stat-text">Images Processed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">150+</div>
+                        <div class="stat-text">Countries</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">99.8%</div>
+                        <div class="stat-text">Success Rate</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2 sec</div>
+                        <div class="stat-text">Avg Time</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content-wrapper">
+            <div class="content-section">
+                <h2 class="content-heading">Why Resize Images to 20KB?</h2>
+                <p class="content-text">
+                    To​‍​‌‍​‍‌​‍​‌‍​‍‌ make data processing more efficient and to save on upload time, various government portals, job application platforms, and academic systems from around the globe impose hard file size limits. Among these, the 20KB limit is most frequently seen in the case of passport photos, signature images, and other types of official documentation that are submitted as part of civil service exams, university admissions, and professional ​‍​‌‍​‍‌​‍​‌‍​‍‌certifications.
+                </p>
+                <p class="content-text">
+                    Conventional​‍​‌‍​‍‌​‍​‌‍​‍‌ photo editing tools usually involve a cumbersome trial-and-error process with quality sliders, which most of the time lead to files that exceed the size limits or have a low visual quality. Our smart compression algorithm removes this need for guessing by determining the best interaction between image dimensions and compression quality to get your exact target size with the least possible clarity ​‍​‌‍​‍‌​‍​‌‍​‍‌loss.
+                </p>
+            </div>
+
+            <div class="content-section">
+                <h2 class="content-heading">How to Use</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-upload"></i>
+                        </div>
+                        <h3 class="feature-title">1. Upload Image</h3>
+                        <p class="feature-description">
+                            Drag and drop or click to select your photo. Supports JPEG, PNG, WebP, HEIC.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h3 class="feature-title">2. Set Target</h3>
+                        <p class="feature-description">
+                            Enter desired size (5KB-1000KB). Default is 20KB for government forms.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <h3 class="feature-title">3. Process</h3>
+                        <p class="feature-description">
+                            Smart algorithm optimizes quality and dimensions in seconds.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <h3 class="feature-title">4. Download</h3>
+                        <p class="feature-description">
+                            Get your perfectly sized image ready for any portal or form.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="content-heading">Common Use Cases</h2>
+                
+                <h3 class="content-subheading">Government & Public Sector</h3>
+                <p class="content-text">
+                    <strong>Civil Service Examinations:</strong> UPSC, SSC, Railway Recruitment Boards, Banking exams, and state public service commissions require passport-size photos typically under 20KB-50KB with specific dimension requirements (300×300px to 600×600px).
+                </p>
+                <p class="content-text">
+                    <strong>Official ID Applications:</strong> Passport applications, voter ID cards, driving licenses, and Aadhaar card updates mandate compressed photos meeting exact size specifications.
+                </p>
+
+                <h3 class="content-subheading">Education & Academic</h3>
+                <p class="content-text">
+                    <strong>University Admissions:</strong> College application portals enforce file size limits from 10KB to 100KB for candidate photographs and documents.
+                </p>
+                <p class="content-text">
+                    <strong>Entrance Exams:</strong> JEE, NEET, CAT, GATE, GRE, GMAT, TOEFL require precisely sized photographs for admit cards and registration.
+                </p>
+
+                <h3 class="content-subheading">Professional & Corporate</h3>
+                <ul class="content-list">
+                    <li><strong>Professional Licenses:</strong> Medical councils, bar associations, engineering boards require exact photo specifications</li>
+                    <li><strong>Job Applications:</strong> HR systems and recruitment platforms with attachment size restrictions</li>
+                    <li><strong>Email Attachments:</strong> Reduce file sizes for email systems with limits</li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <h2 class="content-heading">Frequently Asked Questions</h2>
+                <div class="faq-section">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            How accurate is the file size targeting?
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            Our algorithm achieves within 5% of your target size, meaning a 20KB target typically results in 19-21KB. This precision ensures compliance with strict portal requirements. The system performs multiple compression passes to converge on the exact target while maximizing visual quality.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Can I resize to sizes other than 20KB?
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            Absolutely! While 20KB is the default, you can target any size from 5KB to 1000KB (1MB). Common requirements include 10KB (some government forms), 30KB (academic applications), 50KB (professional certifications), 100KB (email optimization), and custom sizes for specific portals.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Are my uploaded photos stored on your servers?
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            No. Your privacy is our top priority. Images are processed in memory and automatically deleted within 30 minutes. We never store, access, analyze, or share your personal photos. All transfers use HTTPS encryption, and our infrastructure is fully GDPR-compliant.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Why do some portals reject my resized image?
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            Portal rejections typically occur due to additional requirements beyond file size: specific dimensions (e.g., 300×300px square), aspect ratio (1:1, 4:3, etc.), background color (white or light), file format restrictions (JPEG only), or minimum quality thresholds. Always verify the complete requirements of your target portal before final submission.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Does this work with photos from smartphones?
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            Yes! Modern smartphones capture images in various formats including HEIC (iPhones) and high-resolution JPEG (Android). Our tool automatically processes all formats, applies correct rotation based on EXIF metadata, and handles photos from any device—iOS, Android, cameras—with seamless support for portrait and landscape orientations.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading-overlay" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h2 class="loading-title">Processing Image</h2>
+            <p class="loading-subtitle">Resizing to <span id="loadingSize">20</span>KB...</p>
+        </div>
+    </div>
+
+    <!-- Download Page -->
+    <div class="download-page" id="downloadPage">
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Success</span>
+                </div>
+                <h1 class="hero-title">Image Ready</h1>
+                <p class="hero-subtitle">Successfully resized to your target size</p>
+            </div>
+        </section>
+
+        <div class="download-container">
+            <div class="download-card">
+                <div class="download-preview-section">
+                    <div class="download-image-wrapper">
+                        <img id="downloadThumb" class="download-thumbnail" alt="Resized">
+                    </div>
+                    <div class="download-filename" id="downloadName"></div>
+                    <div class="download-size-text" id="downloadSizeText"></div>
+                    <div class="stats-row">
+                        <div class="stat-badge">
+                            <div class="stat-value" id="statOriginal">0 KB</div>
+                            <div class="stat-label">Original</div>
+                        </div>
+                        <div class="stat-badge">
+                            <div class="stat-value" id="statFinal">0 KB</div>
+                            <div class="stat-label">Final</div>
+                        </div>
+                        <div class="stat-badge">
+                            <div class="stat-value" id="statReduction">0%</div>
+                            <div class="stat-label">Reduced</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="download-actions">
+                    <button type="button" class="primary-download-btn" onclick="downloadImage()">
+                        <i class="fas fa-download"></i>
+                        Download Image
+                    </button>
+
+                    <div class="action-grid">
+                        <button type="button" class="action-btn btn-primary" onclick="compressAnother()">
+                            <i class="fas fa-redo"></i>
+                            Resize Another
+                        </button>
+                        <button type="button" class="action-btn btn-success">
+                            <i class="fas fa-expand"></i>
+                            Increase Size
+                        </button>
+                        <button type="button" class="action-btn btn-warning">
+                            <i class="fas fa-file-pdf"></i>
+                            To PDF
+                        </button>
+                        <button type="button" class="action-btn btn-info">
+                            <i class="fas fa-crop"></i>
+                            Crop
+                        </button>
+                    </div>
+
+                    <div class="privacy-card">
+                        <div class="privacy-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <p class="privacy-text">
+                            <strong>Privacy:</strong> Auto-deleted after 30 minutes. Never stored or shared.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let selectedFile = null;
+let processedBlob = null;
+let processedFilename = null;
+
+const fileInput = document.getElementById('fileInput');
+const uploadZone = document.getElementById('uploadZone');
+const targetSizeInput = document.getElementById('targetSize');
+
+// File input handling
+fileInput.addEventListener('change', handleFileSelect);
+
+// Validate target size input
+targetSizeInput.addEventListener('input', function() {
+    let value = parseInt(this.value);
+    if (isNaN(value) || value < 5) {
+        this.value = 5;
+    } else if (value > 1000) {
+        this.value = 1000;
+    }
+});
+
+// Drag and drop
+uploadZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadZone.classList.add('drag-active');
+});
+
+uploadZone.addEventListener('dragleave', () => {
+    uploadZone.classList.remove('drag-active');
+});
+
+uploadZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadZone.classList.remove('drag-active');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+        fileInput.files = e.dataTransfer.files;
+        handleFileSelect({ target: { files: [file] } });
+    }
+});
+
+function handleFileSelect(e) {
+    const file = e.target.files[0];
+    if (!file || !file.type.startsWith('image/')) {
+        alert('Please select a valid image file');
+        return;
+    }
+    
+    selectedFile = file;
+    
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+            document.getElementById('previewThumb').src = e.target.result;
+            document.getElementById('previewName').textContent = file.name;
+            document.getElementById('previewSize').textContent = formatSize(file.size);
+            document.getElementById('previewDimensions').textContent = `${img.width} × ${img.height}px`;
+            
+            document.getElementById('uploadZone').style.display = 'none';
+            document.getElementById('previewSection').classList.add('active');
+            document.getElementById('processBtn').disabled = false;
+        };
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+function clearFile() {
+    selectedFile = null;
+    fileInput.value = '';
+    document.getElementById('uploadZone').style.display = 'block';
+    document.getElementById('previewSection').classList.remove('active');
+    document.getElementById('processBtn').disabled = true;
+}
+
+function processImage() {
+    if (!selectedFile) {
+        alert('Please select an image first');
+        return;
+    }
+    
+    // Get target size, ensure it's a valid number with default fallback
+    let targetSize = parseInt(document.getElementById('targetSize').value);
+    
+    // Validate and set default if invalid
+    if (isNaN(targetSize) || targetSize < 5 || targetSize > 1000) {
+        targetSize = 20;
+        document.getElementById('targetSize').value = 20;
+    }
+    
+    console.log('Processing with target size:', targetSize, 'KB');
+    
+    document.getElementById('loadingSize').textContent = targetSize;
+    
+    document.getElementById('uploadPage').style.display = 'none';
+    document.getElementById('loadingScreen').classList.add('active');
+    
+    const formData = new FormData();
+    formData.append('image_file', selectedFile);
+    formData.append('target_size_kb', targetSize.toString());
+    formData.append('auto_rotate', 'on');
+    formData.append('preserve_exif', 'off'); // Set based on checkbox if you add one
+    
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+    fetch(window.location.pathname, {
+        method: 'POST',
+        body: formData,
+        headers: { 'X-CSRFToken': csrftoken }
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(data => {
+                throw new Error(data.error || 'Processing failed. Please try again.');
+            }).catch(() => {
+                throw new Error('Processing failed. Please try again.');
+            });
+        }
+        
+        const contentDisposition = response.headers.get('Content-Disposition');
+        let filename = selectedFile.name.replace(/\.[^/.]+$/, '') + '_' + targetSize + 'kb.jpg';
+        if (contentDisposition) {
+            const match = contentDisposition.match(/filename="(.+)"/);
+            if (match) filename = match[1];
+        }
+        
+        const originalSize = response.headers.get('X-Original-Size');
+        const compressedSize = response.headers.get('X-Compressed-Size');
+        const targetSizeBytes = response.headers.get('X-Target-Size');
+        const qualityUsed = response.headers.get('X-Quality-Used');
+        
+        console.log('Processing complete:', {
+            original: originalSize,
+            compressed: compressedSize,
+            target: targetSizeBytes,
+            quality: qualityUsed
+        });
+        
+        return response.blob().then(blob => ({ 
+            blob, 
+            filename,
+            originalSize: parseInt(originalSize) || selectedFile.size,
+            compressedSize: parseInt(compressedSize) || blob.size
+        }));
+    })
+    .then(({ blob, filename, originalSize, compressedSize }) => {
+        processedBlob = blob;
+        processedFilename = filename;
+        showDownloadPage(blob, filename, originalSize, compressedSize);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error: ' + error.message);
+        document.getElementById('loadingScreen').classList.remove('active');
+        document.getElementById('uploadPage').style.display = 'block';
+    });
+}
+
+function showDownloadPage(blob, filename, originalSize, compressedSize) {
+    document.getElementById('loadingScreen').classList.remove('active');
+    
+    const url = URL.createObjectURL(blob);
+    document.getElementById('downloadThumb').src = url;
+    document.getElementById('downloadName').textContent = filename;
+    document.getElementById('downloadSizeText').textContent = 'File size: ' + formatSize(blob.size);
+    
+    document.getElementById('statOriginal').textContent = formatSize(originalSize || selectedFile.size);
+    document.getElementById('statFinal').textContent = formatSize(compressedSize || blob.size);
+    
+    const actualOriginal = originalSize || selectedFile.size;
+    const actualCompressed = compressedSize || blob.size;
+    const reduction = Math.round(((actualOriginal - actualCompressed) / actualOriginal) * 100);
+    document.getElementById('statReduction').textContent = Math.max(0, reduction) + '%';
+    
+    document.getElementById('downloadPage').classList.add('active');
+    window.history.pushState({}, '', window.location.pathname + '#download');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function downloadImage() {
+    if (!processedBlob) {
+        alert('No image to download');
+        return;
+    }
+    
+    const url = URL.createObjectURL(processedBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = processedFilename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+function compressAnother() {
+    clearFile();
+    processedBlob = null;
+    processedFilename = null;
+    
+    // Reset target size to default
+    document.getElementById('targetSize').value = 20;
+    
+    document.getElementById('downloadPage').classList.remove('active');
+    document.getElementById('uploadPage').style.display = 'block';
+    window.history.pushState({}, '', window.location.pathname);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function formatSize(bytes) {
+    if (!bytes || bytes < 0) return '0 B';
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+}
+
+// FAQ Accordion
+document.addEventListener('DOMContentLoaded', function() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        
+        question.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+            
+            // Close all FAQ items
+            faqItems.forEach(faq => {
+                faq.classList.remove('active');
+            });
+            
+            // Open clicked item if it wasn't active
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        });
+    });
+});
+
+// Handle browser back/forward
+window.addEventListener('popstate', () => {
+    if (window.location.hash.includes('download')) {
+        if (processedBlob) {
+            document.getElementById('uploadPage').style.display = 'none';
+            document.getElementById('downloadPage').classList.add('active');
+        }
+    } else {
+        document.getElementById('downloadPage').classList.remove('active');
+        document.getElementById('uploadPage').style.display = 'block';
+    }
+});
+
+// Animate on scroll
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('.content-section, .feature-card');
+    sections.forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(20px)';
+        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(section);
+    });
+});
+</script>
+{% endblock %}

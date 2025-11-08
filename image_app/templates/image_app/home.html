@@ -1,0 +1,2521 @@
+{% extends 'image_app/base.html' %}
+{% load static %}
+
+{% block title %}Resize Image Online Free | Resize Image to 20KB, 50KB, 100KB, 200KB | ResizeImages.tools{% endblock %}
+
+{% block description %}Free online image resizer and compressor. Resize image to 20kb, 50kb, 100kb, 200kb instantly. Resize JPEG, PNG images online. Bulk image resizer for photos. Resize image pixels and compress pictures online free - no registration required.{% endblock %}
+
+{% block keywords %}resize image, resize image online, resize image in kb, resize image to 20kb, resize image to 100kb, resize image to 50kb, resize image pixels, free image resizer, resize jpeg image, resize jpg image, bulk image resizer, resize image to 200kb, compress image, image compressor{% endblock %}
+
+{% block canonical %}https://Resizeimages.tools{% url request.resolver_match.url_name %}{% endblock %}
+
+{% block og_title %}Free Online Image Compressor - Resizeimages.tools{% endblock %}
+{% block og_description %}Compress images online for free at Resizeimages.tools. Reduce file sizes by up to 90% while maintaining quality. Perfect for web optimization and social media.{% endblock %}
+
+{% block twitter_title %}Free Online Image Compressor - Resizeimages.tools{% endblock %}
+{% block twitter_description %}Compress images online for free. Reduce file sizes by up to 90% while maintaining quality at Resizeimages.tools{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Compact Hero Section - White Theme */
+    .hero {
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        padding: 1.5rem 0 1rem;
+        border-bottom: 1px solid #e5e7eb;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="grad1" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:%233b82f6;stop-opacity:0.05" /><stop offset="100%" style="stop-color:%232563eb;stop-opacity:0" /></radialGradient></defs><rect width="100%" height="100%" fill="url(%23grad1)"/></svg>') center/cover;
+        z-index: -1;
+    }
+
+    .hero-content {
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero-title {
+        font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+        font-weight: 800;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: clamp(0.875rem, 2vw, 1rem);
+        color: #6b7280;
+        margin-bottom: 1.25rem;
+        line-height: 1.5;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-upload {
+    background: #ffffff;
+    border: 2px dashed #d1d5db;
+    border-radius: 12px;
+    padding: 1.5rem 1rem;
+    margin: 0.75rem auto 0;
+    max-width: 700px; /* Increased from 500px */
+    width: 90%; /* Add responsive width */
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+    .hero-upload:hover,
+    .hero-upload.dragover {
+        border-color: #3b82f6;
+        background: #f0f7ff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-upload.dragover::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+        animation: uploadShine 1s ease-out;
+    }
+
+    @keyframes uploadShine {
+        0% { left: -100%; }
+        100% { left: 100%; }
+    }
+
+    .upload-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 1.5rem;
+        color: white;
+        transition: all 0.3s ease;
+        animation: bounce 2s infinite ease-in-out;
+    }
+
+    @keyframes bounce {
+        0%, 20%, 53%, 80%, 100% {
+            transform: translateY(0);
+        }
+        40%, 43% {
+            transform: translateY(-8px);
+        }
+        70% {
+            transform: translateY(-4px);
+        }
+        90% {
+            transform: translateY(-2px);
+        }
+    }
+
+    .hero-upload:hover .upload-icon {
+        transform: scale(1.05);
+        animation: none;
+    }
+
+    .upload-text h3 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+    }
+
+    .upload-text p {
+        color: #6b7280;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    .upload-browse-btn {
+        background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        pointer-events: none;
+        min-height: 44px;
+    }
+
+    .upload-browse-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    .upload-info {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #e5e7eb;
+        color: #9ca3af;
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+
+    .hidden-file-input {
+        display: none;
+    }
+
+    /* Hide upload area when showing results */
+    .hero.results-mode .hero-upload {
+        display: none;
+    }
+
+    .hero.results-mode .stats {
+        display: none;
+    }
+
+    /* Compression Interface Styles */
+    /* Replace the existing .hero-upload styles with these updated ones */
+.hero-upload {
+    background: #ffffff;
+    border: 2px dashed #d1d5db;
+    border-radius: 12px;
+    padding: 1.5rem 1rem;
+    margin: 0.75rem auto 0;
+    max-width: 700px; /* Increased from 500px */
+    width: 90%; /* Add responsive width */
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Also update the compression interface width */
+.compression-interface {
+    display: none;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 800px; /* Increased from 600px */
+    width: 90%; /* Add responsive width */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+    .compression-interface.active {
+        display: block;
+        animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .selected-files-preview {
+        margin-bottom: 1.5rem;
+    }
+
+    .preview-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        color: #1f2937;
+        font-weight: 600;
+    }
+
+    .clear-all-btn {
+        background: #ef4444;
+        color: white;
+        border: none;
+        padding: 0.4rem 0.8rem;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .clear-all-btn:hover {
+        background: #dc2626;
+    }
+
+    .file-preview {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.75rem;
+        background: #f8fafc;
+        border-radius: 8px;
+        margin-bottom: 0.5rem;
+        position: relative;
+    }
+
+    .file-preview img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 6px;
+    }
+
+    .file-info {
+        flex: 1;
+    }
+
+    .file-name {
+        font-weight: 600;
+        color: #1f2937;
+        font-size: 0.875rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .file-size {
+        color: #6b7280;
+        font-size: 0.75rem;
+    }
+
+    .remove-file {
+        background: #ef4444;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+    }
+
+    .settings-section {
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        background: #f8fafc;
+        border-radius: 8px;
+    }
+
+    .settings-title {
+        color: #1f2937;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .quality-control {
+        margin-bottom: 1rem;
+    }
+
+    .quality-label {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #1f2937;
+    }
+
+    .quality-value {
+        background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-weight: 600;
+        font-size: 0.8rem;
+    }
+
+    .quality-slider {
+        width: 100%;
+        -webkit-appearance: none;
+        height: 6px;
+        border-radius: 10px;
+        background: #d1d5db;
+        outline: none;
+    }
+
+    .quality-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #3b82f6;
+        cursor: pointer;
+        border: 2px solid white;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .quality-slider::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #3b82f6;
+        cursor: pointer;
+        border: 2px solid white;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .quality-labels {
+        display: flex;
+        justify-content: space-between;
+        color: #6b7280;
+        font-size: 0.75rem;
+        margin-top: 0.5rem;
+    }
+
+    .options-row {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .option-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: #ffffff;
+        padding: 0.5rem;
+        border-radius: 6px;
+        border: 1px solid #e5e7eb;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .option-item:hover {
+        border-color: #3b82f6;
+        background: #f0f7ff;
+    }
+
+    .option-item input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+    }
+
+    .option-item label {
+        cursor: pointer;
+        font-size: 0.875rem;
+        color: #1f2937;
+    }
+
+    .compress-button {
+        width: 100%;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        border: none;
+        padding: 0.875rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+    }
+
+    .compress-button:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .compress-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .progress-section {
+        display: none;
+        text-align: center;
+        padding: 2rem;
+        background: #f8fafc;
+        border-radius: 8px;
+        margin: 2rem auto;
+        max-width: 600px;
+    }
+
+    .progress-section.active {
+        display: block;
+    }
+
+    .progress-title {
+        color: #1f2937;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 8px;
+        background: #e5e7eb;
+        border-radius: 10px;
+        overflow: hidden;
+        margin: 1rem 0;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+        width: 0%;
+        transition: width 0.3s ease;
+        position: relative;
+    }
+
+    .progress-fill::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        animation: progress-shine 1.5s infinite;
+    }
+
+    @keyframes progress-shine {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+    }
+
+    .progress-text {
+        color: #6b7280;
+        font-weight: 600;
+    }
+
+    /* Results Section Styles */
+    .results-section {
+        display: none;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 2rem;
+        margin: 2rem auto;
+        max-width: 900px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .results-section.active {
+        display: block;
+        animation: slideIn 0.3s ease-out;
+    }
+
+    .results-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .results-title {
+        font-size: clamp(1.5rem, 4vw, 2rem);
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+    }
+
+    .results-subtitle {
+        color: #6b7280;
+        font-size: 1rem;
+    }
+
+    .results-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .stat-box {
+        background: #f8fafc;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 1rem;
+    }
+
+    .stat-number {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: #10b981;
+        display: block;
+    }
+
+    .stat-label {
+        color: #6b7280;
+        font-size: 0.75rem;
+        margin-top: 0.25rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .results-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .result-card {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .result-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .result-image-container {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+        background: #f8fafc;
+    }
+
+    .result-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .result-card:hover .result-image {
+        transform: scale(1.05);
+    }
+
+    .result-overlay {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background: rgba(16, 185, 129, 0.9);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    .result-info {
+        padding: 1.25rem;
+    }
+
+    .result-name {
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 1rem;
+        font-size: 0.875rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .result-name i {
+        color: #6b7280;
+    }
+
+    .result-comparison {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        align-items: center;
+    }
+
+    .size-info {
+        text-align: center;
+    }
+
+    .size-label {
+        color: #9ca3af;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.25rem;
+    }
+
+    .size-value {
+        font-weight: 700;
+        font-size: 0.875rem;
+    }
+
+    .original-size {
+        color: #ef4444;
+    }
+
+    .compressed-size {
+        color: #10b981;
+    }
+
+    .comparison-arrow {
+        color: #3b82f6;
+        font-size: 1rem;
+    }
+
+    .result-actions {
+        display: flex;
+        gap: 0.75rem;
+    }
+
+    .download-btn {
+        flex: 1;
+        background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+        color: white;
+        border: none;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .download-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+    }
+
+    .preview-btn {
+        background: #ffffff;
+        color: #6b7280;
+        border: 1px solid #d1d5db;
+        padding: 0.75rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .preview-btn:hover {
+        background: #f8fafc;
+        color: #374151;
+    }
+
+    .results-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .download-all-btn {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 25px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .download-all-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
+    }
+
+    .compress-again-btn {
+        background: #ffffff;
+        color: #3b82f6;
+        border: 1px solid #3b82f6;
+        padding: 1rem 2rem;
+        border-radius: 25px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1rem;
+    }
+
+    .compress-again-btn:hover {
+        background: #f0f7ff;
+    }
+
+    /* Compact Stats */
+    .stats {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 1.25rem;
+        margin: 1.5rem auto 2rem;
+        max-width: 500px;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #3b82f6;
+        display: block;
+    }
+
+    .stat-label {
+        color: #6b7280;
+        font-size: 0.75rem;
+        font-weight: 500;
+        margin-top: 0.25rem;
+    }
+
+    /* Features Section */
+    .features {
+        padding: 3rem 0;
+        background: #f8fafc;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .section-title {
+        font-size: clamp(1.5rem, 4vw, 2.25rem);
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+        font-size: clamp(0.9rem, 2.5vw, 1rem);
+        color: #6b7280;
+        line-height: 1.6;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .feature-card {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+        text-align: center;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        border-color: #3b82f6;
+    }
+
+    .feature-icon {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 1.25rem;
+        color: white;
+        transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+        transform: scale(1.05);
+    }
+
+    .feature-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 0.75rem;
+    }
+
+    .feature-description {
+        color: #6b7280;
+        line-height: 1.5;
+        font-size: 0.9rem;
+    }
+
+    /* Benefits Section */
+    .benefits {
+        padding: 3rem 0;
+        background: #ffffff;
+    }
+
+    .benefits-content {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        align-items: center;
+    }
+
+    .benefits-text h2 {
+        font-size: clamp(1.75rem, 5vw, 2.5rem);
+        font-weight: 800;
+        color: #1f2937;
+        margin-bottom: 1.5rem;
+    }
+
+    .benefits-text p {
+        font-size: clamp(1rem, 3vw, 1.125rem);
+        color: #6b7280;
+        margin-bottom: 2rem;
+        line-height: 1.7;
+    }
+
+    .benefits-list {
+        list-style: none;
+        margin-bottom: 2rem;
+    }
+
+    .benefits-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+        color: #6b7280;
+        font-size: clamp(0.875rem, 3vw, 1rem);
+    }
+
+    .benefits-list i {
+        color: #10b981;
+        font-size: 1.125rem;
+        margin-top: 0.125rem;
+        flex-shrink: 0;
+    }
+
+    .benefits-visual {
+        background: #f8fafc;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .compression-demo {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .file-box {
+        background: #ffffff;
+        padding: 1.25rem;
+        border-radius: 12px;
+        flex: 1;
+        border: 2px dashed #d1d5db;
+        min-width: 120px;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    .file-size {
+        font-size: clamp(1.25rem, 4vw, 1.5rem);
+        font-weight: 800;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+    }
+
+    .file-label {
+        color: #6b7280;
+        font-size: clamp(0.75rem, 2.5vw, 0.875rem);
+    }
+
+    .arrow {
+        color: #3b82f6;
+        font-size: clamp(1.5rem, 4vw, 2rem);
+        order: 2;
+    }
+
+    .cta-primary {
+        background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: clamp(1rem, 3vw,1.125rem);
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        min-height: 44px;
+    }
+
+    .cta-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        color: white;
+        text-decoration: none;
+    }
+
+    /* How It Works */
+    .how-it-works {
+        padding: 3rem 0;
+        background: #f8fafc;
+    }
+
+    .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .step {
+        text-align: center;
+        position: relative;
+    }
+
+    .step-number {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: white;
+    }
+
+    .step-title {
+        font-size: clamp(1.125rem, 4vw, 1.25rem);
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 1rem;
+    }
+
+    .step-description {
+        color: #6b7280;
+        line-height: 1.6;
+        font-size: clamp(0.875rem, 3vw, 1rem);
+    }
+
+    /* FAQ Section */
+    .faq {
+        padding: 3rem 0;
+        background: #ffffff;
+    }
+
+    .faq-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .faq-item {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        margin-bottom: 1rem;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .faq-question {
+        width: 100%;
+        padding: 1.25rem;
+        background: none;
+        border: none;
+        color: #1f2937;
+        font-size: clamp(1rem, 3vw, 1.125rem);
+        font-weight: 600;
+        text-align: left;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 44px;
+    }
+
+    .faq-answer {
+        padding: 0 1.25rem 1.25rem;
+        color: #6b7280;
+        line-height: 1.6;
+        display: none;
+        font-size: clamp(0.875rem, 3vw, 1rem);
+    }
+
+    .faq-item.active .faq-answer {
+        display: block;
+    }
+
+    .faq-icon {
+        transition: transform 0.3s ease;
+        flex-shrink: 0;
+        color: #9ca3af;
+    }
+
+    .faq-item.active .faq-icon {
+        transform: rotate(180deg);
+    }
+
+    .faq-question:hover {
+        background: #f8fafc;
+    }
+
+    /* Mobile optimizations */
+    @media (max-width: 768px) {
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .hero-upload {
+            margin: 1rem 0;
+            max-width: 100%;
+        }
+        
+        .stats {
+            max-width: 100%;
+            margin: 1rem 0 1.5rem;
+        }
+
+        .compression-demo {
+            flex-direction: column;
+        }
+
+        .arrow {
+            order: initial;
+            transform: rotate(90deg);
+        }
+
+        .benefits-content {
+            grid-template-columns: 1fr;
+        }
+
+        .options-row {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .option-item {
+            justify-content: flex-start;
+        }
+
+        .results-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .results-stats {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .result-comparison {
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+        }
+        
+        .comparison-arrow {
+            transform: rotate(90deg);
+        }
+        
+        .results-actions {
+            flex-direction: column;
+        }
+        
+        .download-all-btn,
+        .compress-again-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .benefits-content {
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .features-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .steps-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .fade-in-up {
+        animation: fadeInUp 0.8s ease-out;
+    }
+
+    .fade-in-delay-1 { animation-delay: 0.2s; }
+    .fade-in-delay-2 { animation-delay: 0.4s; }
+    .fade-in-delay-3 { animation-delay: 0.6s; }
+
+    /* Performance optimizations */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    /* Accessibility improvements */
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+        .hero-upload {
+            border-width: 3px;
+        }
+        
+        .feature-card {
+            border-width: 2px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Add CSRF token for AJAX requests -->
+<form style="display: none;">
+    {% csrf_token %}
+</form>
+
+<!-- Hero Section with Upload -->
+<section class="hero" id="heroSection" itemscope itemtype="http://schema.org/SoftwareApplication">
+    <div class="container">
+        <div class="hero-content fade-in-up">
+            <h1 class="hero-title" itemprop="name">
+                Free Online Image Resizer | Resize Images to Any KB Size 
+            </h1>
+            <p class="hero-subtitle" itemprop="description">
+                Resize image to 20KB, 50KB, 100KB, or 200KB instantly. Free bulk image resizer for JPEG, PNG photos. Resize image pixels online - no registration needed.
+            </p>
+            
+            <!-- Hero Upload Area -->
+            <div id="heroUpload" class="hero-upload" onclick="document.getElementById('heroFileInput').click()" role="button" aria-label="Upload images to compress" tabindex="0">
+                <div class="upload-icon" aria-hidden="true">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                
+                <div class="upload-text">
+                    <h3>Drop Images or Click to Browse</h3>
+                    <p>Supports JPEG, PNG, WebP, HEIC up to 10MB each</p>
+                </div>
+                
+                <button type="button" class="upload-browse-btn" aria-label="Choose images to compress">
+                    <i class="fas fa-images" aria-hidden="true"></i>
+                    <span>Select Images</span>
+                </button>
+                
+                <div class="upload-info">
+                    <p><strong>Privacy:</strong> Your images are processed securely and deleted after 24 hours</p>
+                </div>
+            </div>
+
+            <input type="file" id="heroFileInput" class="hidden-file-input" accept="image/*" multiple aria-label="Select image files to compress">
+        </div>
+        
+       
+
+<!-- Compression Interface -->
+<section class="compression-interface" id="compressionInterface">
+    <div class="container">
+        <div class="preview-header">
+            <h3><i class="fas fa-images"></i> Selected Images (<span id="imageCount">0</span>)</h3>
+            <button type="button" class="clear-all-btn" onclick="clearAllFiles()">
+                <i class="fas fa-trash"></i> Clear All
+            </button>
+        </div>
+        
+        <div class="selected-files-preview" id="selectedFilesPreview"></div>
+        
+        <div class="settings-section">
+            <h3 class="settings-title">
+                <i class="fas fa-sliders-h"></i>
+                Compression Settings
+            </h3>
+            
+            <div class="quality-control">
+                <div class="quality-label">
+                    <span>Quality</span>
+                    <span class="quality-value" id="qualityValue">80%</span>
+                </div>
+                <input type="range" id="qualitySlider" min="10" max="100" value="80" class="quality-slider">
+                <div class="quality-labels">
+                    <span>Smaller Size</span>
+                    <span>Higher Quality</span>
+                </div>
+            </div>
+            
+            <div class="options-row">
+                <div class="option-item">
+                    <input type="checkbox" id="preserveExif">
+                    <label for="preserveExif">Keep EXIF Data</label>
+                </div>
+                <div class="option-item">
+                    <input type="checkbox" id="autoRotate" checked>
+                    <label for="autoRotate">Auto-rotate</label>
+                </div>
+            </div>
+            
+            <button class="compress-button" id="compressButton">
+                <i class="fas fa-compress-alt"></i>
+                <span>Compress Images</span>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Progress Section -->
+<section class="progress-section" id="progressSection">
+    <div class="container">
+        <div class="progress-title">
+            <i class="fas fa-spinner fa-spin"></i>
+            <span>Compressing Images...</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <p class="progress-text" id="progressText">0% Complete</p>
+    </div>
+</section>
+
+<!-- Results Section -->
+<section class="results-section" id="resultsSection">
+    <div class="container">
+        <div class="results-header">
+            <h2 class="results-title">
+                <i class="fas fa-check-circle"></i>
+                Compression Complete!
+            </h2>
+            <p class="results-subtitle">Your optimized images are ready for download</p>
+        </div>
+
+        <div class="results-stats" id="resultsStats">
+            <div class="stat-box">
+                <span class="stat-number" id="totalFiles">0</span>
+                <div class="stat-label">Files Processed</div>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number" id="totalSaved">0MB</span>
+                <div class="stat-label">Size Saved</div>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number" id="averageSavings">0%</span>
+                <div class="stat-label">Average Reduction</div>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number" id="processingTime">0s</span>
+                <div class="stat-label">Processing Time</div>
+            </div>
+        </div>
+
+        <div class="results-grid" id="resultsGrid"></div>
+
+        <div class="results-actions">
+            <button class="download-all-btn" id="downloadAllBtn">
+                <i class="fas fa-download"></i>
+                <span>Download All Images</span>
+            </button>
+            <button class="compress-again-btn" onclick="startOver()">
+                <i class="fas fa-redo"></i>
+                <span>Compress More Images</span>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features" id="features">
+    <div class="container">
+        <div class="section-header fade-in-up">
+            <h2 class="section-title">Why People Love Resizeimages.tools</h2>
+            <p class="section-subtitle">
+                We've helped tons of folks shrink their photos without the headache. Here's what makes us different.
+            </p>
+        </div>
+        
+        <div class="features-grid">
+            <article class="feature-card fade-in-up">
+                <div class="feature-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                <h3 class="feature-title">Actually Keeps Your Photos Looking Good</h3>
+                <p class="feature-description">
+                    Look, we get it - you don't want your photos to look terrible after compressing them. That's why we spent ages building something that makes files tiny but keeps them looking sharp. Most folks can't even tell the difference.
+                </p>
+            </article>
+            
+            <article class="feature-card fade-in-up fade-in-delay-1">
+                <div class="feature-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3 class="feature-title">Super Quick</h3>
+                <p class="feature-description">
+                    Upload your stuff, wait a few seconds, boom - you're done. No waiting around forever or installing weird software that clutters up your computer.
+                </p>
+            </article>
+            
+            <article class="feature-card fade-in-up fade-in-delay-2">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="feature-title">We Don't Keep Your Photos</h3>
+                <p class="feature-description">
+                    Privacy matters, right? We process your images and then delete them within 24 hours. Nobody here is looking at your vacation pics or work stuff - we've got better things to do.
+                </p>
+            </article>
+            
+            <article class="feature-card fade-in-up">
+                <div class="feature-icon">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <h3 class="feature-title">Do Lots at Once</h3>
+                <p class="feature-description">
+                    Got a whole folder of photos? Throw them all in. You can do up to 20 at a time and download everything in one zip file. Great for when you've got a bunch of wedding photos or product shots.
+                </p>
+            </article>
+            
+            <article class="feature-card fade-in-up fade-in-delay-1">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3 class="feature-title">Works on Your Phone Too</h3>
+                <p class="feature-description">
+                    Whether you're on your laptop, phone, or tablet - doesn't matter. The site works fine on whatever device you're using. No apps to download or anything like that.
+                </p>
+            </article>
+            
+            <article class="feature-card fade-in-up fade-in-delay-2">
+                <div class="feature-icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <h3 class="feature-title">Won't Cost You Anything</h3>
+                <p class="feature-description">
+                    Seriously, it's free. No hidden charges, no "premium" nonsense, no limits on how many photos you can compress. We think useful tools shouldn't cost money.
+                </p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- Benefits Section -->
+<section class="benefits">
+    <div class="container">
+        <div class="benefits-content fade-in-up">
+            <div class="benefits-text">
+                <h2>Tired of Giant Image Files?</h2>
+                <p>
+                    Big photos are annoying. They slow down your website, fill up your phone storage, and take forever to email. Resizeimages.tools fixes all that without making you jump through hoops or learn complicated software.
+                </p>
+                
+                <ul class="benefits-list">
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Your website loads way faster when images aren't huge</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Email photos without hitting attachment limits</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Free up space on your phone or computer</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Meet those annoying file size requirements for job applications</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Post to social media faster</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Save money on web hosting bandwidth</span>
+                    </li>
+                </ul>
+                
+                <a href="#heroUpload" class="cta-primary">
+                    <i class="fas fa-arrow-right"></i>
+                    <span>Let's Do This</span>
+                </a>
+            </div>
+            
+            <div class="benefits-visual fade-in-up fade-in-delay-1">
+                <h3 style="color: #1f2937; margin-bottom: 1.5rem;">Before and After</h3>
+                <div class="compression-demo">
+                    <div class="file-box">
+                        <div class="file-size" style="color: #ef4444;">4.8MB</div>
+                        <div class="file-label">Original</div>
+                    </div>
+                    <div class="arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="file-box">
+                        <div class="file-size" style="color: #10b981;">485KB</div>
+                        <div class="file-label">Compressed</div>
+                    </div>
+                </div>
+                <p style="color: #6b7280; margin-top: 1rem; font-size: 0.875rem;">
+                    Same photo, 90% smaller file
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="how-it-works">
+    <div class="container">
+        <div class="section-header fade-in-up">
+            <h2 class="section-title">How to Use Resizeimages.tools</h2>
+            <p class="section-subtitle">
+                It's pretty straightforward. Three steps and you're done.
+            </p>
+        </div>
+        
+        <div class="steps-grid">
+            <article class="step fade-in-up">
+                <div class="step-number">1</div>
+                <h3 class="step-title">Upload Your Photos</h3>
+                <p class="step-description">
+                    Drag them into the box above or click to browse. You can do up to 20 photos at once, and each one can be up to 10MB. We handle JPG, PNG, WebP, and HEIC files.
+                </p>
+            </article>
+            
+            <article class="step fade-in-up fade-in-delay-1">
+                <div class="step-number">2</div>
+                <h3 class="step-title">Pick Your Settings</h3>
+                <p class="step-description">
+                    Choose how much you want to compress them. Need tiny files for email? We've got you. Want them perfect for your website? That works too.
+                </p>
+            </article>
+            
+            <article class="step fade-in-up fade-in-delay-2">
+                <div class="step-number">3</div>
+                <h3 class="step-title">Download and You're Done</h3>
+                <p class="step-description">
+                    Your compressed photos are ready instantly. Download them one by one or grab everything in a zip file. Easy.
+                </p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section - COMPLETE 16 QUESTIONS -->
+<!-- Replace your existing FAQ section (lines 1603-1645) with this entire section -->
+
+<section class="faq">
+    <div class="container">
+        <div class="faq-container">
+            <div class="section-header fade-in-up">
+                <h2 class="section-title">Frequently Asked Questions About Resizing Images Online</h2>
+                <p class="section-subtitle">
+                    Everything you need to know about resizing images, compressing files, and optimizing photos for web use.
+                </p>
+            </div>
+            
+            <!-- FAQ 1 -->
+            <article class="faq-item fade-in-up" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <button class="faq-question" aria-expanded="false">
+                    <span itemprop="name">How do I resize an image online for free?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <div itemprop="text">
+                        <p>To resize an image online free using ResizeImages.tools:</p>
+                        <ul>
+                            <li><strong>Upload your image:</strong> Click the upload area or drag and drop your JPEG, PNG, or WebP file</li>
+                            <li><strong>Choose target size:</strong> Select your desired file size (20KB, 50KB, 100KB, or 200KB) or use custom compression</li>
+                            <li><strong>Adjust quality:</strong> Use the slider to balance between file size and image quality</li>
+                            <li><strong>Download:</strong> Get your resized image instantly</li>
+                        </ul>
+                        <p>Our free image resizer works entirely in your browser with no registration required. You can resize images up to 10MB each.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- FAQ 2 -->
+            <article class="faq-item fade-in-up" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <button class="faq-question" aria-expanded="false">
+                    <span itemprop="name">How can I resize an image to 20KB, 50KB, or 100KB?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <div itemprop="text">
+                        <p>ResizeImages.tools offers dedicated tools to <strong>resize image to 20KB, resize image to 50KB, resize image to 100KB, and resize image to 200KB</strong>. Here's how:</p>
+                        <ul>
+                            <li><strong>For 20KB:</strong> Use our "Resize to 20KB" tool - perfect for small thumbnails and profile pictures</li>
+                            <li><strong>For 50KB:</strong> Ideal for email attachments and social media posts</li>
+                            <li><strong>For 100KB:</strong> Best balance for web images and document uploads</li>
+                            <li><strong>For 200KB:</strong> High quality for presentations and professional use</li>
+                        </ul>
+                        <p>Each tool automatically optimizes your image dimensions and compression to achieve the exact target file size while maintaining the best possible quality.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- FAQ 3 -->
+            <article class="faq-item fade-in-up" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <button class="faq-question" aria-expanded="false">
+                    <span itemprop="name">Can I resize JPEG images and PNG files online?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <div itemprop="text">
+                        <p>Yes! Our free image resizer supports all popular formats:</p>
+                        <ul>
+                            <li><strong>Resize JPEG image:</strong> Perfect for photographs and complex images</li>
+                            <li><strong>Resize JPG image:</strong> Same as JPEG - we handle both extensions</li>
+                            <li><strong>Resize PNG image:</strong> Maintains transparency for logos and graphics</li>
+                            <li><strong>WebP images:</strong> Modern format with superior compression</li>
+                            <li><strong>HEIC files:</strong> Apple's high-efficiency format from iPhones</li>
+                        </ul>
+                        <p>When you resize JPEG or PNG images, our tool automatically converts them to the optimal format while preserving quality.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- FAQ 4 -->
+            <article class="faq-item fade-in-up" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <button class="faq-question" aria-expanded="false">
+                    <span itemprop="name">Does this work as a bulk image resizer?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <div itemprop="text">
+                        <p>Absolutely! ResizeImages.tools is an excellent <strong>bulk image resizer</strong> that lets you:</p>
+                        <ul>
+                            <li><strong>Upload up to 20 images</strong> at once for batch processing</li>
+                            <li><strong>Resize multiple photos</strong> with the same settings simultaneously</li>
+                            <li><strong>Download all images</strong> at once in a zip file</li>
+                            <li><strong>Save time</strong> by processing entire photo albums in minutes</li>
+                        </ul>
+                        <p>This makes it perfect for photographers, web developers, and anyone who needs to resize many images quickly. Our bulk image resizer maintains consistent quality across all files.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- FAQ 5 -->
+            <article class="faq-item fade-in-up" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <button class="faq-question" aria-expanded="false">
+                    <span itemprop="name">How do I resize image pixels and dimensions?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <div itemprop="text">
+                        <p>When you <strong>resize image pixels</strong> using ResizeImages.tools, we automatically calculate optimal dimensions:</p>
+                        <ul>
+                            <li><strong>Automatic scaling:</strong> We reduce pixel dimensions proportionally to reach your target file size</li>
+                            <li><strong>Aspect ratio preserved:</strong> Your images never get stretched or distorted</li>
+                            <li><strong>Smart algorithms:</strong> We use advanced resampling (Lanczos) for the best quality</li>
+                            <li><strong>Web-optimized:</strong> Perfect pixel density for fast-loading websites</li>
+                        </ul>
+                        <p>For example, a 4000x3000px image resized to 100KB might become 1200x900px, maintaining the same 4:3 ratio while dramatically reducing file size.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- FAQ 6 -->
+            <article class="faq-item fade-in-up" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <button class="faq-question" aria-expanded="false">
+                    <span itemprop="name">Will my images lose quality when resized?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <div itemprop="text">
+                        <p>ResizeImages.tools uses intelligent compression to minimize quality loss:</p>
+                        <ul>
+                            <li><strong>Smart compression:</strong> We analyze each image to find the optimal balance</li>
+                            <li><strong>Content-aware:</strong> Different compression for detailed vs. simple areas</li>
+                            <li><strong>Quality slider:</strong> You control the trade-off between size and quality</li>
+                            <li><strong>Preview before download:</strong> Check the result before saving</li>
+                        </ul>
+                        <p>Most users achieve 70-90% file size reduction with minimal visible quality loss. For web use, the difference is typically imperceptible to viewers.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- FAQ 7 -->
+            <article class="faq-item fade-in-up" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <button class="faq-question" aria-expanded="false">
+                    <span itemprop="name">What are the file size limits for image resizing?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <div itemprop="text">
+                        <p>Our free image resizer has generous limits:</p>
+                        <ul>
+                            <li><strong>Maximum file size:</strong> 10MB per image (15MB for 200KB compression)</li>
+                            <li><strong>Batch limit:</strong> Up to 20 images at once</li>
+                            <li><strong>Target sizes:</strong> From 5KB to 1000KB (1MB)</li>
+                            <li><strong>No daily limits:</strong> Use the tool as many times as you need</li>
+                        </ul>
+                        <p>These limits cover 99% of typical use cases, from smartphone photos to high-resolution camera images.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- FAQ 8 -->
+            <article class="faq-item fade-in-up" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <button class="faq-question" aria-expanded="false">
+                    <span itemprop="name">What's the best image format for websites?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <div itemprop="text">
+                        <p>The best format depends on your needs:</p>
+                        <ul>
+                            <li><strong>JPEG:</strong> Best for photographs and images with gradients. Excellent compression for complex images.</li>
+                            <li><strong>PNG:</strong> Essential for images requiring transparency (logos, icons). Larger file sizes but lossless quality.</li>
+                            <li><strong>WebP:</strong> Modern format offering 25-35% better compression than JPEG with similar quality. Supported by most browsers.</li>
+                        </ul>
+                        <p>ResizeImages.tools automatically optimizes your images regardless of format, ensuring fast website loading times.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- FAQ 9 -->
+            <article class="faq-item fade-in-up" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <button class="faq-question" aria-expanded="false">
+                    <span itemprop="name">Can I resize images taken from my phone?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <div itemprop="text">
+                        <p>Yes! Our image resizer is fully mobile-friendly and works perfectly with smartphone photos:</p>
+                        <ul>
+                            <li><strong>Direct camera access:</strong> Take a photo and resize it immediately</li>
+                            <li><strong>HEIC support:</strong> We handle Apple's HEIC format from iPhones</li>
+                            <li><strong>Large originals:</strong> Modern phones create 4-12MB photos - we handle them all</li>
+                            <li><strong>Touch-optimized:</strong> Easy to use on phone or tablet screens</li>
+                        </ul>
+                        <p>Perfect for sharing photos via email, social media, or messaging apps where file size matters.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- FAQ 10 -->
+            <article class="faq-item fade-in-up" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <button class="faq-question" aria-expanded="false">
+                    <span itemprop="name">What size should I resize images for email?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <div itemprop="text">
+                        <p>For email attachments, we recommend:</p>
+                        <ul>
+                            <li><strong>20-50KB:</strong> Perfect for single images in emails</li>
+                            <li><strong>100KB:</strong> Good for multiple images or when quality is important</li>
+                            <li><strong>Total limit:</strong> Most email providers limit attachments to 20-25MB total</li>
+                        </ul>
+                        <p>Resizing to 50-100KB lets you attach 10-20 images comfortably within email limits while maintaining good quality for viewing on screens.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- FAQ 11 -->
+            <article class="faq-item fade-in-up" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <button class="faq-question" aria-expanded="false">
+                    <span itemprop="name">Is it safe to upload my photos? What about privacy?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <div itemprop="text">
+                        <p>Your privacy is our top priority:</p>
+                        <ul>
+                            <li><strong>Secure upload:</strong> All files transferred via HTTPS encryption</li>
+                            <li><strong>Auto-deletion:</strong> Your images are automatically deleted within 24 hours</li>
+                            <li><strong>No storage:</strong> We don't keep, view, or share your photos</li>
+                            <li><strong>No accounts:</strong> No registration means no personal data collected</li>
+                            <li><strong>No tracking:</strong> We don't track what images you upload</li>
+                        </ul>
+                        <p>Your photos are processed and immediately available for download, then removed from our servers.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- FAQ 12 -->
+            <article class="faq-item fade-in-up" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <button class="faq-question" aria-expanded="false">
+                    <span itemprop="name">Can I use this for professional/commercial projects?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <div itemprop="text">
+                        <p>Absolutely! ResizeImages.tools is perfect for professional use:</p>
+                        <ul>
+                            <li><strong>Web developers:</strong> Optimize images for faster website loading</li>
+                            <li><strong>Photographers:</strong> Create web galleries and client proofs</li>
+                            <li><strong>E-commerce:</strong> Resize product photos for online stores</li>
+                            <li><strong>Real estate:</strong> Optimize property photos for listings</li>
+                            <li><strong>Social media managers:</strong> Prepare images for multiple platforms</li>
+                        </ul>
+                        <p>There are no restrictions on commercial use. The tool is free for personal and business projects alike.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- FAQ 13 -->
+            <article class="faq-item fade-in-up" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <button class="faq-question" aria-expanded="false">
+                    <span itemprop="name">What happens to EXIF data when I resize images?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <div itemprop="text">
+                        <p>You have full control over EXIF data:</p>
+                        <ul>
+                            <li><strong>Optional preservation:</strong> Choose to keep or remove metadata</li>
+                            <li><strong>Privacy protection:</strong> Remove GPS location data automatically</li>
+                            <li><strong>Copyright info:</strong> Optionally preserve copyright and creator data</li>
+                            <li><strong>Camera settings:</strong> Keep technical details if needed</li>
+                        </ul>
+                        <p>EXIF data includes camera model, date taken, GPS coordinates, and camera settings. Removing it can further reduce file size and protect privacy.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- FAQ 14 -->
+            <article class="faq-item fade-in-up" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <button class="faq-question" aria-expanded="false">
+                    <span itemprop="name">How does this compare to Photoshop or desktop image editors?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <div itemprop="text">
+                        <p>ResizeImages.tools offers several advantages:</p>
+                        <ul>
+                            <li><strong>No installation:</strong> Works instantly in your browser</li>
+                            <li><strong>Free forever:</strong> No subscription like Photoshop ($10-60/month)</li>
+                            <li><strong>Simple interface:</strong> No learning curve - just upload and resize</li>
+                            <li><strong>Batch processing:</strong> Resize 20 images as easily as one</li>
+                            <li><strong>Any device:</strong> Works on Mac, Windows, Linux, phones, tablets</li>
+                        </ul>
+                        <p>While Photoshop offers more editing features, ResizeImages.tools is faster and easier for the specific task of resizing and compressing images.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- FAQ 15 -->
+            <article class="faq-item fade-in-up" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <button class="faq-question" aria-expanded="false">
+                    <span itemprop="name">How much will resizing images improve my website speed?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <div itemprop="text">
+                        <p>Resizing images can dramatically improve website performance:</p>
+                        <ul>
+                            <li><strong>70-90% faster loading:</strong> With properly sized images</li>
+                            <li><strong>Better SEO:</strong> Google ranks faster sites higher</li>
+                            <li><strong>Lower bandwidth:</strong> Reduce hosting costs</li>
+                            <li><strong>Mobile-friendly:</strong> Critical for phone users on limited data</li>
+                            <li><strong>Higher conversion:</strong> 1 second delay = 7% fewer conversions</li>
+                        </ul>
+                        <p>A typical webpage might have 10-30 images. Resizing from 2MB to 100KB each saves 19MB+ per page load - a huge improvement for user experience.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- FAQ 16 -->
+            <article class="faq-item fade-in-up" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <button class="faq-question" aria-expanded="false">
+                    <span itemprop="name">What size should I resize images for social media?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <div itemprop="text">
+                        <p>Different platforms have different optimal sizes:</p>
+                        <ul>
+                            <li><strong>Facebook:</strong> 100-200KB for posts, maintains good quality</li>
+                            <li><strong>Instagram:</strong> 100KB works well for regular posts and stories</li>
+                            <li><strong>Twitter:</strong> 50-100KB for fast loading</li>
+                            <li><strong>LinkedIn:</strong> 100-200KB for professional appearance</li>
+                        </ul>
+                        <p>Social platforms compress images further, so starting with 50-200KB ensures good quality after their compression. Larger files waste upload time without improving final quality.</p>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const heroUpload = document.getElementById('heroUpload');
+    const heroFileInput = document.getElementById('heroFileInput');
+    const compressionInterface = document.getElementById('compressionInterface');
+    const selectedFilesPreview = document.getElementById('selectedFilesPreview');
+    const qualitySlider = document.getElementById('qualitySlider');
+    const qualityValue = document.getElementById('qualityValue');
+    const compressButton = document.getElementById('compressButton');
+    const progressSection = document.getElementById('progressSection');
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+    const imageCount = document.getElementById('imageCount');
+    const resultsSection = document.getElementById('resultsSection');
+    const heroSection = document.getElementById('heroSection');
+    
+    let selectedFiles = [];
+    let compressionResults = [];
+    let compressionStartTime = 0;
+
+    // Quality slider update
+    qualitySlider.addEventListener('input', function() {
+        qualityValue.textContent = this.value + '%';
+    });
+
+    // Drag and drop functionality
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        heroUpload.addEventListener(eventName, preventDefaults, false);
+        document.body.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        heroUpload.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        heroUpload.addEventListener(eventName, unhighlight, false);
+    });
+
+    function highlight() {
+        heroUpload.classList.add('dragover');
+        heroUpload.setAttribute('aria-label', 'Drop images here to compress');
+    }
+
+    function unhighlight() {
+        heroUpload.classList.remove('dragover');
+        heroUpload.setAttribute('aria-label', 'Upload images to compress');
+    }
+
+    // Handle file drop and selection
+    heroUpload.addEventListener('drop', handleDrop, false);
+    heroFileInput.addEventListener('change', handleFileSelect, false);
+
+    function handleDrop(e) {
+        const files = e.dataTransfer.files;
+        processFiles(files);
+    }
+
+    function handleFileSelect(e) {
+        const files = e.target.files;
+        processFiles(files);
+    }
+
+    function processFiles(files) {
+        const validFiles = Array.from(files).filter(file => {
+            const isValidType = file.type.startsWith('image/');
+            const isValidSize = file.size <= 10 * 1024 * 1024; // 10MB
+            return isValidType && isValidSize;
+        });
+
+        if (validFiles.length === 0) {
+            showNotification('Please select valid image files (max 10MB each)', 'error');
+            return;
+        }
+
+        if (validFiles.length > 20) {
+            showNotification('Maximum 20 images allowed at once', 'error');
+            validFiles.splice(20);
+        }
+
+        // Add to existing files or replace
+        selectedFiles = [...selectedFiles, ...validFiles];
+        
+        // Limit total files to 20
+        if (selectedFiles.length > 20) {
+            selectedFiles = selectedFiles.slice(0, 20);
+            showNotification('Limited to 20 images total', 'warning');
+        }
+
+        displaySelectedFiles();
+        showCompressionInterface();
+    }
+
+    function displaySelectedFiles() {
+        selectedFilesPreview.innerHTML = '';
+        imageCount.textContent = selectedFiles.length;
+        
+        selectedFiles.forEach((file, index) => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.createElement('div');
+                preview.className = 'file-preview';
+                preview.innerHTML = `
+                    <img src="${e.target.result}" alt="Preview of ${file.name}">
+                    <div class="file-info">
+                        <div class="file-name" title="${file.name}">${file.name}</div>
+                        <div class="file-size">${formatFileSize(file.size)}</div>
+                    </div>
+                    <button class="remove-file" onclick="removeFile(${index})" aria-label="Remove ${file.name}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                selectedFilesPreview.appendChild(preview);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    function showCompressionInterface() {
+        compressionInterface.classList.add('active');
+        compressionInterface.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    window.removeFile = function(index) {
+        selectedFiles.splice(index, 1);
+        if (selectedFiles.length === 0) {
+            compressionInterface.classList.remove('active');
+            heroFileInput.value = '';
+        } else {
+            displaySelectedFiles();
+        }
+    };
+
+    window.clearAllFiles = function() {
+        selectedFiles = [];
+        compressionResults.forEach(result => {
+            if (result.url) URL.revokeObjectURL(result.url);
+            if (result.originalPreview) URL.revokeObjectURL(result.originalPreview);
+        });
+        compressionResults = [];
+        compressionInterface.classList.remove('active');
+        resultsSection.classList.remove('active');
+        heroSection.classList.remove('results-mode');
+        heroFileInput.value = '';
+        progressSection.style.display = 'none';
+        compressButton.disabled = false;
+        compressButton.innerHTML = '<i class="fas fa-compress-alt"></i><span>Compress Images</span>';
+    };
+
+    // Updated compression button click handler
+    compressButton.addEventListener('click', async function() {
+        if (selectedFiles.length === 0) return;
+
+        // Hide upload area and show progress
+        heroSection.classList.add('results-mode');
+        compressionInterface.style.display = 'none';
+        progressSection.classList.add('active');
+        progressSection.style.display = 'block';
+        
+        // Scroll to progress
+        progressSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        compressButton.disabled = true;
+        compressButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Processing...</span>';
+        
+        compressionResults = [];
+        compressionStartTime = Date.now();
+        let completedFiles = 0;
+
+        for (let i = 0; i < selectedFiles.length; i++) {
+            const file = selectedFiles[i];
+            const progress = ((i + 1) / selectedFiles.length) * 100;
+            
+            progressFill.style.width = progress + '%';
+            progressText.textContent = `Processing ${file.name} - ${Math.round(progress)}% Complete`;
+
+            try {
+                const result = await compressFile(file);
+                compressionResults.push(result);
+                completedFiles++;
+            } catch (error) {
+                console.error('Compression error:', error);
+                showNotification(`Error compressing ${file.name}: ${error.message}`, 'error');
+            }
+        }
+
+        // Hide progress and show results
+        setTimeout(() => {
+            progressSection.style.display = 'none';
+            showResults();
+        }, 1000);
+    });
+
+    // Updated compressFile function to return result data
+    async function compressFile(file) {
+        const formData = new FormData();
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        
+        formData.append('csrfmiddlewaretoken', csrfToken);
+        formData.append('image_file', file);
+        formData.append('quality', qualitySlider.value);
+        formData.append('preserve_exif', document.getElementById('preserveExif').checked ? 'true' : 'false');
+        formData.append('auto_rotate', document.getElementById('autoRotate').checked ? 'true' : 'false');
+
+        const response = await fetch(window.location.href, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        });
+
+        if (response.ok) {
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+            
+            // Get filename from response headers
+            const contentDisposition = response.headers.get('Content-Disposition');
+            let filename = file.name.replace(/\.[^/.]+$/, '_compressed.jpg');
+            if (contentDisposition) {
+                const match = contentDisposition.match(/filename="(.+)"/);
+                if (match) filename = match[1];
+            }
+
+            // Get compression stats
+            const originalSize = file.size;
+            const compressedSize = blob.size;
+            const savings = Math.round(((originalSize - compressedSize) / originalSize) * 100);
+
+            // Create preview URL for the original image
+            const originalPreview = URL.createObjectURL(file);
+
+            return {
+                originalName: file.name,
+                filename: filename,
+                originalSize: originalSize,
+                compressedSize: compressedSize,
+                savings: savings,
+                url: url,
+                originalPreview: originalPreview,
+                blob: blob
+            };
+        } else {
+            const errorText = await response.text();
+            let errorMessage = 'Compression failed';
+            
+            try {
+                const errorData = JSON.parse(errorText);
+                errorMessage = errorData.error || errorMessage;
+            } catch (e) {
+                // If not JSON, use generic message
+            }
+            
+            throw new Error(errorMessage);
+        }
+    }
+
+    // New function to show results
+    function showResults() {
+        if (compressionResults.length === 0) {
+            showNotification('No images were successfully compressed', 'error');
+            return;
+        }
+
+        const processingTime = Math.round((Date.now() - compressionStartTime) / 1000);
+        const totalOriginalSize = compressionResults.reduce((sum, result) => sum + result.originalSize, 0);
+        const totalCompressedSize = compressionResults.reduce((sum, result) => sum + result.compressedSize, 0);
+        const totalSaved = totalOriginalSize - totalCompressedSize;
+        const averageSavings = totalOriginalSize > 0 ? Math.round((totalSaved / totalOriginalSize) * 100) : 0;
+
+        // Update stats
+        document.getElementById('totalFiles').textContent = compressionResults.length;
+        document.getElementById('totalSaved').textContent = formatFileSize(totalSaved);
+        document.getElementById('averageSavings').textContent = averageSavings + '%';
+        document.getElementById('processingTime').textContent = processingTime + 's';
+
+        // Display result cards
+        const resultsGrid = document.getElementById('resultsGrid');
+        resultsGrid.innerHTML = '';
+
+        compressionResults.forEach((result, index) => {
+            const card = document.createElement('div');
+            card.className = 'result-card';
+            card.innerHTML = `
+                <div class="result-image-container">
+                    <img src="${result.url}" alt="Compressed ${result.originalName}" class="result-image">
+                    <div class="result-overlay">${result.savings}% smaller</div>
+                </div>
+                <div class="result-info">
+                    <div class="result-name">
+                        <i class="fas fa-file-image"></i>
+                        ${result.originalName}
+                    </div>
+                    <div class="result-comparison">
+                        <div class="size-info">
+                            <div class="size-label">Original</div>
+                            <div class="size-value original-size">${formatFileSize(result.originalSize)}</div>
+                        </div>
+                        <div class="comparison-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                        <div class="size-info">
+                            <div class="size-label">Compressed</div>
+                            <div class="size-value compressed-size">${formatFileSize(result.compressedSize)}</div>
+                        </div>
+                    </div>
+                    <div class="result-actions">
+                        <button class="download-btn" onclick="downloadSingleFile(${index})">
+                            <i class="fas fa-download"></i>
+                            <span>Download</span>
+                        </button>
+                        <button class="preview-btn" onclick="previewImage('${result.url}')" title="Preview image">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            resultsGrid.appendChild(card);
+        });
+
+        resultsSection.classList.add('active');
+        resultsSection.style.display = 'block';
+        setTimeout(() => {
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    }
+
+    // Download functions
+    window.downloadSingleFile = function(index) {
+        const result = compressionResults[index];
+        if (result) {
+            const a = document.createElement('a');
+            a.href = result.url;
+            a.download = result.filename;
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    };
+
+    document.getElementById('downloadAllBtn').addEventListener('click', function() {
+        if (compressionResults.length === 0) {
+            showNotification('No files to download', 'error');
+            return;
+        }
+
+        let downloadCount = 0;
+        compressionResults.forEach((result, index) => {
+            setTimeout(() => {
+                downloadSingleFile(index);
+                downloadCount++;
+                if (downloadCount === compressionResults.length) {
+                    showNotification(`All ${downloadCount} files downloaded successfully!`, 'success');
+                }
+            }, index * 200); // Stagger downloads to avoid browser blocking
+        });
+    });
+
+    // Preview function
+    window.previewImage = function(url) {
+        const modal = document.createElement('div');
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            cursor: pointer;
+        `;
+        
+        const img = document.createElement('img');
+        img.src = url;
+        img.style.cssText = `
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        `;
+        
+        modal.appendChild(img);
+        document.body.appendChild(modal);
+        
+        modal.addEventListener('click', function() {
+            document.body.removeChild(modal);
+        });
+    };
+
+    // Start over function
+    window.startOver = function() {
+        clearAllFiles();
+        heroSection.classList.remove('results-mode');
+        resultsSection.classList.remove('active');
+        resultsSection.style.display = 'none';
+        
+        // Scroll back to upload area
+        setTimeout(() => {
+            heroUpload.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+    };
+
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    function showNotification(message, type) {
+        const existingNotifications = document.querySelectorAll('.notification');
+        existingNotifications.forEach(notif => notif.remove());
+
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.setAttribute('role', 'alert');
+        notification.setAttribute('aria-live', 'polite');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            left: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            z-index: 10000;
+            transform: translateY(-100px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            ${type === 'success' ? 'background: #10b981;' : 
+              type === 'warning' ? 'background: #f59e0b; color: #1f2937;' : 
+              'background: #ef4444;'}
+        `;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        requestAnimationFrame(() => {
+            notification.style.transform = 'translateY(0)';
+        });
+
+        setTimeout(() => {
+            notification.style.transform = 'translateY(-100px)';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }, 4000);
+    }
+
+    // Keyboard accessibility
+    heroUpload.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            heroFileInput.click();
+        }
+    });
+
+    // FAQ functionality
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+        
+        question.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+            const isExpanded = question.getAttribute('aria-expanded') === 'true';
+            
+            // Close all other FAQ items
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                    otherItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+                }
+            });
+            
+            // Toggle current item
+            item.classList.toggle('active', !isActive);
+            question.setAttribute('aria-expanded', !isExpanded);
+        });
+
+        // Keyboard accessibility for FAQ
+        question.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                question.click();
+            }
+        });
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const target = document.getElementById(targetId);
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Enhanced Intersection Observer for animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Apply fade-in animations
+    document.querySelectorAll('.fade-in-up').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        
+        // Add staggered delays
+        if (el.classList.contains('fade-in-delay-1')) {
+            el.style.transitionDelay = '0.2s';
+        } else if (el.classList.contains('fade-in-delay-2')) {
+            el.style.transitionDelay = '0.4s';
+        } else if (el.classList.contains('fade-in-delay-3')) {
+            el.style.transitionDelay = '0.6s';
+        }
+        
+        observer.observe(el);
+    });
+
+    // Clean up on page unload
+    window.addEventListener('beforeunload', function() {
+        // Clean up any object URLs that might still exist
+        compressionResults.forEach(result => {
+            if (result.url) URL.revokeObjectURL(result.url);
+            if (result.originalPreview) URL.revokeObjectURL(result.originalPreview);
+        });
+    });
+});
+
+// Structured Data for SEO
+const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Free Online Image Compressor - Resizeimages.tools",
+    "description": "Compress your images online without losing quality at Resizeimages.tools. Reduce file sizes by up to 90% while maintaining quality.",
+    "url": "https://Resizeimages.tools",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+    },
+    "creator": {
+        "@type": "Organization",
+        "name": "Resizeimages.tools"
+    },
+    "featureList": [
+        "Smart image compression technology",
+        "Batch image processing up to 20 files",
+        "Multiple format support (JPEG, PNG, WebP, HEIC)",
+        "Mobile-optimized interface",
+        "Privacy-focused processing",
+        "No registration required",
+        "Instant download with preview"
+    ]
+};
+
+// Inject structured data
+const script = document.createElement('script');
+script.type = 'application/ld+json';
+script.textContent = JSON.stringify(structuredData);
+document.head.appendChild(script);
+</script>
+{% endblock %}

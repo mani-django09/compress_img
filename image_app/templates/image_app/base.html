@@ -1,0 +1,713 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- SEO Meta Tags -->
+    <title>{% block title %}Free Online Image Compressor | Reduce Photo File Size | resizeimages.tools{% endblock %}</title>
+    <meta name="description" content="{% block description %}Compress JPEG, PNG, WebP images online for free. Reduce photo file sizes by up to 90% while maintaining quality. Fast batch compression tool for web optimization.{% endblock %}">
+    <meta name="keywords" content="{% block keywords %}image compressor, photo compressor, reduce image size, compress photos online, optimize images for web, batch image compression, JPEG compressor, PNG compressor{% endblock %}">
+    <meta name="author" content="resizeimages.tools">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{% block canonical %}https://resizeimages.tools{% url request.resolver_match.url_name %}{% endblock %}">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="{% block og_title %}Free Online Image Compressor - resizeimages.tools{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Compress images online for free. Reduce file sizes by up to 90% while maintaining quality. Perfect for web optimization and social media.{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://resizeimages.tools">
+    <meta property="og:image" content="{% static 'images/og-image.jpg' %}">
+    <meta property="og:site_name" content="resizeimages.tools">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}Free Online Image Compressor - resizeimages.tools{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Compress images online for free. Reduce file sizes by up to 90% while maintaining quality.{% endblock %}">
+    <meta name="twitter:image" content="{% static 'images/twitter-card.jpg' %}">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "resizeimages.tools",
+        "description": "Free online image compression tool",
+        "url": "https://resizeimages.tools",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "Image compression",
+            "Resize to specific KB",
+            "Batch processing",
+            "Multiple formats support",
+            "Privacy protection"
+        ]
+    }
+    </script>
+    
+    <!-- Favicon - Multiple Sizes -->
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon-16x16.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon-32x32.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'android-chrome-192x192.png' %}">
+    <link rel="icon" type="image/png" sizes="512x512" href="{% static 'android-chrome-512x512.png' %}">
+    <link rel="manifest" href="{% static 'site.webmanifest' %}">
+    
+    <!-- Fonts and Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #3B82F6;
+            --primary-dark: #2563EB;
+            --primary-light: #60A5FA;
+            --secondary: #8B5CF6;
+            --accent: #10B981;
+            --dark: #1E293B;
+            --dark-light: #334155;
+            --text-dark: #0F172A;
+            --text-light: #F8FAFC;
+            --text-gray: #64748B;
+            --border: #E2E8F0;
+            --bg-light: #F8FAFC;
+            --bg-white: #FFFFFF;
+            
+            /* Additional variables for features page */
+            --dark-bg: #0F172A;
+            --dark-surface: #1E293B;
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --glass-bg: rgba(30, 41, 59, 0.5);
+            --glass-border: rgba(148, 163, 184, 0.1);
+            --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.3);
+            --gradient-1: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);
+            --success: #10B981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: var(--bg-white);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-wrapper:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            line-height: 1.2;
+        }
+
+        .logo-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.25rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.625rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .nav-link i {
+            font-size: 0.875rem;
+        }
+
+        /* Dropdown Menu */
+        .nav-item {
+            position: relative;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            min-width: 220px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+            z-index: 1000;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 1.25rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(59, 130, 246, 0.05);
+            color: var(--primary);
+            padding-left: 1.5rem;
+        }
+
+        .dropdown-item i {
+            font-size: 1rem;
+            width: 20px;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: var(--dark);
+            color: var(--text-light);
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            max-width: 400px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .footer-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .footer-logo-text {
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .footer-description {
+            color: var(--text-gray);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-column h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            color: var(--text-light);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-link {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+            padding-left: 0.5rem;
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .copyright {
+            color: var(--text-gray);
+            font-size: 0.875rem;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-bottom-link {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom-link:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+
+            .footer-brand {
+                grid-column: 1 / -1;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                background: var(--bg-white);
+                flex-direction: column;
+                padding: 1.5rem;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+                transition: left 0.3s ease;
+                max-height: calc(100vh - 80px);
+                overflow-y: auto;
+                gap: 0.5rem;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-link {
+                width: 100%;
+                justify-content: flex-start;
+                padding: 1rem;
+            }
+
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                border: none;
+                border-left: 2px solid var(--primary);
+                margin: 0.5rem 0 0.5rem 1rem;
+                border-radius: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W8CJ7TVQFW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-W8CJ7TVQFW');
+</script>
+
+
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="{% url 'home' %}" class="logo-wrapper">
+                <div class="logo-icon">
+                    <i class="fas fa-compress-alt"></i>
+                </div>
+                <div class="logo-text">
+                    <div class="logo-title">ResizeImages.tools</div>
+                    <div class="logo-subtitle">Free Image Compressor</div>
+                </div>
+            </a>
+            
+            <ul class="nav-links" id="navLinks">
+                <li class="nav-item">
+                    <a href="{% url 'upload' %}" class="nav-link {% if request.resolver_match.url_name == 'upload' %}active{% endif %}">
+                        <i class="fas fa-compress"></i>
+                        <span>Compress</span>
+                    </a>
+                </li>
+                
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">
+                        <i class="fas fa-file-image"></i>
+                        <span>Resize to KB</span>
+                        <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 0.25rem;"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="{% url 'resize_to_kb' %}" class="dropdown-item">
+                            <i class="fas fa-compress-alt"></i>
+                            Resize to 20KB
+                        </a>
+                        <a href="{% url 'resize_to_50kb' %}" class="dropdown-item">
+                            <i class="fas fa-compress"></i>
+                            Resize to 50KB
+                        </a>
+                        <a href="{% url 'resize_to_100kb' %}" class="dropdown-item">
+                            <i class="fas fa-expand-alt"></i>
+                            Resize to 100KB
+                        </a>
+                        <a href="{% url 'compress_200kb' %}" class="dropdown-item">
+                            <i class="fas fa-crown"></i>
+                            Compress to 200KB
+                        </a>
+                    </div>
+                </li>
+                
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">
+                        <i class="fas fa-compress-arrows-alt"></i>
+                        <span>Compress to KB</span>
+                        <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 0.25rem;"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="{% url 'compress_50kb' %}" class="dropdown-item">
+                            <i class="fas fa-compress"></i>
+                            Compress to 50KB
+                        </a>
+                        <a href="{% url 'compress_100kb' %}" class="dropdown-item">
+                            <i class="fas fa-expand-alt"></i>
+                            Compress to 100KB
+                        </a>
+                        <a href="{% url 'compress_200kb' %}" class="dropdown-item">
+                            <i class="fas fa-crown"></i>
+                            Compress to 200KB
+                        </a>
+                    </div>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="{% url 'dynamic_features' %}" class="nav-link {% if request.resolver_match.url_name == 'dynamic_features' %}active{% endif %}">
+                        <i class="fas fa-star"></i>
+                        <span>Features</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-compress-alt"></i>
+                        </div>
+                        <div class="footer-logo-text">ResizeImages.tools</div>
+                    </div>
+                    <p class="footer-description">
+                        Professional image compression and resizing tools. Compress JPEG, PNG, WebP images online for free. Reduce file sizes while maintaining quality.
+                    </p>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/resizeimages.tools" class="social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://twitter.com/resizeimages" class="social-link" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/resizeimages-tools" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.instagram.com/resizeimages.tools" class="social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Resize Tools</h3>
+                    <div class="footer-links">
+                        <a href="{% url 'resize_to_kb' %}" class="footer-link">Resize to 20KB</a>
+                        <a href="{% url 'resize_to_50kb' %}" class="footer-link">Resize to 50KB</a>
+                        <a href="{% url 'resize_to_100kb' %}" class="footer-link">Resize to 100KB</a>
+                        <a href="{% url 'compress_200kb' %}" class="footer-link">Compress to 200KB</a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Compress Tools</h3>
+                    <div class="footer-links">
+                        <a href="{% url 'upload' %}" class="footer-link">Image Compressor</a>
+                        <a href="{% url 'compress_50kb' %}" class="footer-link">Compress to 50KB</a>
+                        <a href="{% url 'compress_100kb' %}" class="footer-link">Compress to 100KB</a>
+                        <a href="{% url 'dynamic_features' %}" class="footer-link">All Features</a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <div class="footer-links">
+                        <a href="{% url 'about' %}" class="footer-link">About Us</a>
+                        <a href="{% url 'contact' %}" class="footer-link">Contact</a>
+                        <a href="{% url 'privacy' %}" class="footer-link">Privacy Policy</a>
+                        <a href="{% url 'terms' %}" class="footer-link">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">
+                    &copy; <span id="currentYear"></span> ResizeImages.tools. All rights reserved.
+                </p>
+                <div class="footer-bottom-links">
+                    <a href="{% url 'privacy' %}" class="footer-bottom-link">Privacy</a>
+                    <a href="{% url 'terms' %}" class="footer-bottom-link">Terms</a>
+                    <a href="{% url 'contact' %}" class="footer-bottom-link">Support</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+            
+            const icon = this.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.className = 'fas fa-times';
+            } else {
+                icon.className = 'fas fa-bars';
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            const navLinks = document.getElementById('navLinks');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            
+            if (!navLinks.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
+                navLinks.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                if (icon) icon.className = 'fas fa-bars';
+            }
+        });
+
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (!this.classList.contains('dropdown-toggle')) {
+                    const navLinks = document.getElementById('navLinks');
+                    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+                    navLinks.classList.remove('active');
+                    const icon = mobileMenuBtn.querySelector('i');
+                    if (icon) icon.className = 'fas fa-bars';
+                }
+            });
+        });
+
+        // Prevent dropdown toggle navigation
+        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                e.preventDefault();
+            });
+        });
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
